@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://dl6j6ofxpdaxw"]
+
+[ext_resource type="Texture2D" uid="uid://b82a4b1iy7w1e" path="res://New Piskel.png" id="1_tqwul"]
+[ext_resource type="PackedScene" uid="uid://dr2upyhilklc2" path="res://Props/platform.tscn" id="2_tn7p1"]
+
+[node name="level1" type="Node2D"]
+
+[node name="FloorBack" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(0, -80)
+scale = Vector2(10, 5)
+texture = ExtResource("1_tqwul")
+
+[node name="Brick" parent="." instance=ExtResource("2_tn7p1")]
+position = Vector2(-78, -36)
+scale = Vector2(0.2, 0.2)
+
+[node name="Brick2" parent="." instance=ExtResource("2_tn7p1")]
+position = Vector2(-14, -55)
+scale = Vector2(0.2, 0.2)
+
+[node name="Brick3" parent="." instance=ExtResource("2_tn7p1")]
+position = Vector2(72, -88)
+scale = Vector2(0.2, 0.2)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -28.0
+offset_top = -165.0
+offset_right = 26.0
+offset_bottom = -142.0
+text = "Level 1"

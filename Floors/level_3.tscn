@@ -1,0 +1,56 @@
+[gd_scene load_steps=3 format=3 uid="uid://birwh6dh7ln5l"]
+
+[ext_resource type="Texture2D" uid="uid://b82a4b1iy7w1e" path="res://New Piskel.png" id="1_c2lra"]
+[ext_resource type="PackedScene" uid="uid://dr2upyhilklc2" path="res://Props/platform.tscn" id="2_nbac1"]
+
+[node name="level3" type="Node2D"]
+
+[node name="FloorBack" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(0, -465)
+scale = Vector2(10, 29.0625)
+texture = ExtResource("1_c2lra")
+
+[node name="Brick" parent="." instance=ExtResource("2_nbac1")]
+position = Vector2(2.00001, -44)
+scale = Vector2(0.2, 0.2)
+
+[node name="Brick2" parent="." instance=ExtResource("2_nbac1")]
+position = Vector2(-4, -139)
+scale = Vector2(0.2, 0.2)
+
+[node name="Brick3" parent="." instance=ExtResource("2_nbac1")]
+position = Vector2(-2.38419e-07, -221)
+scale = Vector2(0.2, 0.2)
+
+[node name="Brick4" parent="." instance=ExtResource("2_nbac1")]
+position = Vector2(2, -326)
+scale = Vector2(0.2, 0.2)
+
+[node name="Brick5" parent="." instance=ExtResource("2_nbac1")]
+position = Vector2(8, -427)
+scale = Vector2(0.2, 0.2)
+
+[node name="Brick6" parent="." instance=ExtResource("2_nbac1")]
+position = Vector2(9, -556)
+scale = Vector2(0.2, 0.2)
+
+[node name="Brick7" parent="." instance=ExtResource("2_nbac1")]
+position = Vector2(11, -692)
+scale = Vector2(0.2, 0.2)
+
+[node name="Brick8" parent="." instance=ExtResource("2_nbac1")]
+position = Vector2(-8, -824)
+scale = Vector2(0.2, 0.2)
+
+[node name="Brick9" parent="." instance=ExtResource("2_nbac1")]
+position = Vector2(2, -927)
+scale = Vector2(0.2, 0.2)
+
+[node name="Label" type="Label" parent="."]
+offset_left = 32.0
+offset_top = -936.0
+offset_right = 86.0
+offset_bottom = -913.0
+text = "Level 3"
