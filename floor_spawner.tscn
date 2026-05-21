@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://c3vwjh05i37h0"]
+
+[ext_resource type="Script" uid="uid://b82sorvthadqy" path="res://FloorSpawner.cs" id="1_7kb2p"]
+
+[node name="floor_spawner" type="Node2D" unique_id=1900912291]
+script = ExtResource("1_7kb2p")

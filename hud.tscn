@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://cb81quefv111a"]
+
+[ext_resource type="Script" uid="uid://bqlnlcjrbse4b" path="res://HUD.cs" id="1_37p78"]
+
+[node name="HUD" type="Control" unique_id=540366213]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_37p78")

@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://f1h2hm20fdcf"]
+
+[ext_resource type="Script" uid="uid://cetc2ryjqqgwc" path="res://Floor.cs" id="1_oj3tl"]
+
+[node name="floor" type="Node2D" unique_id=1262757009]
+script = ExtResource("1_oj3tl")
