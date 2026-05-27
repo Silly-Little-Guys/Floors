@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://cko4cmqkwxpuq"]
+
+[ext_resource type="Script" uid="uid://7wiie0nqg4er" path="res://scenes/enemy/Enemy.cs" id="1_yt117"]
+[ext_resource type="Texture2D" uid="uid://g3rdxjq3ads4" path="res://aseprite/WingedEnemy.png" id="2_rlc8e"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wymol"]
+atlas = ExtResource("2_rlc8e")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ymun"]
+atlas = ExtResource("2_rlc8e")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b2ppj"]
+atlas = ExtResource("2_rlc8e")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mjjpt"]
+atlas = ExtResource("2_rlc8e")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2oopx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wymol")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ymun")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b2ppj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mjjpt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yt117"]
+size = Vector2(8, 8)
+
+[node name="WingedEnemy" type="RigidBody2D" unique_id=1531237354]
+gravity_scale = 0.0
+script = ExtResource("1_yt117")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1667174503]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_2oopx")
+frame_progress = 0.4598575
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=436350362]
+shape = SubResource("RectangleShape2D_yt117")
