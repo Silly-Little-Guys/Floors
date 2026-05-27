@@ -50,7 +50,7 @@ public partial class Player : CharacterBody2D
 			{
 				animatedSprite2D.FlipH = false;
 			}
-			animatedSprite2D.Play("run");
+			animatedSprite2D.Play("run_no_weapon");
 		}
 		else
 		{
