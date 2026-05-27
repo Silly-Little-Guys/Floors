@@ -30,6 +30,7 @@ public partial class Player : CharacterBody2D
 		if (!jumpBufferTimer.IsStopped() && !coyoteTimer.IsStopped())
 		{
 			velocity.Y = JumpVelocity;
+			jumpBufferTimer.Stop();
 		}
 
 		// Get the input direction and handle the movement/deceleration.
