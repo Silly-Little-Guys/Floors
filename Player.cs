@@ -10,6 +10,12 @@ public partial class Player : CharacterBody2D
 	[Export] public AnimatedSprite2D animatedSprite2D;
 	[Export] public Timer coyoteTimer;
 	[Export] public Timer jumpBufferTimer;
+	[Export] public HUD hud;
+
+	public void Hurt()
+	{
+		SetMeta("Health", (int) GetMeta("Health") - 5);
+	}
 
 	public override void _PhysicsProcess(double delta)
 	{

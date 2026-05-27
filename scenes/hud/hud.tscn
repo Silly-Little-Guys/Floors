@@ -1,12 +1,22 @@
 [gd_scene format=3 uid="uid://cb81quefv111a"]
 
-[ext_resource type="Script" uid="uid://bqlnlcjrbse4b" path="res://HUD.cs" id="1_37p78"]
+[ext_resource type="Script" uid="uid://bqlnlcjrbse4b" path="res://scenes/hud/HUD.cs" id="1_37p78"]
 
-[node name="HUD" type="Control" unique_id=540366213]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="HUD" type="CanvasLayer" unique_id=651644861]
 script = ExtResource("1_37p78")
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1664389420]
+offset_left = 55.0
+offset_right = 287.0
+offset_bottom = 27.0
+
+[node name="Label" type="Label" parent="." unique_id=837840285]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Health"
+
+[node name="Button" type="Button" parent="." unique_id=1634350163]
+offset_top = 32.0
+offset_right = 287.0
+offset_bottom = 63.0
+text = "Hurt"
