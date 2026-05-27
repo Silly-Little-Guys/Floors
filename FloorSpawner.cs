@@ -8,11 +8,12 @@ public partial class FloorSpawner : Node2D
 	[Export] public Player player;
 	[Export] public Node2D rootParentToSpawnIn;
 	[Export] public EnemySpawner enemySpawner;
-	[Export] public int level = 1;
+	private int level = 1;
+	private int floorsSinceLastLevel = 0;
 	private List<PackedScene> floors = new();
 	private const string floorsPath = "res://scenes/floors";
 	
-	private float nextFloorTopY = 0;
+	private float nextFloorAttachY = 0;
 	private float currentFloorTopY = 0;
 	private float currentFloorTileHeight = 0;
 	private bool hasSpawnedFloor = false;
@@ -74,9 +75,10 @@ public partial class FloorSpawner : Node2D
 
 	public void SpawnNextFloor()
 	{
-		if (floors.Count == 0)
+		if (floorsSinceLastLevel >= 5)
 		{
 			level++;
+			floorsSinceLastLevel = 0;
 			PopulateFloors(level);
 		}
 
@@ -85,21 +87,21 @@ public partial class FloorSpawner : Node2D
 			return;
 		}
 
-		Floor toSpawn = floors[0].Instantiate<Floor>();
-		floors.RemoveAt(0);
-		rootParentToSpawnIn.AddChild(toSpawn);
-
+		Floor toSpawn = floors[GD.RandRange(0, floors.Count-1)].Instantiate<Floor>();
+		rootParentToSpawnIn.CallDeferred("add_child", toSpawn);
 		if (!TryGetFloorVerticalBounds(toSpawn, out float floorTopY, out float floorBottomY, out float tileHeight))
 		{
 			return;
 		}
 
-		float yOffset = nextFloorTopY - floorTopY;
+		float yOffset = hasSpawnedFloor ? nextFloorAttachY - floorBottomY : nextFloorAttachY - floorTopY;
 		toSpawn.GlobalPosition += new Vector2(0, yOffset);
 		currentFloorTopY = floorTopY + yOffset;
 		currentFloorTileHeight = tileHeight;
 		hasSpawnedFloor = true;
-		nextFloorTopY = floorBottomY + yOffset;
+		nextFloorAttachY = currentFloorTopY;
+
+		floorsSinceLastLevel++;
 	}
 
 	private void CheckPlayerPositionForNextFloor()
@@ -109,7 +111,7 @@ public partial class FloorSpawner : Node2D
 			return;
 		}
 
-		if (player.GlobalPosition.Y >= currentFloorTopY + currentFloorTileHeight)
+		if (player.GlobalPosition.Y <= currentFloorTopY + currentFloorTileHeight)
 		{
 			SpawnNextFloor();
 		}

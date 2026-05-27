@@ -1,6 +1,38 @@
 [gd_scene format=3 uid="uid://c4kosqjt3yi40"]
 
 [ext_resource type="Script" uid="uid://cbalh5ibd3fir" path="res://Main.cs" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://c3vwjh05i37h0" path="res://floor_spawner.tscn" id="2_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://xac8eoxv20h1" path="res://enemy_spawner.tscn" id="3_lquwl"]
+[ext_resource type="PackedScene" uid="uid://dt460lyur87d" path="res://player.tscn" id="4_7mycd"]
+[ext_resource type="PackedScene" uid="uid://bhw1bm57r30ur" path="res://enemy.tscn" id="4_lquwl"]
+[ext_resource type="Script" uid="uid://dsqkp1sshjhf2" path="res://DeathArea.cs" id="6_7mycd"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_7mycd"]
 
 [node name="main" type="Node2D" unique_id=1029074777]
 script = ExtResource("1_ig7tw")
+
+[node name="floor_spawner" parent="." unique_id=1900912291 node_paths=PackedStringArray("player", "rootParentToSpawnIn", "enemySpawner") instance=ExtResource("2_1bvp3")]
+player = NodePath("../player")
+rootParentToSpawnIn = NodePath("..")
+enemySpawner = NodePath("../enemy_spawner")
+
+[node name="enemy_spawner" parent="." unique_id=2039197503 instance=ExtResource("3_lquwl")]
+testEnemyToSpawn = ExtResource("4_lquwl")
+
+[node name="player" parent="." unique_id=28407583 instance=ExtResource("4_7mycd")]
+position = Vector2(14, 29)
+
+[node name="Camera2D" type="Camera2D" parent="player" unique_id=1628567368]
+texture_filter = 1
+zoom = Vector2(9.53, 9.53)
+
+[node name="BottomDeath" type="Area2D" parent="." unique_id=786361301]
+position = Vector2(-4, 146)
+script = ExtResource("6_7mycd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomDeath" unique_id=1770539641]
+position = Vector2(13, 47)
+shape = SubResource("WorldBoundaryShape2D_7mycd")
+
+[connection signal="body_entered" from="BottomDeath" to="BottomDeath" method="OnBodyEntered"]
