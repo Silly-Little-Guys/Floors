@@ -27,7 +27,7 @@ public partial class Player : CharacterBody2D
 			jumpBufferTimer.Start();
 		}
 
-		if (!jumpBufferTimer.IsStopped() && !coyoteTimer.IsStopped())
+		if (!jumpBufferTimer.IsStopped() && (!coyoteTimer.IsStopped() || IsOnFloor()))
 		{
 			velocity.Y = JumpVelocity;
 			jumpBufferTimer.Stop();

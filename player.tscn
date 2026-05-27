@@ -54,10 +54,12 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
 size = Vector2(3, 13)
 
-[node name="player" type="CharacterBody2D" unique_id=28407583 node_paths=PackedStringArray("animatedSprite2D")]
+[node name="player" type="CharacterBody2D" unique_id=28407583 node_paths=PackedStringArray("animatedSprite2D", "coyoteTimer", "jumpBufferTimer")]
 z_index = 1
 script = ExtResource("1_4flbx")
 animatedSprite2D = NodePath("AnimatedSprite2D")
+coyoteTimer = NodePath("CoyoteTime")
+jumpBufferTimer = NodePath("JumpBuffTime")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1193582801]
 texture_filter = 1
@@ -68,3 +70,11 @@ autoplay = "idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=784993124]
 position = Vector2(-0.5, 1.5)
 shape = SubResource("RectangleShape2D_onrkg")
+
+[node name="CoyoteTime" type="Timer" parent="." unique_id=693958492]
+wait_time = 0.15
+one_shot = true
+
+[node name="JumpBuffTime" type="Timer" parent="." unique_id=479664685]
+wait_time = 0.15
+one_shot = true
