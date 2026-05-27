@@ -3,6 +3,7 @@ using System;
 
 public partial class Floor : Node2D
 {
+	[Export] public TileMapLayer mainTileMapLayer;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
