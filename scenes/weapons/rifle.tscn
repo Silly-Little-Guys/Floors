@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://brivmfkko535o"]
+
+[ext_resource type="Script" uid="uid://dtsmwo6e616we" path="res://scenes/weapons/Weapon.cs" id="1_6kub0"]
+[ext_resource type="Texture2D" uid="uid://co5js2tw3h4r8" path="res://aseprite/Rifle.png" id="2_hkhc6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sg1yr"]
+atlas = ExtResource("2_hkhc6")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gwkgk"]
+atlas = ExtResource("2_hkhc6")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pqxi0"]
+atlas = ExtResource("2_hkhc6")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_swcir"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sg1yr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gwkgk")
+}],
+"loop": true,
+"name": &"firing",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pqxi0")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="rifle" type="Node2D" unique_id=176905316]
+script = ExtResource("1_6kub0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=529214809]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_swcir")
+animation = &"firing"
