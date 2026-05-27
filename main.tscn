@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dt460lyur87d" path="res://player.tscn" id="4_7mycd"]
 [ext_resource type="PackedScene" uid="uid://bhw1bm57r30ur" path="res://enemy.tscn" id="4_lquwl"]
 [ext_resource type="Script" uid="uid://dsqkp1sshjhf2" path="res://DeathArea.cs" id="6_7mycd"]
+[ext_resource type="Script" uid="uid://bfowu7rgqis3f" path="res://CameraFollow.cs" id="7_272bh"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_7mycd"]
 
@@ -23,10 +24,6 @@ testEnemyToSpawn = ExtResource("4_lquwl")
 [node name="player" parent="." unique_id=28407583 instance=ExtResource("4_7mycd")]
 position = Vector2(14, 29)
 
-[node name="Camera2D" type="Camera2D" parent="player" unique_id=1628567368]
-texture_filter = 1
-zoom = Vector2(9.53, 9.53)
-
 [node name="BottomDeath" type="Area2D" parent="." unique_id=786361301]
 position = Vector2(-4, 146)
 script = ExtResource("6_7mycd")
@@ -34,5 +31,10 @@ script = ExtResource("6_7mycd")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BottomDeath" unique_id=1770539641]
 position = Vector2(13, 47)
 shape = SubResource("WorldBoundaryShape2D_7mycd")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2009549934 node_paths=PackedStringArray("player")]
+zoom = Vector2(7.61, 7.61)
+script = ExtResource("7_272bh")
+player = NodePath("../player")
 
 [connection signal="body_entered" from="BottomDeath" to="BottomDeath" method="OnBodyEntered"]
