@@ -5,13 +5,16 @@ public partial class Player : CharacterBody2D
 {
 	public const float Speed = 300.0f;
 	public const float JumpVelocity = -400.0f;
+	
 
 	[Export] public AnimatedSprite2D animatedSprite2D;
+	[Export] public Timer coyoteTimer;
+	[Export] public Timer jumpBufferTimer;
 
 	public override void _PhysicsProcess(double delta)
 	{
 		Vector2 velocity = Velocity;
-
+		bool wasOnFloor = IsOnFloor();
 		// Add the gravity.
 		if (!IsOnFloor())
 		{
@@ -19,7 +22,12 @@ public partial class Player : CharacterBody2D
 		}
 
 		// Handle Jump.
-		if (Input.IsActionJustPressed("jump") && IsOnFloor())
+		if (Input.IsActionJustPressed("jump"))
+		{
+			jumpBufferTimer.Start();
+		}
+
+		if (!jumpBufferTimer.IsStopped() && !coyoteTimer.IsStopped())
 		{
 			velocity.Y = JumpVelocity;
 		}
@@ -47,5 +55,14 @@ public partial class Player : CharacterBody2D
 
 		Velocity = velocity;
 		MoveAndSlide();
+
+		if (IsOnFloor() && !wasOnFloor)
+		{
+			coyoteTimer.Stop();
+		}
+		else if (!IsOnFloor() && wasOnFloor)
+		{
+			coyoteTimer.Start();
+		}
 	}
 }
