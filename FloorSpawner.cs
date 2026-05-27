@@ -12,7 +12,10 @@ public partial class FloorSpawner : Node2D
 	private List<PackedScene> floors = new();
 	private const string floorsPath = "res://scenes/floors";
 	
-	private float previousHeight = 0;
+	private float nextFloorTopY = 0;
+	private float currentFloorTopY = 0;
+	private float currentFloorTileHeight = 0;
+	private bool hasSpawnedFloor = false;
 
 	public void PopulateFloors(int level)
 	{
@@ -61,11 +64,12 @@ public partial class FloorSpawner : Node2D
 	public override void _Ready()
 	{
 		PopulateFloors(level);
+		SpawnNextFloor();
 	}
 	
 	public override void _PhysicsProcess(double delta)
 	{
-		
+		CheckPlayerPositionForNextFloor();
 	}
 
 	public void SpawnNextFloor()
@@ -75,34 +79,93 @@ public partial class FloorSpawner : Node2D
 			level++;
 			PopulateFloors(level);
 		}
+
+		if (floors.Count == 0)
+		{
+			return;
+		}
+
 		Floor toSpawn = floors[0].Instantiate<Floor>();
 		floors.RemoveAt(0);
 		rootParentToSpawnIn.AddChild(toSpawn);
-		toSpawn.GlobalPosition = new Vector2(toSpawn.GlobalPosition.X, toSpawn.GlobalPosition.Y + previousHeight);
-		previousHeight = GetFloorHeight(toSpawn);
+
+		if (!TryGetFloorVerticalBounds(toSpawn, out float floorTopY, out float floorBottomY, out float tileHeight))
+		{
+			return;
+		}
+
+		float yOffset = nextFloorTopY - floorTopY;
+		toSpawn.GlobalPosition += new Vector2(0, yOffset);
+		currentFloorTopY = floorTopY + yOffset;
+		currentFloorTileHeight = tileHeight;
+		hasSpawnedFloor = true;
+		nextFloorTopY = floorBottomY + yOffset;
 	}
 
-	private float GetFloorHeight(Floor floor)
+	private void CheckPlayerPositionForNextFloor()
 	{
+		if (!hasSpawnedFloor || player == null)
+		{
+			return;
+		}
+
+		if (player.GlobalPosition.Y >= currentFloorTopY + currentFloorTileHeight)
+		{
+			SpawnNextFloor();
+		}
+	}
+
+	private bool TryGetFloorVerticalBounds(Floor floor, out float topY, out float bottomY, out float tileHeight)
+	{
+		topY = 0;
+		bottomY = 0;
+		tileHeight = 0;
+
 		if (floor?.mainTileMapLayer == null)
 		{
-			GD.PushWarning("Cannot calculate floor height because the floor has no main TileMapLayer assigned.");
-			return 0;
+			GD.PushWarning("Cannot calculate floor bounds because the floor has no main TileMapLayer assigned.");
+			return false;
 		}
 
 		TileMapLayer tileMapLayer = floor.mainTileMapLayer;
-		Rect2I usedRect = tileMapLayer.GetUsedRect();
 
-		if (usedRect.Size.Y == 0 || tileMapLayer.TileSet == null)
+		if (tileMapLayer.TileSet == null)
 		{
-			return 0;
+			GD.PushWarning("Cannot calculate floor bounds because the main TileMapLayer has no TileSet.");
+			return false;
 		}
 
-		int lowestTileY = usedRect.Position.Y;
-		int highestTileY = usedRect.End.Y - 1;
-		int tileRows = highestTileY - lowestTileY + 1;
-		float tileHeight = tileMapLayer.TileSet.TileSize.Y;
-		float layerScale = Mathf.Abs(tileMapLayer.GlobalScale.Y);
-		return tileRows * tileHeight * layerScale;
+		Rect2I usedRect = tileMapLayer.GetUsedRect();
+
+		if (usedRect.Size == Vector2I.Zero)
+		{
+			GD.PushWarning("Cannot calculate floor bounds because the main TileMapLayer has no used cells.");
+			return false;
+		}
+
+		Vector2I tileSize = tileMapLayer.TileSet.TileSize;
+		tileHeight = Mathf.Abs(tileMapLayer.ToGlobal(new Vector2(0, tileSize.Y)).Y - tileMapLayer.ToGlobal(Vector2.Zero).Y);
+		Vector2 localTopLeft = new Vector2(usedRect.Position.X * tileSize.X, usedRect.Position.Y * tileSize.Y);
+		Vector2 localBottomRight = new Vector2(usedRect.End.X * tileSize.X, usedRect.End.Y * tileSize.Y);
+
+		Vector2[] corners =
+		{
+			localTopLeft,
+			new Vector2(localBottomRight.X, localTopLeft.Y),
+			localBottomRight,
+			new Vector2(localTopLeft.X, localBottomRight.Y)
+		};
+
+		topY = float.PositiveInfinity;
+		bottomY = float.NegativeInfinity;
+
+		foreach (Vector2 corner in corners)
+		{
+			float globalY = tileMapLayer.ToGlobal(corner).Y;
+			topY = Mathf.Min(topY, globalY);
+			bottomY = Mathf.Max(bottomY, globalY);
+		}
+
+		return true;
 	}
 }
