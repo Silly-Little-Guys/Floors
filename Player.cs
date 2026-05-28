@@ -23,7 +23,7 @@ public partial class Player : CharacterBody2D
 	}
 
 	/// <summary>
-	/// Add an integer amount of health to the player's health. Health is clamped from 0 to 100. Additive can be negative.
+	/// Add an integer amount of health to the player's health. Player health will be clamped from 0 to 100. Additive can be negative.
 	/// </summary>
 	public void AddHealth(int additive)
 	{
