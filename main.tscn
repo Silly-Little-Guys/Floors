@@ -25,6 +25,7 @@ testEnemyToSpawn = ExtResource("4_5vw27")
 [node name="player" parent="." unique_id=28407583 node_paths=PackedStringArray("hud") instance=ExtResource("4_7mycd")]
 position = Vector2(14, 29)
 hud = NodePath("../HUD")
+metadata/Health = 100
 
 [node name="BottomDeath" type="Area2D" parent="." unique_id=786361301]
 position = Vector2(-4, 146)
@@ -39,6 +40,8 @@ zoom = Vector2(7.61, 7.61)
 script = ExtResource("7_272bh")
 player = NodePath("../player")
 
-[node name="HUD" parent="." unique_id=651644861 instance=ExtResource("8_5vw27")]
+[node name="HUD" parent="." unique_id=651644861 node_paths=PackedStringArray("player") instance=ExtResource("8_5vw27")]
+player = NodePath("../player")
 
+[connection signal="HealthUpdated" from="player" to="HUD" method="OnPlayerHealthUpdated"]
 [connection signal="body_entered" from="BottomDeath" to="BottomDeath" method="OnBodyEntered"]

@@ -1,8 +1,12 @@
 using Godot;
 using System;
+using System.ComponentModel;
 
 public partial class Player : CharacterBody2D
 {
+	[Signal]
+	public delegate void HealthUpdatedEventHandler();
+
 	public const float Speed = 125.0f;
 	public const float JumpVelocity = -300.0f;
 	
@@ -17,9 +21,21 @@ public partial class Player : CharacterBody2D
 	{
 		weaponHandler.bulletSpawnPoint = GetParent();
 	}
-	public void Hurt()
+
+	/// <summary>
+	/// Add an integer amount of health to the player's health. Health is clamped from 0 to 100. Additive can be negative.
+	/// </summary>
+	public void AddHealth(int additive)
 	{
-		SetMeta("Health", (int) GetMeta("Health") - 5);
+		int newHealth = Mathf.Clamp((int) GetMeta("Health") + additive, 0, 100);
+		SetMeta("Health", newHealth);
+		GD.Print("Health: " + this.GetHealth());
+		EmitSignal(SignalName.HealthUpdated);	
+	}
+
+	public int GetHealth()
+	{
+		return (int) GetMeta("Health");
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -29,6 +45,7 @@ public partial class Player : CharacterBody2D
 		string idleAnimation = hasWeapon ? "idle_weapon" : "idle_no_weapon";
 		Vector2 velocity = Velocity;
 		bool wasOnFloor = IsOnFloor();
+
 		// Add the gravity.
 		if (!IsOnFloor())
 		{
