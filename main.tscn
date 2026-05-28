@@ -22,9 +22,10 @@ enemySpawner = NodePath("../enemy_spawner")
 [node name="enemy_spawner" parent="." unique_id=2039197503 instance=ExtResource("3_lquwl")]
 testEnemyToSpawn = ExtResource("4_5vw27")
 
-[node name="player" parent="." unique_id=28407583 node_paths=PackedStringArray("hud") instance=ExtResource("4_7mycd")]
+[node name="player" parent="." unique_id=28407583 node_paths=PackedStringArray("hud", "bulletSpawnPoint") instance=ExtResource("4_7mycd")]
 position = Vector2(14, 29)
 hud = NodePath("../HUD")
+bulletSpawnPoint = NodePath("..")
 metadata/Health = 100
 
 [node name="BottomDeath" type="Area2D" parent="." unique_id=786361301]

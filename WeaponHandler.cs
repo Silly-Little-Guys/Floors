@@ -8,19 +8,6 @@ public partial class WeaponHandler : Node2D
 
     [Export] public Node bulletSpawnPoint;
 
-	public override void _Ready()
-	{
-		if (weaponToUse != null)
-		{
-			currentWeapon = weaponToUse.Instantiate<Weapon>();
-			AddChild(currentWeapon);
-			if (currentWeapon is GunWeapon gun)
-			{
-				gun.bulletSpawnPoint = bulletSpawnPoint;
-			}
-		}
-	}
-
 	public void UpdateWeapon()
 	{
 		if (weaponToUse != null)
@@ -30,6 +17,11 @@ public partial class WeaponHandler : Node2D
 				currentWeapon.QueueFree();
 			}
 			currentWeapon = weaponToUse.Instantiate<Weapon>();
+			if (currentWeapon is GunWeapon gun)
+			{
+				GD.Print("ts is bulllllllllll");
+				gun.bulletSpawnPoint = bulletSpawnPoint;
+			}
 			AddChild(currentWeapon);
 		}
 	}

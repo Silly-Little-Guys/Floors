@@ -16,10 +16,12 @@ public partial class Player : CharacterBody2D
 	[Export] public Timer jumpBufferTimer;
 	[Export] public HUD hud;
 	[Export] public WeaponHandler weaponHandler;
+	[Export] public Node bulletSpawnPoint;
 
 	public override void _Ready()
 	{
-		weaponHandler.bulletSpawnPoint = GetParent();
+		weaponHandler.bulletSpawnPoint = bulletSpawnPoint;
+		weaponHandler.UpdateWeapon();
 	}
 
 	/// <summary>
