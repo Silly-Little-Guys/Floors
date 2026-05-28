@@ -6,7 +6,7 @@ public partial class EnemySpawner : Node2D
 	[Export] public PackedScene testEnemyToSpawn;
 	public void SpawnEnemies(Floor toSpawnIn)
 	{
-		Enemy e = testEnemyToSpawn.Instantiate<Enemy>();
+		WingedEnemy e = testEnemyToSpawn.Instantiate<WingedEnemy>();
 		toSpawnIn.AddChild(e);
 		e.GlobalPosition = new Vector2(0, 10);
 	}
