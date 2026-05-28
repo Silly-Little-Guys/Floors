@@ -11,7 +11,6 @@ public partial class HUD : CanvasLayer
 	{
 		healthBar = GetNode<ProgressBar>("HealthBar");
 		healthBar.Value = player.GetHealth();
-		Console.WriteLine("Health: " + player.GetHealth());
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
