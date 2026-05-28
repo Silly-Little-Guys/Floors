@@ -26,7 +26,7 @@ public partial class Player : CharacterBody2D
 	{
 		bool hasWeapon = weaponHandler.HasWeapon();
 		string runAnimation = hasWeapon ? "run_weapon" : "run_no_weapon";
-		string idleAnimation = hasWeapon ? "idle" : "idle";
+		string idleAnimation = hasWeapon ? "idle_weapon" : "idle_no_weapon";
 		Vector2 velocity = Velocity;
 		bool wasOnFloor = IsOnFloor();
 		// Add the gravity.
