@@ -2,11 +2,12 @@
 
 [ext_resource type="Script" uid="uid://cbalh5ibd3fir" path="res://Main.cs" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://c3vwjh05i37h0" path="res://floor_spawner.tscn" id="2_1bvp3"]
-[ext_resource type="PackedScene" uid="uid://xac8eoxv20h1" path="res://enemy_spawner.tscn" id="3_lquwl"]
+[ext_resource type="PackedScene" uid="uid://xac8eoxv20h1" path="res://scenes/enemy_spawner/enemy_spawner.tscn" id="3_lquwl"]
+[ext_resource type="PackedScene" uid="uid://cko4cmqkwxpuq" path="res://scenes/enemy/WingedEnemy.tscn" id="4_5vw27"]
 [ext_resource type="PackedScene" uid="uid://dt460lyur87d" path="res://player.tscn" id="4_7mycd"]
-[ext_resource type="PackedScene" uid="uid://bhw1bm57r30ur" path="res://enemy.tscn" id="4_lquwl"]
 [ext_resource type="Script" uid="uid://dsqkp1sshjhf2" path="res://DeathArea.cs" id="6_7mycd"]
 [ext_resource type="Script" uid="uid://bfowu7rgqis3f" path="res://CameraFollow.cs" id="7_272bh"]
+[ext_resource type="PackedScene" uid="uid://cb81quefv111a" path="res://scenes/hud/hud.tscn" id="8_5vw27"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_7mycd"]
 
@@ -19,10 +20,11 @@ rootParentToSpawnIn = NodePath("..")
 enemySpawner = NodePath("../enemy_spawner")
 
 [node name="enemy_spawner" parent="." unique_id=2039197503 instance=ExtResource("3_lquwl")]
-testEnemyToSpawn = ExtResource("4_lquwl")
+testEnemyToSpawn = ExtResource("4_5vw27")
 
-[node name="player" parent="." unique_id=28407583 instance=ExtResource("4_7mycd")]
+[node name="player" parent="." unique_id=28407583 node_paths=PackedStringArray("hud") instance=ExtResource("4_7mycd")]
 position = Vector2(14, 29)
+hud = NodePath("../HUD")
 
 [node name="BottomDeath" type="Area2D" parent="." unique_id=786361301]
 position = Vector2(-4, 146)
@@ -36,5 +38,7 @@ shape = SubResource("WorldBoundaryShape2D_7mycd")
 zoom = Vector2(7.61, 7.61)
 script = ExtResource("7_272bh")
 player = NodePath("../player")
+
+[node name="HUD" parent="." unique_id=651644861 instance=ExtResource("8_5vw27")]
 
 [connection signal="body_entered" from="BottomDeath" to="BottomDeath" method="OnBodyEntered"]

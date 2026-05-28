@@ -1,12 +1,17 @@
 using Godot;
 using System;
 
-public partial class Enemy : RigidBody2D
+public partial class WingedEnemy : RigidBody2D, IEnemy
 {
 	public const float Speed = 300.0f;
 	public const float JumpVelocity = -400.0f;
 
-	public override void _PhysicsProcess(double delta)
+    public void TakeDamage(int damage)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void _PhysicsProcess(double delta)
 	{
 		// Vector2 velocity = Velocity;
 

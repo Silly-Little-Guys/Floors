@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://brivmfkko535o"]
+
+[ext_resource type="Script" uid="uid://dtsmwo6e616we" path="res://scenes/weapons/GunWeapon.cs" id="1_6kub0"]
+[ext_resource type="Texture2D" uid="uid://co5js2tw3h4r8" path="res://aseprite/Rifle.png" id="2_hkhc6"]
+[ext_resource type="PackedScene" uid="uid://ccbwt5f4t5ks0" path="res://scenes/weapons/bullet.tscn" id="2_sg1yr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sg1yr"]
+atlas = ExtResource("2_hkhc6")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gwkgk"]
+atlas = ExtResource("2_hkhc6")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pqxi0"]
+atlas = ExtResource("2_hkhc6")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_swcir"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sg1yr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gwkgk")
+}],
+"loop": true,
+"name": &"firing",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pqxi0")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="rifle" type="Node2D" unique_id=176905316 node_paths=PackedStringArray("fireTimer", "animatedSprite2D", "pivotPoint")]
+script = ExtResource("1_6kub0")
+damage = 50
+fireRate = 300.0
+bulletSpeed = 10.0
+bulletScene = ExtResource("2_sg1yr")
+fireTimer = NodePath("FireTime")
+animatedSprite2D = NodePath("AnimatedSprite2D")
+pivotPoint = NodePath("pivot")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=529214809]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_swcir")
+animation = &"firing"
+
+[node name="FireTime" type="Timer" parent="." unique_id=197237495]
+
+[node name="pivot" type="Node2D" parent="." unique_id=1536243649]
+position = Vector2(-2, 4)
