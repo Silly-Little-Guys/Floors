@@ -29,7 +29,6 @@ public partial class Player : CharacterBody2D
 	{
 		int newHealth = Mathf.Clamp((int) GetMeta("Health") + additive, 0, 100);
 		SetMeta("Health", newHealth);
-		GD.Print("Health: " + this.GetHealth());
 		EmitSignal(SignalName.HealthUpdated);	
 	}
 
