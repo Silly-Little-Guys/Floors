@@ -7,7 +7,7 @@ public partial class Player : CharacterBody2D
 	[Signal]
 	public delegate void HealthUpdatedEventHandler();
 
-	public const float Speed = 125.0f;
+	public const float Speed = 100.0f;
 	public const float JumpVelocity = -300.0f;
 	
 
