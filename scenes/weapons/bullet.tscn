@@ -7,6 +7,8 @@
 size = Vector2(2, 1)
 
 [node name="Bullet" type="RigidBody2D" unique_id=1268418496 node_paths=PackedStringArray("t")]
+contact_monitor = true
+max_contacts_reported = 5
 script = ExtResource("1_dnt7v")
 t = NodePath("DespawnTime")
 
@@ -21,4 +23,5 @@ shape = SubResource("RectangleShape2D_dnt7v")
 [node name="DespawnTime" type="Timer" parent="." unique_id=469462377]
 one_shot = true
 
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]
 [connection signal="timeout" from="DespawnTime" to="." method="OnTimerEnded"]

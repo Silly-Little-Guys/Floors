@@ -17,10 +17,10 @@ public partial class Bullet : RigidBody2D
 
 	public void OnBodyEntered(Node2D body)
 	{
-		if (body is IEnemy enemy)
+		if (body is IEnemy enemy && this.LinearVelocity.Length() > 50)
 		{
 			enemy.TakeDamage(damage);
+			QueueFree();
 		}
-		QueueFree();
 	}
 }
