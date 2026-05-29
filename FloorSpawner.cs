@@ -57,6 +57,7 @@ public partial class FloorSpawner : Node2D
 
 	public override void _Ready()
 	{
+		enemySpawner.player = player;
 		PopulateFloors(level);
 		SpawnNextFloor();
 	}
@@ -85,6 +86,7 @@ public partial class FloorSpawner : Node2D
 
 		Floor toSpawn = floors[GD.RandRange(0, floors.Count-1)].Instantiate<Floor>();
 		rootParentToSpawnIn.CallDeferred("add_child", toSpawn);
+
 		if (!TryGetFloorVerticalBounds(toSpawn, out float floorTopY, out float floorBottomY, out float tileHeight))
 		{
 			return;
@@ -98,6 +100,11 @@ public partial class FloorSpawner : Node2D
 		nextFloorAttachY = currentFloorTopY;
 
 		floorsSinceLastLevel++;
+
+		if (enemySpawner != null)
+		{
+			enemySpawner.SpawnEnemies(toSpawn);
+		}
 	}
 
 	/// <summary>

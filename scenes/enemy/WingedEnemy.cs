@@ -4,16 +4,15 @@ using System;
 public partial class WingedEnemy : CharacterBody2D, IEnemy
 {
 	public const float speed = 100.0f;
-	private Node2D player;
-
-    public override void _Ready()
-    {
-        player = (Node2D)GetNode("../Player");
-    }
+	public Player player;
 
     public void TakeDamage(int damage)
     {
-        throw new NotImplementedException();
+        SetMeta("Health", (int)GetMeta("Health") - damage);
+        if ((int)GetMeta("Health") <= 0)
+        {
+            QueueFree();
+        }
     }
 
     public override void _PhysicsProcess(double delta)

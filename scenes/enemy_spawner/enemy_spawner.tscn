@@ -2,5 +2,11 @@
 
 [ext_resource type="Script" uid="uid://b622envmx6vu1" path="res://scenes/enemy_spawner/EnemySpawner.cs" id="1_ewhtn"]
 
-[node name="enemy_spawner" type="Node2D" unique_id=2039197503]
+[node name="enemy_spawner" type="Node2D" unique_id=2039197503 node_paths=PackedStringArray("spawnTimer")]
 script = ExtResource("1_ewhtn")
+spawnTimer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="." unique_id=323544323]
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="OnTimerTimeout"]
