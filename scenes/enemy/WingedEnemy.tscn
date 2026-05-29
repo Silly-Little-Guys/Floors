@@ -44,6 +44,7 @@ size = Vector2(8, 8)
 
 [node name="WingedEnemy" type="CharacterBody2D" unique_id=1402600375]
 script = ExtResource("1_yt117")
+metadata/Health = 100
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1667174503]
 texture_filter = 1
