@@ -17,8 +17,8 @@ public partial class WingedEnemy : CharacterBody2D, IEnemy
 		{
 			asp2d.Play();
 			this.Visible = false;
-			collisionShape2D.Disabled = true;
-            collisionShape2D.CallDeferred("");
+			// collisionShape2D.Disabled = true;
+			collisionShape2D.SetDeferred("disabled", true);
 		}
 	}
 
