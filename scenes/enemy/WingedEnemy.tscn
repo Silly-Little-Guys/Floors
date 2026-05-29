@@ -42,7 +42,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yt117"]
 size = Vector2(8, 8)
 
-[node name="WingedEnemy" type="CharacterBody2D" unique_id=1402600375]
+[node name="WingedEnemy" type="CharacterBody2D" unique_id=1402600375 node_paths=PackedStringArray("animatedSprite2D")]
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_yt117")
