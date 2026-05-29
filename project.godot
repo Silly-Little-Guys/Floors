@@ -13,6 +13,7 @@ config_version=5
 config/name="Floors"
 run/main_scene="uid://ow0kjrhc0dki"
 config/features=PackedStringArray("4.6", "C#")
+boot_splash/image="uid://cuwqntruq40ul"
 config/icon="res://icon.svg"
 
 [dotnet]

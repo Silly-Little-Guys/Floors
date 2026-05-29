@@ -38,7 +38,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="rifle" type="Node2D" unique_id=176905316 node_paths=PackedStringArray("fireTimer", "animatedSprite2D", "pivotPoint")]
+[node name="rifle" type="Node2D" unique_id=176905316 node_paths=PackedStringArray("fireTimer", "animatedSprite2D", "pivotPoint", "shotDirection")]
 script = ExtResource("1_6kub0")
 damage = 50
 fireRate = 100.0
@@ -47,6 +47,7 @@ bulletScene = ExtResource("2_sg1yr")
 fireTimer = NodePath("FireTime")
 animatedSprite2D = NodePath("AnimatedSprite2D")
 pivotPoint = NodePath("pivot")
+shotDirection = NodePath("shotDirection")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=529214809]
 texture_filter = 1
@@ -58,3 +59,9 @@ frame_progress = 0.8048584
 
 [node name="pivot" type="Node2D" parent="." unique_id=1536243649]
 position = Vector2(-2, 4)
+
+[node name="shotDirection" type="RayCast2D" parent="." unique_id=1229932787]
+position = Vector2(6, 3)
+enabled = false
+target_position = Vector2(16, 0)
+collide_with_bodies = false
