@@ -17,4 +17,9 @@ public partial class TitleScreen : Control
 	{
 		GetTree().ChangeSceneToFile("res://main.tscn");
 	}
+
+	public void OnQuitButtonPressed()
+	{
+		GetTree().Quit();
+	}
 }

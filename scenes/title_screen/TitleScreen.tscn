@@ -4,24 +4,44 @@
 
 [node name="TitleScreen" type="Control" unique_id=952694068]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
 script = ExtResource("1_bludd")
 
-[node name="Button" type="Button" parent="." unique_id=434718520]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
-scale = Vector2(24.770239, 20.94574)
-text = "Start"
-
 [node name="Label" type="Label" parent="." unique_id=1636276247]
-layout_mode = 0
-offset_right = 40.0
+layout_mode = 1
+offset_right = 62.0
 offset_bottom = 23.0
 text = "FLOORS"
 
-[connection signal="pressed" from="Button" to="." method="OnStartButtonPressed"]
+[node name="StartButton" type="Button" parent="." unique_id=1336585488]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 492.0
+offset_top = 232.0
+offset_right = 538.0
+offset_bottom = 263.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Start"
+
+[node name="QuitButton" type="Button" parent="." unique_id=1422715309]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 314.0
+offset_top = 321.0
+offset_right = 741.0
+offset_bottom = 602.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 200
+text = "Quit"
+
+[connection signal="pressed" from="StartButton" to="." method="OnStartButtonPressed"]
+[connection signal="pressed" from="QuitButton" to="." method="OnQuitButtonPressed"]
