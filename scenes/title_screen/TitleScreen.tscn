@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://ow0kjrhc0dki"]
+
+[ext_resource type="Script" uid="uid://pgi8fscxvf6r" path="res://scenes/title_screen/TitleScreen.cs" id="1_bludd"]
+
+[node name="TitleScreen" type="Control" unique_id=952694068]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bludd")
+
+[node name="Button" type="Button" parent="." unique_id=434718520]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+scale = Vector2(24.770239, 20.94574)
+text = "Start"
+
+[node name="Label" type="Label" parent="." unique_id=1636276247]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "FLOORS"
+
+[connection signal="pressed" from="Button" to="." method="OnStartButtonPressed"]
