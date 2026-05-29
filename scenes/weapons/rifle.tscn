@@ -27,7 +27,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"firing",
-"speed": 5.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -52,6 +52,7 @@ pivotPoint = NodePath("pivot")
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_swcir")
 animation = &"firing"
+frame_progress = 0.8048584
 
 [node name="FireTime" type="Timer" parent="." unique_id=197237495]
 
