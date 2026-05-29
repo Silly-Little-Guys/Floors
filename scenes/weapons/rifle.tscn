@@ -27,7 +27,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"firing",
-"speed": 5.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -42,7 +42,7 @@ animations = [{
 script = ExtResource("1_6kub0")
 damage = 50
 fireRate = 300.0
-bulletSpeed = 10.0
+bulletSpeed = 500.0
 bulletScene = ExtResource("2_sg1yr")
 fireTimer = NodePath("FireTime")
 animatedSprite2D = NodePath("AnimatedSprite2D")
@@ -52,6 +52,7 @@ pivotPoint = NodePath("pivot")
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_swcir")
 animation = &"firing"
+frame_progress = 0.8048584
 
 [node name="FireTime" type="Timer" parent="." unique_id=197237495]
 

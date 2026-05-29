@@ -5,7 +5,7 @@
 [node name="HUD" type="CanvasLayer" unique_id=651644861]
 script = ExtResource("1_37p78")
 
-[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1664389420]
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=1664389420]
 offset_left = 55.0
 offset_right = 287.0
 offset_bottom = 27.0
@@ -20,3 +20,5 @@ offset_top = 32.0
 offset_right = 287.0
 offset_bottom = 63.0
 text = "Hurt"
+
+[connection signal="pressed" from="Button" to="." method="OnButtonPressed"]

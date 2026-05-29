@@ -1,8 +1,12 @@
 using Godot;
 using System;
+using System.ComponentModel;
 
 public partial class Player : CharacterBody2D
 {
+	[Signal]
+	public delegate void HealthUpdatedEventHandler();
+
 	public const float Speed = 125.0f;
 	public const float JumpVelocity = -300.0f;
 	
@@ -12,23 +16,37 @@ public partial class Player : CharacterBody2D
 	[Export] public Timer jumpBufferTimer;
 	[Export] public HUD hud;
 	[Export] public WeaponHandler weaponHandler;
+	[Export] public Node bulletSpawnPoint;
 
 	public override void _Ready()
 	{
-		weaponHandler.bulletSpawnPoint = GetParent();
+		weaponHandler.bulletSpawnPoint = bulletSpawnPoint;
+		weaponHandler.UpdateWeapon();
 	}
-	public void Hurt()
+
+	/// <summary>
+	/// Add an integer amount of health to the player's health. Player health will be clamped from 0 to 100. Additive can be negative.
+	/// </summary>
+	public void AddHealth(int additive)
 	{
-		SetMeta("Health", (int) GetMeta("Health") - 5);
+		int newHealth = Mathf.Clamp(GetHealth() + additive, 0, 100);
+		SetMeta("Health", newHealth);
+		EmitSignal(SignalName.HealthUpdated);	
+	}
+
+	public int GetHealth()
+	{
+		return (int) GetMeta("Health");
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
 		bool hasWeapon = weaponHandler.HasWeapon();
 		string runAnimation = hasWeapon ? "run_weapon" : "run_no_weapon";
-		string idleAnimation = hasWeapon ? "idle" : "idle";
+		string idleAnimation = hasWeapon ? "idle_weapon" : "idle_no_weapon";
 		Vector2 velocity = Velocity;
 		bool wasOnFloor = IsOnFloor();
+
 		// Add the gravity.
 		if (!IsOnFloor())
 		{

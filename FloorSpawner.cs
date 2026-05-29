@@ -9,7 +9,7 @@ public partial class FloorSpawner : Node2D
 	[Export] public Node2D rootParentToSpawnIn;
 	[Export] public EnemySpawner enemySpawner;
 	private int level = 1;
-	private int floorsSinceLastLevel = 0;
+	private int floorsSinceLastLevel = 4;
 	private List<PackedScene> floors = new();
 	private const string floorsPath = "res://scenes/floors";
 	
@@ -18,7 +18,11 @@ public partial class FloorSpawner : Node2D
 	private float currentFloorTileHeight = 0;
 	private bool hasSpawnedFloor = false;
 
-	public void PopulateFloors(int level)
+	/// <summary>
+	/// Populates the internal floors list with floors from a given level pool of floors.
+	/// </summary>
+	/// <param name="level">The "level" the user is on. Increments every 5. Pulls from the floors directory from the passed in level (i.e. pulls from scenes/floors/level1  if level=1</param>
+	private void PopulateFloors(int level)
 	{
 		floors.Clear();
 
@@ -49,17 +53,6 @@ public partial class FloorSpawner : Node2D
 
 			floors.Add(floorScene);
 		}
-
-		ShuffleFloors();
-	}
-
-	private void ShuffleFloors()
-	{
-		for (int index = floors.Count - 1; index > 0; index--)
-		{
-			int swapIndex = GD.RandRange(0, index);
-			(floors[index], floors[swapIndex]) = (floors[swapIndex], floors[index]);
-		}
 	}
 
 	public override void _Ready()
@@ -73,6 +66,9 @@ public partial class FloorSpawner : Node2D
 		CheckPlayerPositionForNextFloor();
 	}
 
+	/// <summary>
+	/// Spawns in the next floor on top of the current one, randomly pulled from the current level pool of floors.
+	/// </summary>
 	public void SpawnNextFloor()
 	{
 		if (floorsSinceLastLevel >= 5)
@@ -104,6 +100,9 @@ public partial class FloorSpawner : Node2D
 		floorsSinceLastLevel++;
 	}
 
+	/// <summary>
+	/// Checks if the player is one tile away from the top of the highest floor, if so it tries to spawn the next floor.
+	/// </summary>
 	private void CheckPlayerPositionForNextFloor()
 	{
 		if (!hasSpawnedFloor || player == null)
@@ -117,6 +116,14 @@ public partial class FloorSpawner : Node2D
 		}
 	}
 
+	/// <summary>
+	/// Attempts to calculate the global vertical bounds of a floor from its main tile map layer.
+	/// </summary>
+	/// <param name="floor">The floor whose main tile map layer should be measured.</param>
+	/// <param name="topY">The highest global Y position occupied by the floor when the calculation succeeds; otherwise 0.</param>
+	/// <param name="bottomY">The lowest global Y position occupied by the floor when the calculation succeeds; otherwise 0.</param>
+	/// <param name="tileHeight">The global height of one tile in the floor's tile map layer when the calculation succeeds; otherwise 0.</param>
+	/// <returns>True if the floor has a valid main tile map layer, tile set, and used cells; otherwise false.</returns>
 	private bool TryGetFloorVerticalBounds(Floor floor, out float topY, out float bottomY, out float tileHeight)
 	{
 		topY = 0;
