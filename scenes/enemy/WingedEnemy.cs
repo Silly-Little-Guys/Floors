@@ -3,12 +3,13 @@ using System;
 
 public partial class WingedEnemy : CharacterBody2D, IEnemy
 {
-	public const float speed = 100.0f;
+	public const float speed = 50.0f;
 	public Player player;
 	[Export] public AudioStreamPlayer2D asp2d;
 	string flightAnimation = "default";
 	[Export] public AnimatedSprite2D animatedSprite2D;
 	[Export] public CollisionShape2D collisionShape2D;
+    [Export] public NavigationAgent2D nav;
 
 	public void TakeDamage(int damage)
 	{
@@ -29,12 +30,11 @@ public partial class WingedEnemy : CharacterBody2D, IEnemy
 
 	public override void _PhysicsProcess(double delta)
 	{
+        nav.TargetPosition = player.GlobalPosition;
+        Vector2 nextPos = nav.GetNextPathPosition();
 		animatedSprite2D.Play(flightAnimation);
-		Vector2 velocity = Velocity;
-		Vector2 direction = (player.GlobalPosition - GlobalPosition).Normalized();
-		velocity = direction * speed;
-
-		Velocity = velocity;
+		Vector2 updateVelo = (nextPos - GlobalPosition).Normalized() * speed;
+		Velocity = updateVelo;
 		MoveAndSlide();
 	}
 }

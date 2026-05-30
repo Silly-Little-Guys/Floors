@@ -148,6 +148,7 @@ size = Vector2(6, 13)
 
 [node name="player" type="CharacterBody2D" unique_id=28407583 node_paths=PackedStringArray("animatedSprite2D", "coyoteTimer", "jumpBufferTimer", "weaponHandler")]
 z_index = 1
+collision_mask = 5
 script = ExtResource("1_4flbx")
 animatedSprite2D = NodePath("AnimatedSprite2D")
 coyoteTimer = NodePath("CoyoteTime")
