@@ -4,10 +4,10 @@
 [ext_resource type="TileSet" uid="uid://cw4nfp1xk7o16" path="res://assets/tilesets/debug_tileset.tres" id="2_eh88f"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_1nay1"]
-vertices = PackedVector2Array(-8.7578125, -24.757813, 88.75781, -23.242188, -72.75781, -23.242188, -55.242188, -24.757813, 71.24219, -71.24219, 8.7578125, -71.24219, -8.7578125, -72.75781, 24.757813, -88.75781, 71.24219, -88.75781, -24.757813, -104.75781, -8.7578125, -103.24219, -39.242188, -103.24219, -71.24219, -104.75781, 88.75781, -120.75781, 71.24219, -119.24219, 72.75781, -120.75781, 71.24219, -40.757813, 8.7578125, -40.757813, -8.7578125, -55.242188, -39.242188, -72.75781, -55.242188, -55.242188, 71.24219, -144.79688, 72.75781, -144.82031, 71.24219, -136.75781, -24.757813, -135.24219, 24.757813, -119.24219, -72.75781, -136.75781, -71.24219, -135.24219)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7, 8), PackedInt32Array(9, 10, 11, 12), PackedInt32Array(13, 1, 8, 14, 15), PackedInt32Array(16, 1, 0, 17), PackedInt32Array(17, 0, 18, 5), PackedInt32Array(19, 6, 5, 18, 20), PackedInt32Array(21, 22, 15, 23), PackedInt32Array(12, 11, 19, 20), PackedInt32Array(20, 3, 2, 12), PackedInt32Array(10, 9, 24, 25), PackedInt32Array(23, 15, 14, 25, 24), PackedInt32Array(12, 2, 26, 27), PackedInt32Array(27, 26, 23, 24), PackedInt32Array(10, 25, 7, 6), PackedInt32Array(4, 8, 1), PackedInt32Array(4, 1, 16)])
+vertices = PackedVector2Array(-10, -26, 90, -22, -74, -22, -54, -26, 70, -70, 10, -70, -10, -74, -10, -102, 26, -90, 90, -122, 70, -90, 70, -118, 74, -122, 70, -42, 10, -42, -10, -54, -38, -74, -54, -54, 26, -118, -26, -106, -26, -134, 70, -138, 70, -146.03125, 74, -146.07031, -70, -106, -38, -102, -74, -138, -70, -134)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7, 8), PackedInt32Array(9, 1, 10, 11, 12), PackedInt32Array(13, 1, 0, 14), PackedInt32Array(14, 0, 15, 5), PackedInt32Array(16, 6, 5, 15, 17), PackedInt32Array(18, 7, 19, 20, 21), PackedInt32Array(22, 23, 12, 21), PackedInt32Array(17, 3, 2, 24), PackedInt32Array(21, 12, 11, 18), PackedInt32Array(1, 13, 4), PackedInt32Array(10, 1, 4), PackedInt32Array(8, 10, 4), PackedInt32Array(18, 8, 7), PackedInt32Array(19, 7, 25, 24), PackedInt32Array(24, 25, 16, 17), PackedInt32Array(24, 2, 26, 27), PackedInt32Array(27, 26, 21, 20)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-152, -150, -155, 49, 166, 51, 174, -153)])
-agent_radius = 7.24
+agent_radius = 6.0
 
 [node name="ExampleFloor" type="Node2D" unique_id=1750975773 node_paths=PackedStringArray("mainTileMapLayer")]
 script = ExtResource("1_j0mf0")
