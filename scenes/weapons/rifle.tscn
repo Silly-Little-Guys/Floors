@@ -41,7 +41,7 @@ animations = [{
 [node name="rifle" type="Node2D" unique_id=176905316 node_paths=PackedStringArray("fireTimer", "animatedSprite2D", "pivotPoint", "shotDirection")]
 script = ExtResource("1_6kub0")
 damage = 15
-fireRate = 100.0
+fireRate = 10.0
 bulletSpeed = 200.0
 bulletScene = ExtResource("2_sg1yr")
 fireTimer = NodePath("FireTime")
@@ -57,6 +57,7 @@ animation = &"firing"
 frame_progress = 0.8048584
 
 [node name="FireTime" type="Timer" parent="." unique_id=197237495]
+one_shot = true
 
 [node name="pivot" type="Node2D" parent="." unique_id=1536243649]
 position = Vector2(-2, 4)

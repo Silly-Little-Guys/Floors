@@ -7,6 +7,7 @@ public partial class GunWeapon : Weapon
 	[Export] public float fireRate;
 	[Export] public float bulletSpeed;
 	[Export] public float spreadDegrees = 2.0f;
+	[Export] public float airUpwardRecoilScale = 0.25f;
 	[Export] public PackedScene bulletScene;
 	[Export] public Timer fireTimer;
 	[Export] public Node bulletSpawnPoint;
@@ -23,7 +24,8 @@ public partial class GunWeapon : Weapon
 	public override void _Ready()
 	{
 		maxAmmoCount = ammoCount;
-		fireTimer.WaitTime = 1 / fireRate;
+		fireTimer.OneShot = true;
+		fireTimer.WaitTime = 1.0 / fireRate;
 		pivotPointStartPosition = pivotPoint.Position;
 		shotDirectionStartPosition = shotDirection.Position;
 	}
@@ -48,11 +50,11 @@ public partial class GunWeapon : Weapon
 		b.LinearVelocity = new Vector2(bulletSpeed, 0).Rotated(shotRotation);
 		bulletSpawnPoint.AddChild(b);
 
-		Vector2 recoilVelocity = new Vector2(-bulletSpeed * 0.90f, 0).Rotated(shotRotation);
-		if (Mathf.Abs(recoilVelocity.Y) > 0.0f)
+		float weightScale = 70.0f / Mathf.Max(player.weightInKilograms, 1.0f);
+		Vector2 recoilVelocity = new Vector2(-bulletSpeed * 0.90f, 0).Rotated(shotRotation) * weightScale;
+		if (recoilVelocity.Y < 0.0f)
 		{
-			float weightScale = 70.0f / Mathf.Max(player.weightInKilograms, 1.0f);
-			recoilVelocity.Y *= weightScale;
+			recoilVelocity.Y *= player.IsOnFloor() ? 0.0f : Mathf.Clamp(airUpwardRecoilScale, 0.0f, 1.0f);
 		}
 		player.Velocity += recoilVelocity;
 
