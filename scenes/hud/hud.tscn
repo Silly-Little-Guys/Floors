@@ -21,4 +21,11 @@ offset_right = 287.0
 offset_bottom = 63.0
 text = "Hurt"
 
+[node name="AmmoLabel" type="Label" parent="." unique_id=782973321]
+offset_left = 978.0
+offset_top = 529.0
+offset_right = 1018.0
+offset_bottom = 552.0
+theme_override_font_sizes/font_size = 50
+
 [connection signal="pressed" from="Button" to="." method="OnButtonPressed"]
