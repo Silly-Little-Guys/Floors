@@ -66,6 +66,5 @@ shape = SubResource("RectangleShape2D_yt117")
 stream = ExtResource("3_rlc8e")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1760770948]
-debug_enabled = true
 
 [connection signal="finished" from="AudioStreamPlayer2D" to="." method="OnAudioFinished"]
