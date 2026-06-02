@@ -44,13 +44,15 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yt117"]
 size = Vector2(6, 6)
 
-[node name="WingedEnemy" type="CharacterBody2D" unique_id=1402600375 node_paths=PackedStringArray("asp2d", "animatedSprite2D", "collisionShape2D", "nav")]
+[node name="WingedEnemy" type="CharacterBody2D" unique_id=1402600375 node_paths=PackedStringArray("asp2d", "enemyHealthBar", "animatedSprite2D", "collisionShape2D", "nav")]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_yt117")
 asp2d = NodePath("AudioStreamPlayer2D")
+enemyHealthBar = NodePath("EnemyHealthBar")
 animatedSprite2D = NodePath("AnimatedSprite2D")
 collisionShape2D = NodePath("CollisionShape2D")
+nav = NodePath("NavigationAgent2D")
 metadata/Health = 100
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1667174503]
@@ -67,9 +69,8 @@ stream = ExtResource("3_rlc8e")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1760770948]
 
-[node name="EnemyHealthBar" parent="." unique_id=1159423256 node_paths=PackedStringArray("enemy") instance=ExtResource("4_wymol")]
+[node name="EnemyHealthBar" parent="." unique_id=1159423256 instance=ExtResource("4_wymol")]
 position = Vector2(0, -7.000001)
 scale = Vector2(0.16313294, 0.16313294)
-enemy = NodePath("..")
 
 [connection signal="finished" from="AudioStreamPlayer2D" to="." method="OnAudioFinished"]

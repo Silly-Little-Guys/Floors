@@ -5,25 +5,38 @@ public partial class WingedEnemy : CharacterBody2D, IEnemy
 {
 	public const float speed = 50.0f;
 	public Player player;
+	public int maxHealth;
 	[Export] public AudioStreamPlayer2D asp2d;
+	[Export] public EnemyHealthBar enemyHealthBar;
 	string flightAnimation = "default";
 	[Export] public AnimatedSprite2D animatedSprite2D;
 	[Export] public CollisionShape2D collisionShape2D;
 	[Export] public NavigationAgent2D nav;
 
-	public void TakeDamage(int damage)
-	{
-		SetMeta("Health", (int)GetMeta("Health") - damage);
-		if ((int)GetMeta("Health") <= 0)
-		{
-			asp2d.Play();
-			this.Visible = false;
-			// collisionShape2D.Disabled = true;
-			collisionShape2D.SetDeferred("disabled", true);
-		}
-	}
+    public override void _Ready()
+    {
+        maxHealth = GetHealth();
+    }
 
-	public void OnAudioFinished()
+	public void TakeDamage(int damage)
+    {
+        SetMeta("Health", GetHealth() - damage);
+        if (GetHealth() <= 0)
+        {
+            asp2d.Play();
+            this.Visible = false;
+            // collisionShape2D.Disabled = true;
+            collisionShape2D.SetDeferred("disabled", true);
+        }
+        enemyHealthBar.SetProgress(Mathf.InverseLerp(0, maxHealth, GetHealth()));
+    }
+
+    private int GetHealth()
+    {
+        return (int) GetMeta("Health");
+    }
+
+    public void OnAudioFinished()
 	{
 		QueueFree();
 	}
