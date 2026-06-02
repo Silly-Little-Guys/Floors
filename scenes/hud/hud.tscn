@@ -10,7 +10,7 @@ offset_left = 55.0
 offset_right = 287.0
 offset_bottom = 27.0
 
-[node name="Label" type="Label" parent="." unique_id=837840285]
+[node name="HealthLabel" type="Label" parent="." unique_id=837840285]
 offset_right = 40.0
 offset_bottom = 23.0
 text = "Health"

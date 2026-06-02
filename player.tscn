@@ -173,6 +173,7 @@ one_shot = true
 wait_time = 0.15
 one_shot = true
 
-[node name="WeaponHandler" type="Node2D" parent="." unique_id=701302093]
+[node name="WeaponHandler" type="Node2D" parent="." unique_id=701302093 node_paths=PackedStringArray("player")]
 script = ExtResource("5_sweqy")
 weaponToUse = ExtResource("6_2hs0m")
+player = NodePath("..")

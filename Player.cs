@@ -9,6 +9,7 @@ public partial class Player : CharacterBody2D
 
 	public const float Speed = 100.0f;
 	public const float JumpVelocity = -300.0f;
+	[Export] public float weightInKilograms = 1000.0f;
 	
 
 	[Export] public AnimatedSprite2D animatedSprite2D;
@@ -21,6 +22,7 @@ public partial class Player : CharacterBody2D
 	public override void _Ready()
 	{
 		weaponHandler.bulletSpawnPoint = bulletSpawnPoint;
+		weaponHandler.hud = hud;
 		weaponHandler.UpdateWeapon();
 	}
 

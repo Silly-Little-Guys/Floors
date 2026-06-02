@@ -27,4 +27,19 @@ public partial class HUD : CanvasLayer
 	{
 		healthBar.Value = player.GetHealth();
 	}
+
+	public void OnAmmoCountUpdated()
+	{
+		
+	}
+
+	public void OnGunEquipped()
+	{
+		
+	}
+
+	public void OnGunUnequipped()
+	{
+			
+	}
 }
