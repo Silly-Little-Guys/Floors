@@ -47,3 +47,7 @@ shoot={
 
 2d/default_gravity=1000.0
 common/physics_interpolation=true
+
+[rendering]
+
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)

@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class Floor : Node2D
 {
@@ -135,5 +136,66 @@ public partial class Floor : Node2D
 		}
 
 		return true;
+	}
+
+	/// <summary>
+	/// Attempts to find a random tile center that is inside this floor's tile map and has no TileSet collision polygons.
+	/// </summary>
+	/// <param name="spawnPosition">A global position safe for spawning when the calculation succeeds; otherwise Vector2.Zero.</param>
+	/// <returns>True if at least one non-colliding used cell exists; otherwise false.</returns>
+	public bool TryGetRandomNonCollidingSpawnPosition(out Vector2 spawnPosition)
+	{
+		spawnPosition = Vector2.Zero;
+
+		if (this.mainTileMapLayer == null)
+		{
+			GD.PushWarning("Cannot find spawn position because the floor has no main TileMapLayer assigned.");
+			return false;
+		}
+
+		TileMapLayer tileMapLayer = this.mainTileMapLayer;
+
+		if (tileMapLayer.TileSet == null)
+		{
+			GD.PushWarning("Cannot find spawn position because the main TileMapLayer has no TileSet.");
+			return false;
+		}
+
+		List<Vector2I> spawnableCells = new();
+
+		foreach (Vector2I cell in tileMapLayer.GetUsedCells())
+		{
+			TileData tileData = tileMapLayer.GetCellTileData(cell);
+
+			if (tileData == null || CellHasCollision(tileData, tileMapLayer.TileSet))
+			{
+				continue;
+			}
+
+			spawnableCells.Add(cell);
+		}
+
+		if (spawnableCells.Count == 0)
+		{
+			GD.PushWarning("Cannot find spawn position because the floor has no non-colliding used cells.");
+			return false;
+		}
+
+		Vector2I spawnCell = spawnableCells[GD.RandRange(0, spawnableCells.Count - 1)];
+		spawnPosition = tileMapLayer.ToGlobal(tileMapLayer.MapToLocal(spawnCell));
+		return true;
+	}
+
+	private static bool CellHasCollision(TileData tileData, TileSet tileSet)
+	{
+		for (int layerId = 0; layerId < tileSet.GetPhysicsLayersCount(); layerId++)
+		{
+			if (tileData.GetCollisionPolygonsCount(layerId) > 0)
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 }
