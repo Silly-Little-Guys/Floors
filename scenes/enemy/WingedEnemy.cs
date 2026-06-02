@@ -34,6 +34,13 @@ public partial class WingedEnemy : CharacterBody2D, IEnemy
 		Vector2 nextPos = nav.GetNextPathPosition();
 		animatedSprite2D.Play(flightAnimation);
 		Vector2 updateVelo = (nextPos - GlobalPosition).Normalized() * speed;
+		if (Velocity.X < 0)
+		{
+			animatedSprite2D.FlipH = true;
+		} else if (Velocity.X > 0)
+		{
+			animatedSprite2D.FlipH = false;
+		}
 		Velocity = updateVelo;
 		MoveAndSlide();
 	}
