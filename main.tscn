@@ -19,8 +19,9 @@ player = NodePath("../player")
 rootParentToSpawnIn = NodePath("..")
 enemySpawner = NodePath("../enemy_spawner")
 
-[node name="enemy_spawner" parent="." unique_id=2039197503 instance=ExtResource("3_lquwl")]
+[node name="enemy_spawner" parent="." unique_id=2039197503 node_paths=PackedStringArray("player") instance=ExtResource("3_lquwl")]
 testEnemyToSpawn = ExtResource("4_5vw27")
+player = NodePath("../player")
 
 [node name="player" parent="." unique_id=28407583 node_paths=PackedStringArray("hud", "bulletSpawnPoint") instance=ExtResource("4_7mycd")]
 position = Vector2(14, 29)
