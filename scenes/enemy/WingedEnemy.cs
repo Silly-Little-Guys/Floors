@@ -9,7 +9,7 @@ public partial class WingedEnemy : CharacterBody2D, IEnemy
 	string flightAnimation = "default";
 	[Export] public AnimatedSprite2D animatedSprite2D;
 	[Export] public CollisionShape2D collisionShape2D;
-    [Export] public NavigationAgent2D nav;
+	[Export] public NavigationAgent2D nav;
 
 	public void TakeDamage(int damage)
 	{
@@ -30,8 +30,8 @@ public partial class WingedEnemy : CharacterBody2D, IEnemy
 
 	public override void _PhysicsProcess(double delta)
 	{
-        nav.TargetPosition = player.GlobalPosition;
-        Vector2 nextPos = nav.GetNextPathPosition();
+		nav.TargetPosition = player.GlobalPosition;
+		Vector2 nextPos = nav.GetNextPathPosition();
 		animatedSprite2D.Play(flightAnimation);
 		Vector2 updateVelo = (nextPos - GlobalPosition).Normalized() * speed;
 		Velocity = updateVelo;

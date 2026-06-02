@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bl02ibeqy2qby" path="res://scenes/enemy/WingedEnemy.cs" id="1_yt117"]
 [ext_resource type="Texture2D" uid="uid://g3rdxjq3ads4" path="res://aseprite/WingedEnemy.png" id="2_rlc8e"]
 [ext_resource type="AudioStream" uid="uid://dfujhtj1el3b5" path="res://assets/sfx/pigdeath.wav" id="3_rlc8e"]
+[ext_resource type="PackedScene" uid="uid://c68wqs36aaijx" path="res://scenes/enemy_health_bar/EnemyHealthBar.tscn" id="4_wymol"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wymol"]
 atlas = ExtResource("2_rlc8e")
@@ -50,7 +51,6 @@ script = ExtResource("1_yt117")
 asp2d = NodePath("AudioStreamPlayer2D")
 animatedSprite2D = NodePath("AnimatedSprite2D")
 collisionShape2D = NodePath("CollisionShape2D")
-nav = NodePath("NavigationAgent2D")
 metadata/Health = 100
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1667174503]
@@ -66,5 +66,10 @@ shape = SubResource("RectangleShape2D_yt117")
 stream = ExtResource("3_rlc8e")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1760770948]
+
+[node name="EnemyHealthBar" parent="." unique_id=1159423256 node_paths=PackedStringArray("enemy") instance=ExtResource("4_wymol")]
+position = Vector2(0, -7.000001)
+scale = Vector2(0.16313294, 0.16313294)
+enemy = NodePath("..")
 
 [connection signal="finished" from="AudioStreamPlayer2D" to="." method="OnAudioFinished"]
