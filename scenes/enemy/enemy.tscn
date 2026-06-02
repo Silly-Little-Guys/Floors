@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bhw1bm57r30ur"]
 
-[ext_resource type="Script" uid="uid://7wiie0nqg4er" path="res://scenes/enemy/Enemy.cs" id="1_7k104"]
-[ext_resource type="Texture2D" uid="uid://coku6f60nq0jm" path="res://aseprite/enemy.png" id="2_4gyqm"]
+[ext_resource type="Script" path="res://scenes/enemy/Enemy.cs" id="1_7k104"]
+[ext_resource type="Texture2D" uid="uid://coku6f60nq0jm" path="res://assets/aseprite/enemy.png" id="2_4gyqm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qi2p4"]
 atlas = ExtResource("2_4gyqm")

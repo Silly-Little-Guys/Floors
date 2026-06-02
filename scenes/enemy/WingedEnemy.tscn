@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cko4cmqkwxpuq"]
 
 [ext_resource type="Script" uid="uid://bl02ibeqy2qby" path="res://scenes/enemy/WingedEnemy.cs" id="1_yt117"]
-[ext_resource type="Texture2D" uid="uid://g3rdxjq3ads4" path="res://aseprite/WingedEnemy.png" id="2_rlc8e"]
+[ext_resource type="Texture2D" uid="uid://g3rdxjq3ads4" path="res://assets/aseprite/WingedEnemy.png" id="2_rlc8e"]
 [ext_resource type="AudioStream" uid="uid://dfujhtj1el3b5" path="res://assets/sfx/pigdeath.wav" id="3_rlc8e"]
 [ext_resource type="PackedScene" uid="uid://c68wqs36aaijx" path="res://scenes/enemy_health_bar/EnemyHealthBar.tscn" id="4_wymol"]
 

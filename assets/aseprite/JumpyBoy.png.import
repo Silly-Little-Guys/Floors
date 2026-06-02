@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bojonyovwu7y5"
-path="res://.godot/imported/Scythe.png-230279c0b0ed9b6531edabf5d8f4f734.ctex"
+uid="uid://ureq8848qmyp"
+path="res://.godot/imported/JumpyBoy.png-8024bde5cf0a179baaf219a7df4d3431.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://aseprite/Scythe.png"
-dest_files=["res://.godot/imported/Scythe.png-230279c0b0ed9b6531edabf5d8f4f734.ctex"]
+source_file="res://assets/aseprite/JumpyBoy.png"
+dest_files=["res://.godot/imported/JumpyBoy.png-8024bde5cf0a179baaf219a7df4d3431.ctex"]
 
 [params]
 

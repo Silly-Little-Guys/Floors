@@ -1,7 +1,7 @@
 [gd_resource type="TileSet" format=3 uid="uid://cw4nfp1xk7o16"]
 
-[ext_resource type="Texture2D" uid="uid://uh4pauehvk8y" path="res://aseprite/tilemap.png" id="1_7iux3"]
-[ext_resource type="Texture2D" uid="uid://d4a7u27wnfms6" path="res://aseprite/TileSet.png" id="1_8g8rr"]
+[ext_resource type="Texture2D" uid="uid://uh4pauehvk8y" path="res://assets/aseprite/tilemap.png" id="1_7iux3"]
+[ext_resource type="Texture2D" uid="uid://d4a7u27wnfms6" path="res://assets/aseprite/TileSet.png" id="1_8g8rr"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_2ikwi"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)

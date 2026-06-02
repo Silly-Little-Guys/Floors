@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cmlu5qedfyiqr"
-path="res://.godot/imported/IdleNoHands.png-a85aa8cdc9ec043b7eb1a5996f1f067f.ctex"
+uid="uid://g3rdxjq3ads4"
+path="res://.godot/imported/WingedEnemy.png-8678c5483fa6c512fbed8a99947d41d2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://aseprite/IdleNoHands.png"
-dest_files=["res://.godot/imported/IdleNoHands.png-a85aa8cdc9ec043b7eb1a5996f1f067f.ctex"]
+source_file="res://assets/aseprite/WingedEnemy.png"
+dest_files=["res://.godot/imported/WingedEnemy.png-8678c5483fa6c512fbed8a99947d41d2.ctex"]
 
 [params]
 

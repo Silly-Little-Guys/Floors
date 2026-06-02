@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://g3rdxjq3ads4"
-path="res://.godot/imported/WingedEnemy.png-1d76db9b55ecc53bcb58b2c30edd0a56.ctex"
+uid="uid://b210nddpvah4t"
+path="res://.godot/imported/RunWithHands.png-f4c6ecec6b255f7469da3c36219ba323.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://aseprite/WingedEnemy.png"
-dest_files=["res://.godot/imported/WingedEnemy.png-1d76db9b55ecc53bcb58b2c30edd0a56.ctex"]
+source_file="res://assets/aseprite/RunWithHands.png"
+dest_files=["res://.godot/imported/RunWithHands.png-f4c6ecec6b255f7469da3c36219ba323.ctex"]
 
 [params]
 

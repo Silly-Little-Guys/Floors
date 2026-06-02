@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b210nddpvah4t"
-path="res://.godot/imported/RunWithHands.png-78977cb80cda1e2d39c57e928b731392.ctex"
+uid="uid://b436hr4bvylxn"
+path="res://.godot/imported/Pistol.png-be83765abba9478b57589ecc1eddb0bd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://aseprite/RunWithHands.png"
-dest_files=["res://.godot/imported/RunWithHands.png-78977cb80cda1e2d39c57e928b731392.ctex"]
+source_file="res://assets/aseprite/Pistol.png"
+dest_files=["res://.godot/imported/Pistol.png-be83765abba9478b57589ecc1eddb0bd.ctex"]
 
 [params]
 

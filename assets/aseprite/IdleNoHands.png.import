@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b436hr4bvylxn"
-path="res://.godot/imported/Pistol.png-d3c7cdeda41c3b45dfdafb694e564086.ctex"
+uid="uid://cmlu5qedfyiqr"
+path="res://.godot/imported/IdleNoHands.png-f6dbda7021b81ac160f282e543ac4e87.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://aseprite/Pistol.png"
-dest_files=["res://.godot/imported/Pistol.png-d3c7cdeda41c3b45dfdafb694e564086.ctex"]
+source_file="res://assets/aseprite/IdleNoHands.png"
+dest_files=["res://.godot/imported/IdleNoHands.png-f6dbda7021b81ac160f282e543ac4e87.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://35ulqs0g6qdu"
-path="res://.godot/imported/TreasureChest.png-3a2701086d7db4f70e0cd8daf88b979b.ctex"
+uid="uid://bojonyovwu7y5"
+path="res://.godot/imported/Scythe.png-fc18b5eafc7674116cc6238744d4c607.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://aseprite/TreasureChest.png"
-dest_files=["res://.godot/imported/TreasureChest.png-3a2701086d7db4f70e0cd8daf88b979b.ctex"]
+source_file="res://assets/aseprite/Scythe.png"
+dest_files=["res://.godot/imported/Scythe.png-fc18b5eafc7674116cc6238744d4c607.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://uh4pauehvk8y"
-path="res://.godot/imported/tilemap.png-70a4f119002b5d66c17649352ff8c1a3.ctex"
+uid="uid://coku6f60nq0jm"
+path="res://.godot/imported/enemy.png-7fb132f0c6fb2b7dfa1a30221a29645c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://aseprite/tilemap.png"
-dest_files=["res://.godot/imported/tilemap.png-70a4f119002b5d66c17649352ff8c1a3.ctex"]
+source_file="res://assets/aseprite/enemy.png"
+dest_files=["res://.godot/imported/enemy.png-7fb132f0c6fb2b7dfa1a30221a29645c.ctex"]
 
 [params]
 

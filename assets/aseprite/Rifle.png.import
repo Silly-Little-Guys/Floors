@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dr7ryvtaw1s32"
-path="res://.godot/imported/player.png-4b7a07a05f58bcf2d1cbe64427a6c23b.ctex"
+uid="uid://co5js2tw3h4r8"
+path="res://.godot/imported/Rifle.png-82e5302c8ff28a709362b3ee1e2f8b26.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://aseprite/player.png"
-dest_files=["res://.godot/imported/player.png-4b7a07a05f58bcf2d1cbe64427a6c23b.ctex"]
+source_file="res://assets/aseprite/Rifle.png"
+dest_files=["res://.godot/imported/Rifle.png-82e5302c8ff28a709362b3ee1e2f8b26.ctex"]
 
 [params]
 
