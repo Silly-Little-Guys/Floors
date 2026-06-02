@@ -7,6 +7,8 @@ public partial class WeaponHandler : Node2D
 	private Weapon currentWeapon;
 
     [Export] public Node bulletSpawnPoint;
+	[Export] public Player player;
+	[Export] public HUD hud;
 
 	public void UpdateWeapon()
 	{
@@ -21,6 +23,7 @@ public partial class WeaponHandler : Node2D
 			{
 				GD.Print("ts is bulllllllllll");
 				gun.bulletSpawnPoint = bulletSpawnPoint;
+				gun.player = player;
 			}
 			AddChild(currentWeapon);
 		}
