@@ -10,9 +10,11 @@ public partial class FloorSpawner : Node2D
 	[Export] public EnemySpawner enemySpawner;
 	private int level = 1;
 	private int floorsSinceLastLevel = 4;
+	private int levelLoopCount = 0;
 	private List<PackedScene> floors = new();
 	private const string floorsPath = "res://scenes/floors";
 	private const string bottomFloorPath = "res://scenes/floors/bottomfloor.tscn";
+	private const int firstLoopLevel = 2;
 	private PackedScene bottomFloorScene;
 	
 	private float nextFloorAttachY = 0;
@@ -30,7 +32,7 @@ public partial class FloorSpawner : Node2D
 	/// Populates the internal floors list with floors from a given level pool of floors.
 	/// </summary>
 	/// <param name="level">The "level" the user is on. Increments every 5. Pulls from the floors directory from the passed in level (i.e. pulls from scenes/floors/level1  if level=1</param>
-	private void PopulateFloors(int level)
+	private bool PopulateFloors(int level)
 	{
 		floors.Clear();
 
@@ -40,7 +42,7 @@ public partial class FloorSpawner : Node2D
 		if (fileNames.Length == 0)
 		{
 			GD.PushWarning($"No floor scenes found in: {levelPath}");
-			return;
+			return false;
 		}
 
 		foreach (string fileName in fileNames)
@@ -61,6 +63,8 @@ public partial class FloorSpawner : Node2D
 
 			floors.Add(floorScene);
 		}
+
+		return floors.Count > 0;
 	}
 
 	public override void _Ready()
@@ -91,7 +95,12 @@ public partial class FloorSpawner : Node2D
 		{
 			level++;
 			floorsSinceLastLevel = 0;
-			PopulateFloors(level);
+			if (!PopulateFloors(level))
+			{
+				level = firstLoopLevel;
+				levelLoopCount++;
+				PopulateFloors(level);
+			}
 		}
 
 		if (floors.Count == 0)
