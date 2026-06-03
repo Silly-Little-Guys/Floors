@@ -17,7 +17,7 @@ public partial class GunWeapon : Weapon
 	[Export] public Node2D pivotPoint;
 	[Export] public RayCast2D shotDirection;
 	[Export] public Player player;
-	[Export] public int ammoCount = 100;
+	[Export] public int ammoCount;
 	public int maxAmmoCount;
 	
 	private Vector2 pivotPointStartPosition;
