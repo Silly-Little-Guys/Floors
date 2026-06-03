@@ -1,15 +1,16 @@
 using Godot;
 using System;
+using System.ComponentModel;
 
 public partial class HUD : CanvasLayer
 {
 	[Export] public Player player;
-	private ProgressBar healthBar;
+	[Export] public ProgressBar healthBar;
+	[Export] public Label ammoLabel;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		healthBar = GetNode<ProgressBar>("HealthBar");
 		healthBar.Value = player.GetHealth();
 	}
 
@@ -26,6 +27,14 @@ public partial class HUD : CanvasLayer
 	public void OnPlayerHealthUpdated()
 	{
 		healthBar.Value = player.GetHealth();
+	}
+
+	/// <summary>
+	/// Updates the ammo label text to the integer passed as a parameter.
+	/// </summary>
+	public void SetAmmoDisplay(int ammo)
+	{
+		ammoLabel.Text = ammo.ToString();
 	}
 
 	public void OnAmmoCountUpdated()

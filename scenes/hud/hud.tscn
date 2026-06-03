@@ -2,8 +2,10 @@
 
 [ext_resource type="Script" uid="uid://bqlnlcjrbse4b" path="res://scenes/hud/HUD.cs" id="1_37p78"]
 
-[node name="HUD" type="CanvasLayer" unique_id=651644861]
+[node name="HUD" type="CanvasLayer" unique_id=651644861 node_paths=PackedStringArray("healthBar", "ammoLabel")]
 script = ExtResource("1_37p78")
+healthBar = NodePath("HealthBar")
+ammoLabel = NodePath("AmmoLabel")
 
 [node name="HealthBar" type="ProgressBar" parent="." unique_id=1664389420]
 offset_left = 55.0
@@ -22,10 +24,15 @@ offset_bottom = 63.0
 text = "Hurt"
 
 [node name="AmmoLabel" type="Label" parent="." unique_id=782973321]
-offset_left = 978.0
-offset_top = 529.0
-offset_right = 1018.0
-offset_bottom = 552.0
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -69.0
+grow_horizontal = 0
+grow_vertical = 0
 theme_override_font_sizes/font_size = 50
 
 [connection signal="pressed" from="Button" to="." method="OnButtonPressed"]

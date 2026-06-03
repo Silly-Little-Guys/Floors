@@ -1,8 +1,10 @@
 using Godot;
 using System;
+using System.ComponentModel;
 
 public partial class GunWeapon : Weapon
 {
+	[Signal] public delegate void OnAmmoCountUpdatedEventHandler(int ammo);
 	[Export] public int damage;
 	[Export] public float fireRate;
 	[Export] public float bulletSpeed;
@@ -39,7 +41,10 @@ public partial class GunWeapon : Weapon
 		{
 			return;
 		}
+
 		ammoCount--;
+		EmitSignal(SignalName.OnAmmoCountUpdated, ammoCount);
+
 		fireTimer.Start();
 		float shotSpread = Mathf.DegToRad((float)GD.RandRange(-spreadDegrees, spreadDegrees));
 		float shotRotation = shotDirection.GlobalRotation + shotSpread;

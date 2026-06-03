@@ -12,6 +12,12 @@ public partial class WeaponHandler : Node2D
 
 	public void UpdateWeapon()
 	{
+		// When a weapon is dropped, we should unsubscribe from that weapon's events because they're no longer relevant (we don't need to know its ammo count anymore)
+		if (currentWeapon is GunWeapon prevGun)
+		{
+			prevGun.OnAmmoCountUpdated -= UpdateAmmoDisplay;
+		}
+
 		if (weaponToUse != null)
 		{
 			if (currentWeapon != null)
@@ -24,9 +30,16 @@ public partial class WeaponHandler : Node2D
 				GD.Print("ts is bulllllllllll");
 				gun.bulletSpawnPoint = bulletSpawnPoint;
 				gun.player = player;
+				gun.OnAmmoCountUpdated += UpdateAmmoDisplay;
+				UpdateAmmoDisplay(gun.ammoCount);
 			}
 			AddChild(currentWeapon);
 		}
+	}
+
+	public void UpdateAmmoDisplay(int ammo)
+	{
+		hud.SetAmmoDisplay(ammo);
 	}
 
 	public bool HasWeapon()
