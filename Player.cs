@@ -45,21 +45,17 @@ public partial class Player : CharacterBody2D
 
 	public void OnInteractionAreaAreaEntered(Area2D area)
 	{
-		GD.Print($"Entered: {area.Name}");
 		if (area.IsInGroup("interactable"))
 		{
 			nearbyInteractables.Add(area.GetParent() as IInteractable);
-			GD.Print("Interactable entered");
 		}
 	}
 
 	public void OnInteractionAreaAreaExited(Area2D area)
 	{
-		// GD.Print($"Exited: {area.Name}");
 		if (area.IsInGroup("interactable"))
 		{
 			nearbyInteractables.Remove(area.GetParent() as IInteractable);
-			GD.Print("Interactable exited");
 		}
 	}
 
