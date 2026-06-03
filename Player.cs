@@ -10,7 +10,7 @@ public partial class Player : CharacterBody2D
 
 	public const float Speed = 100.0f;
 	public const float JumpVelocity = -300.0f;
-	private List<Node> nearbyInteractables = new();
+	private List<IInteractable> nearbyInteractables = new();
 	[Export] public float weightInKilograms = 1000.0f;
 	
 
@@ -48,7 +48,7 @@ public partial class Player : CharacterBody2D
 		GD.Print($"Entered: {area.Name}");
 		if (area.IsInGroup("interactable"))
 		{
-			nearbyInteractables.Add(area.GetParent());
+			nearbyInteractables.Add(area.GetParent() as IInteractable);
 			GD.Print("Interactable entered");
 		}
 	}
@@ -58,7 +58,7 @@ public partial class Player : CharacterBody2D
 		// GD.Print($"Exited: {area.Name}");
 		if (area.IsInGroup("interactable"))
 		{
-			nearbyInteractables.Remove(area.GetParent());
+			nearbyInteractables.Remove(area.GetParent() as IInteractable);
 			GD.Print("Interactable exited");
 		}
 	}
@@ -70,7 +70,7 @@ public partial class Player : CharacterBody2D
 			if (nearbyInteractables.Count > 0)
 			{
 				var interactable = nearbyInteractables[0];
-				interactable.Call("Interact");
+				interactable.Interact();
 			}
 		}
 	}

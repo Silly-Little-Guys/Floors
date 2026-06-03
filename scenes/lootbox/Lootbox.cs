@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.ComponentModel;
 
-public partial class Lootbox : Node2D
+public partial class Lootbox : Node2D, IInteractable
 {
 	private bool opened = false;
 
