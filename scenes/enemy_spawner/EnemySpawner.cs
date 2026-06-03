@@ -23,7 +23,6 @@ public partial class EnemySpawner : Node2D
 		}
 
 		WingedEnemy e = testEnemyToSpawn.Instantiate<WingedEnemy>();
-		toSpawnIn.AddChild(e);
 		e.player = player;
 		e.GlobalPosition = spawnPosition;
 
@@ -31,6 +30,7 @@ public partial class EnemySpawner : Node2D
 		{
 			spawnTimer.Start();
 		}
+		toSpawnIn.AddChild(e);
 	}
 
 	public void OnTimerTimeout()
