@@ -146,6 +146,8 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
 size = Vector2(6, 13)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1jxqw"]
+
 [node name="player" type="CharacterBody2D" unique_id=28407583 node_paths=PackedStringArray("animatedSprite2D", "coyoteTimer", "jumpBufferTimer", "weaponHandler")]
 z_index = 1
 collision_mask = 5
@@ -178,3 +180,11 @@ one_shot = true
 script = ExtResource("5_sweqy")
 weaponToUse = ExtResource("6_2hs0m")
 player = NodePath("..")
+
+[node name="InteractionArea" type="Area2D" parent="." unique_id=1348010403]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=364566377]
+shape = SubResource("RectangleShape2D_1jxqw")
+
+[connection signal="area_entered" from="InteractionArea" to="." method="OnInteractionAreaAreaEntered"]
+[connection signal="area_exited" from="InteractionArea" to="." method="OnInteractionAreaAreaExited"]

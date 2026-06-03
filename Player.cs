@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 public partial class Player : CharacterBody2D
@@ -9,6 +10,7 @@ public partial class Player : CharacterBody2D
 
 	public const float Speed = 100.0f;
 	public const float JumpVelocity = -300.0f;
+	private List<Node> nearbyInteractables = new();
 	[Export] public float weightInKilograms = 1000.0f;
 	
 
@@ -39,6 +41,38 @@ public partial class Player : CharacterBody2D
 	public int GetHealth()
 	{
 		return (int) GetMeta("Health");
+	}
+
+	public void OnInteractionAreaAreaEntered(Area2D area)
+	{
+		GD.Print($"Entered: {area.Name}");
+		if (area.IsInGroup("interactable"))
+		{
+			nearbyInteractables.Add(area.GetParent());
+			GD.Print("Interactable entered");
+		}
+	}
+
+	public void OnInteractionAreaAreaExited(Area2D area)
+	{
+		// GD.Print($"Exited: {area.Name}");
+		if (area.IsInGroup("interactable"))
+		{
+			nearbyInteractables.Remove(area.GetParent());
+			GD.Print("Interactable exited");
+		}
+	}
+
+	public override void _UnhandledInput(InputEvent @event)
+	{
+		if (@event.IsActionPressed("interact"))
+		{
+			if (nearbyInteractables.Count > 0)
+			{
+				var interactable = nearbyInteractables[0];
+				interactable.Call("Interact");
+			}
+		}
 	}
 
 	public override void _PhysicsProcess(double delta)
