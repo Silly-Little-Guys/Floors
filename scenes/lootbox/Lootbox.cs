@@ -19,12 +19,14 @@ public partial class Lootbox : Node2D, IInteractable
 	{
 	}
 
-	public void Interact()
+	public int Interact()
 	{
-		if (opened) return;
+		if (opened) return -1;
 		opened = true;
 		
 		GD.Print("Interacted");
 		sprite.Frame = 1;
+
+		return 0;
 	}
 }

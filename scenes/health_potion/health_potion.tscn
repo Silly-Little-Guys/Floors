@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://qndbnechbaqq"]
+
+[ext_resource type="Texture2D" uid="uid://qogui233vioo" path="res://assets/aseprite/HealthPotion.png" id="1_grty6"]
+
+[node name="HealthPotion" type="Node2D" unique_id=956409328]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=206065569]
+texture = ExtResource("1_grty6")

@@ -31,6 +31,11 @@ public partial class HUD : CanvasLayer
 		if (damaged) damageAnimation.Play("damage_flash");
 	}
 
+	public void UpdateHeldItem(int item)
+	{
+		
+	}
+
 	/// <summary>
 	/// Updates the ammo label text to the integer passed as a parameter.
 	/// </summary>

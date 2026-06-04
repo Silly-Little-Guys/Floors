@@ -20,6 +20,7 @@ public partial class Player : CharacterBody2D
 	[Export] public HUD hud;
 	[Export] public WeaponHandler weaponHandler;
 	[Export] public Node bulletSpawnPoint;
+	private int heldItem = -1;
 
 	private int maxHealth;
 
@@ -76,7 +77,8 @@ public partial class Player : CharacterBody2D
 			if (nearbyInteractables.Count > 0)
 			{
 				var interactable = nearbyInteractables[0];
-				interactable.Interact();
+				heldItem = interactable.Interact();
+				hud.UpdateHeldItem(heldItem);
 			}
 		}
 	}
