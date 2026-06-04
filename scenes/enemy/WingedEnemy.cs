@@ -16,7 +16,7 @@ public partial class WingedEnemy : CharacterBody2D, IEnemy
 	[Export] public NavigationAgent2D nav;
 	[Export] public Timer attackCooldownTimer;
 	private bool isAttacking = false;
-    public override void _Ready()
+	public override void _Ready()
 	{
 		maxHealth = GetHealth();
 	}
