@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cbalh5ibd3fir" path="res://Main.cs" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://c3vwjh05i37h0" path="res://floor_spawner.tscn" id="2_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://xac8eoxv20h1" path="res://scenes/enemy_spawner/enemy_spawner.tscn" id="3_lquwl"]
-[ext_resource type="PackedScene" uid="uid://cko4cmqkwxpuq" path="res://scenes/enemy/WingedEnemy.tscn" id="4_5vw27"]
+[ext_resource type="PackedScene" uid="uid://hgti56o5bf0v" path="res://scenes/enemy/JumpyEnemy.tscn" id="4_5vw27"]
 [ext_resource type="PackedScene" uid="uid://dt460lyur87d" path="res://player.tscn" id="4_7mycd"]
 [ext_resource type="Script" uid="uid://dsqkp1sshjhf2" path="res://DeathArea.cs" id="6_7mycd"]
 [ext_resource type="Script" uid="uid://bfowu7rgqis3f" path="res://CameraFollow.cs" id="7_272bh"]

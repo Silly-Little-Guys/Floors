@@ -6,6 +6,7 @@ public partial class EnemySpawner : Node2D
 	[Export] public PackedScene testEnemyToSpawn;
 	[Export] public Timer spawnTimer;
 	[Export] public Player player;
+	[Export] public bool wingedEnemy;
 	private Floor currentFloor;
 
 	public void SpawnEnemies(Floor toSpawnIn)
@@ -22,15 +23,25 @@ public partial class EnemySpawner : Node2D
 			return;
 		}
 
-		WingedEnemy e = testEnemyToSpawn.Instantiate<WingedEnemy>();
-		e.player = player;
-		e.GlobalPosition = spawnPosition;
+		
+		if (wingedEnemy)
+		{
+			WingedEnemy e = testEnemyToSpawn.Instantiate<WingedEnemy>();
+			e.player = player;
+			e.GlobalPosition = spawnPosition;
+			toSpawnIn.AddChild(e);
+		} else
+		{
+			JumpyEnemy e = testEnemyToSpawn.Instantiate<JumpyEnemy>();
+			e.player = player;
+			e.GlobalPosition = spawnPosition;
+			toSpawnIn.AddChild(e);
+		}
 
 		if (spawnTimer != null)
 		{
 			spawnTimer.Start();
 		}
-		toSpawnIn.AddChild(e);
 	}
 
 	public void OnTimerTimeout()
