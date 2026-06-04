@@ -19,6 +19,7 @@ public partial class JumpyEnemy : RigidBody2D, IEnemy
 	public const float gCompensation = 3f;
 	public int maxHealth;
 	private bool isAttacking = false;
+	private bool isDying = false;
 	string walk = "walk";
 	string state = "walking";
 	public override void _Ready()
@@ -31,6 +32,7 @@ public partial class JumpyEnemy : RigidBody2D, IEnemy
 		SetMeta("Health", GetHealth() - damage);
 		if (GetHealth() <= 0)
 		{
+			isDying = true;
 			asp2d.Play();
 			this.Visible = false;
 			collisionShape2D.SetDeferred("disabled", true);
@@ -49,7 +51,7 @@ public partial class JumpyEnemy : RigidBody2D, IEnemy
 
 	public void Attack()
 	{
-		if (isAttacking)
+		if (isAttacking && !isDying)
 		{
 			player.TakeDamage(attackDamage);
 			attackCooldownTimer.Start();
