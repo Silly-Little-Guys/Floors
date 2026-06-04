@@ -22,7 +22,7 @@ public partial class HUD : CanvasLayer
 
 	public void OnButtonPressed()
 	{
-		player.AddHealth(-5);
+		player.TakeDamage(10);
 	}
 
 	public void OnPlayerHealthUpdated(bool damaged)
