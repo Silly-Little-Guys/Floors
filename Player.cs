@@ -21,21 +21,31 @@ public partial class Player : CharacterBody2D
 	[Export] public WeaponHandler weaponHandler;
 	[Export] public Node bulletSpawnPoint;
 
+	private int maxHealth;
+
 	public override void _Ready()
 	{
 		weaponHandler.bulletSpawnPoint = bulletSpawnPoint;
 		weaponHandler.hud = hud;
+		maxHealth = (int)GetMeta("Health");
 		weaponHandler.UpdateWeapon();
 	}
 
 	/// <summary>
 	/// Add an integer amount of health to the player's health. Player health will be clamped from 0 to 100. Additive can be negative.
 	/// </summary>
-	public void AddHealth(int additive)
+	public void AddHealth(int amount)
 	{
-		int newHealth = Mathf.Clamp(GetHealth() + additive, 0, 100);
+		int newHealth = Mathf.Clamp(GetHealth() + amount, 0, 100);
 		SetMeta("Health", newHealth);
 		EmitSignal(SignalName.HealthUpdated);	
+	}
+
+	public void TakeDamage(int amount)
+	{
+		int newHealth = Mathf.Clamp(GetHealth() - amount, 0, 100);
+		SetMeta("Health", newHealth);
+		EmitSignal(SignalName.HealthUpdated);
 	}
 
 	public int GetHealth()
