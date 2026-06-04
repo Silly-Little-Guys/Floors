@@ -2,29 +2,59 @@
 
 [ext_resource type="Script" uid="uid://pgi8fscxvf6r" path="res://scenes/title_screen/TitleScreen.cs" id="1_bludd"]
 
+[sub_resource type="SystemFont" id="SystemFont_bludd"]
+font_names = PackedStringArray("Comic Sans MS")
+font_italic = true
+font_weight = 999
+font_stretch = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bludd"]
+bg_color = Color(0.7495496, 0.570537, 1.92523e-07, 1)
+
 [node name="TitleScreen" type="Control" unique_id=952694068]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 script = ExtResource("1_bludd")
 
 [node name="Label" type="Label" parent="." unique_id=1636276247]
 layout_mode = 1
-offset_right = 62.0
-offset_bottom = 23.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -31.0
+offset_top = -288.0
+offset_right = 31.0
+offset_bottom = -265.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_bludd")
+theme_override_styles/normal = SubResource("StyleBoxFlat_bludd")
 text = "FLOORS"
 
 [node name="StartButton" type="Button" parent="." unique_id=1336585488]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 492.0
-offset_top = 232.0
-offset_right = 538.0
-offset_bottom = 263.0
+offset_left = -74.5
+offset_top = -45.5
+offset_right = 74.5
+offset_bottom = 45.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_font_sizes/font_size = 60
 text = "Start"
 
 [node name="QuitButton" type="Button" parent="." unique_id=1422715309]
@@ -34,13 +64,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 314.0
-offset_top = 321.0
-offset_right = 741.0
-offset_bottom = 602.0
+offset_left = -46.0
+offset_top = 105.0
+offset_right = 46.0
+offset_bottom = 168.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 200
+theme_override_font_sizes/font_size = 40
 text = "Quit"
 
 [node name="Label2" type="Label" parent="." unique_id=99996149]
@@ -50,10 +80,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 219.0
-offset_top = 78.0
-offset_right = 817.0
-offset_bottom = 179.0
+offset_left = -299.0
+offset_top = -249.0
+offset_right = 299.0
+offset_bottom = -148.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "W, A, S, D to move
