@@ -2,10 +2,56 @@
 
 [ext_resource type="Script" uid="uid://bqlnlcjrbse4b" path="res://scenes/hud/HUD.cs" id="1_37p78"]
 
-[node name="HUD" type="CanvasLayer" unique_id=651644861 node_paths=PackedStringArray("healthBar", "ammoLabel")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_48c2t"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+
+[sub_resource type="Animation" id="Animation_48c2t"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DamageColorRect:color:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_cgeww"]
+resource_name = "damage_flash"
+length = 0.1
+capture_included = true
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DamageColorRect:color:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.099999994),
+"transitions": PackedFloat32Array(0.2773924, 1),
+"update": 2,
+"values": [0.39215687, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_c45xl"]
+_data = {
+&"RESET": SubResource("Animation_48c2t"),
+&"damage_flash": SubResource("Animation_cgeww")
+}
+
+[node name="HUD" type="CanvasLayer" unique_id=651644861 node_paths=PackedStringArray("healthBar", "ammoLabel", "damageAnimation")]
 script = ExtResource("1_37p78")
 healthBar = NodePath("HealthBar")
 ammoLabel = NodePath("AmmoLabel")
+damageAnimation = NodePath("AnimationPlayer")
 
 [node name="HealthBar" type="ProgressBar" parent="." unique_id=1664389420]
 offset_left = 55.0
@@ -34,5 +80,39 @@ offset_top = -69.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 50
+
+[node name="ItemHolder" type="Control" parent="." unique_id=1249634679]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -118.0
+offset_top = -203.0
+offset_bottom = -85.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Panel" type="Panel" parent="ItemHolder" unique_id=1857093963]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_48c2t")
+
+[node name="DamageColorRect" type="ColorRect" parent="." unique_id=1157573606]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=856967178]
+libraries/ = SubResource("AnimationLibrary_c45xl")
 
 [connection signal="pressed" from="Button" to="." method="OnButtonPressed"]

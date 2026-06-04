@@ -7,6 +7,7 @@ public partial class HUD : CanvasLayer
 	[Export] public Player player;
 	[Export] public ProgressBar healthBar;
 	[Export] public Label ammoLabel;
+	[Export] public AnimationPlayer damageAnimation;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -24,9 +25,10 @@ public partial class HUD : CanvasLayer
 		player.AddHealth(-5);
 	}
 
-	public void OnPlayerHealthUpdated()
+	public void OnPlayerHealthUpdated(bool damaged)
 	{
 		healthBar.Value = player.GetHealth();
+		if (damaged) damageAnimation.Play("damage_flash");
 	}
 
 	/// <summary>

@@ -6,7 +6,7 @@ using System.ComponentModel;
 public partial class Player : CharacterBody2D
 {
 	[Signal]
-	public delegate void HealthUpdatedEventHandler();
+	public delegate void HealthUpdatedEventHandler(bool damaged);
 
 	public const float Speed = 100.0f;
 	public const float JumpVelocity = -300.0f;
@@ -38,14 +38,14 @@ public partial class Player : CharacterBody2D
 	{
 		int newHealth = Mathf.Clamp(GetHealth() + amount, 0, 100);
 		SetMeta("Health", newHealth);
-		EmitSignal(SignalName.HealthUpdated);	
+		EmitSignal(SignalName.HealthUpdated, false);	
 	}
 
 	public void TakeDamage(int amount)
 	{
 		int newHealth = Mathf.Clamp(GetHealth() - amount, 0, 100);
 		SetMeta("Health", newHealth);
-		EmitSignal(SignalName.HealthUpdated);
+		EmitSignal(SignalName.HealthUpdated, true);
 	}
 
 	public int GetHealth()
