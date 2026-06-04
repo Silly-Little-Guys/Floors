@@ -61,7 +61,9 @@ size = Vector2(10, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sulrx"]
 size = Vector2(9, 15)
 
-[node name="JumpyEnemy" type="RigidBody2D" unique_id=491792340 node_paths=PackedStringArray("asp2d", "enemyHealthBar", "collisionShape2D", "animatedSprite2D", "nav", "shape")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d25oh"]
+
+[node name="JumpyEnemy" type="RigidBody2D" unique_id=491792340 node_paths=PackedStringArray("asp2d", "enemyHealthBar", "collisionShape2D", "animatedSprite2D", "nav", "shape", "attackCooldownTimer")]
 collision_layer = 4
 collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_mmkk0")
@@ -74,6 +76,8 @@ collisionShape2D = NodePath("CollisionShape2D")
 animatedSprite2D = NodePath("AnimatedSprite2D")
 nav = NodePath("NavigationAgent2D")
 shape = NodePath("ShapeCast2D")
+attackCooldownTimer = NodePath("AttackCooldown")
+attackDamage = 20
 metadata/Health = 20
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1760999784]
@@ -97,3 +101,15 @@ skew = 0.008726646
 shape = SubResource("RectangleShape2D_sulrx")
 target_position = Vector2(0, 1)
 collision_mask = 3
+
+[node name="AttackArea" type="Area2D" parent="." unique_id=594065931]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1905151610]
+shape = SubResource("RectangleShape2D_d25oh")
+
+[node name="AttackCooldown" type="Timer" parent="." unique_id=70180414]
+one_shot = true
+
+[connection signal="body_entered" from="AttackArea" to="." method="OnAttackAreaBodyEntered"]
+[connection signal="body_exited" from="AttackArea" to="." method="OnAttackAreaBodyExited"]
+[connection signal="timeout" from="AttackCooldown" to="." method="OnAttackCooldownTimeout"]

@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://cko4cmqkwxpuq"]
+[gd_scene format=3 uid="uid://djis7gw6lb41s"]
 
 [ext_resource type="Script" uid="uid://bl02ibeqy2qby" path="res://scenes/enemy/WingedEnemy.cs" id="1_yt117"]
 [ext_resource type="Texture2D" uid="uid://g3rdxjq3ads4" path="res://assets/aseprite/WingedEnemy.png" id="2_rlc8e"]

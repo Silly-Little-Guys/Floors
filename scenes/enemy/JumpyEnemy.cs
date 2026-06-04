@@ -11,11 +11,14 @@ public partial class JumpyEnemy : RigidBody2D, IEnemy
 	[Export] public AnimatedSprite2D animatedSprite2D;
 	[Export] public NavigationAgent2D nav;
 	[Export] public ShapeCast2D shape;
+	[Export] public Timer attackCooldownTimer;
+	[Export] public int attackDamage;
 	public const float speed = 30.0f;
 	public const float jumpForce = 200.0f;
 	public const float jumpRadius = 35.0f;
 	public const float gCompensation = 3f;
 	public int maxHealth;
+	private bool isAttacking = false;
 	string walk = "walk";
 	string state = "walking";
 	public override void _Ready()
@@ -42,6 +45,38 @@ public partial class JumpyEnemy : RigidBody2D, IEnemy
 	public void OnAudioFinished()
 	{
 		QueueFree();
+	}
+
+	public void Attack()
+	{
+		if (isAttacking)
+		{
+			player.TakeDamage(attackDamage);
+			attackCooldownTimer.Start();
+		}
+	}
+
+	public void OnAttackCooldownTimeout()
+	{
+		Attack();
+	}
+
+	public void OnAttackAreaBodyEntered(Node2D body)
+	{
+		if (body is Player)
+		{
+			isAttacking = true;
+			attackCooldownTimer.Start();
+			Attack();
+		}
+	}
+
+	public void OnAttackAreaBodyExited(Node2D body)
+	{
+		if (body is Player)
+		{
+			isAttacking = false;
+		}
 	}
 
 	public override void _PhysicsProcess(double delta)
