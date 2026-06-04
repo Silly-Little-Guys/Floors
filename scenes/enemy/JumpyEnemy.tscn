@@ -80,6 +80,7 @@ collisionShape2D = NodePath("CollisionShape2D")
 animatedSprite2D = NodePath("AnimatedSprite2D")
 nav = NodePath("NavigationAgent2D")
 shape = NodePath("ShapeCast2D")
+metadata/Health = 100
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1760999784]
 texture_filter = 1

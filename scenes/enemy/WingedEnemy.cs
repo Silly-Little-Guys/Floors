@@ -13,7 +13,7 @@ public partial class WingedEnemy : CharacterBody2D, IEnemy
 	[Export] public CollisionShape2D collisionShape2D;
 	[Export] public NavigationAgent2D nav;
 
-	public override void _Ready()
+    public override void _Ready()
 	{
 		maxHealth = GetHealth();
 	}
