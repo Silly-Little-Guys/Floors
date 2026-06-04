@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://c1rpt6dddknhe"]
+
+[ext_resource type="Script" uid="uid://dtsmwo6e616we" path="res://scenes/weapons/GunWeapon.cs" id="1_60a84"]
+[ext_resource type="PackedScene" uid="uid://ccbwt5f4t5ks0" path="res://scenes/weapons/bullet.tscn" id="2_ivc8v"]
+[ext_resource type="Texture2D" uid="uid://b436hr4bvylxn" path="res://assets/aseprite/Pistol.png" id="3_60a84"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ivc8v"]
+atlas = ExtResource("3_60a84")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t1ie7"]
+atlas = ExtResource("3_60a84")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_61dc8"]
+atlas = ExtResource("3_60a84")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_swcir"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ivc8v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t1ie7")
+}],
+"loop": true,
+"name": &"firing",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_61dc8")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="pistol" type="Node2D" unique_id=176905316 node_paths=PackedStringArray("fireTimer", "animatedSprite2D", "pivotPoint", "shotDirection")]
+script = ExtResource("1_60a84")
+damage = 50
+fireRate = 2.0
+bulletSpeed = 200.0
+bulletScene = ExtResource("2_ivc8v")
+fireTimer = NodePath("FireTime")
+animatedSprite2D = NodePath("AnimatedSprite2D")
+pivotPoint = NodePath("pivot")
+shotDirection = NodePath("shotDirection")
+ammoCount = 16
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=529214809]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_swcir")
+animation = &"firing"
+
+[node name="FireTime" type="Timer" parent="." unique_id=197237495]
+wait_time = 3.0
+one_shot = true
+
+[node name="pivot" type="Node2D" parent="." unique_id=1536243649]
+position = Vector2(2, 4)
+
+[node name="shotDirection" type="RayCast2D" parent="." unique_id=1229932787]
+position = Vector2(7, 2)
+enabled = false
+target_position = Vector2(16, 0)
+collide_with_bodies = false
