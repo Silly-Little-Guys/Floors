@@ -13,8 +13,8 @@ public partial class JumpyEnemy : RigidBody2D, IEnemy
 	[Export] public ShapeCast2D shape;
 	public const float speed = 30.0f;
 	public const float jumpForce = 200.0f;
-	public const float jumpRadius = 30.0f;
-	public const float gCompensation = 0.5f;
+	public const float jumpRadius = 35.0f;
+	public const float gCompensation = 3f;
 	public int maxHealth;
 	string walk = "walk";
 	string state = "walking";
