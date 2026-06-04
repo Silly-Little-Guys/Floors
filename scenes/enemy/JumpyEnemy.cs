@@ -66,15 +66,16 @@ public partial class JumpyEnemy : RigidBody2D, IEnemy
 			{
 				state = "jumping";
 				ApplyCentralImpulse(((nextPos - GlobalPosition).Normalized() + Vector2.Up * gCompensation).Normalized() * jumpForce);
+				animatedSprite2D.Play("jump");
 			}
 		}
 		else if (state.Equals("jumping"))
 		{
+			animatedSprite2D.Play("jump");
 			if (shape.IsColliding())
 			{
 				state = "walking";
 			}
 		}
-		
 	}
 }
