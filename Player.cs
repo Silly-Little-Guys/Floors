@@ -53,6 +53,10 @@ public partial class Player : CharacterBody2D
 		int newHealth = Mathf.Clamp(GetHealth() - amount, 0, 100);
 		SetMeta("Health", newHealth);
 		EmitSignal(SignalName.HealthUpdated, true);
+		if (GetHealth() <= 0)
+		{
+			GetTree().ChangeSceneToFile("res://scenes/death_screen/death_screen.tscn");
+		}
 	}
 
 	public void AddCash(int amount)

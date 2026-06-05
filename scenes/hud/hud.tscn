@@ -67,12 +67,6 @@ offset_right = 40.0
 offset_bottom = 23.0
 text = "Health"
 
-[node name="Button" type="Button" parent="." unique_id=1634350163]
-offset_top = 32.0
-offset_right = 287.0
-offset_bottom = 63.0
-text = "Hurt"
-
 [node name="AmmoLabel" type="Label" parent="." unique_id=782973321]
 anchors_preset = 3
 anchor_left = 1.0
@@ -134,5 +128,3 @@ offset_right = 1144.0
 offset_bottom = 443.0
 text = "$999,999"
 horizontal_alignment = 2
-
-[connection signal="pressed" from="Button" to="." method="OnButtonPressed"]

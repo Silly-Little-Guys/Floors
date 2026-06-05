@@ -38,11 +38,6 @@ public partial class HUD : CanvasLayer
 		UpdateCashLabelPulse((float)delta);
 	}
 
-	public void OnButtonPressed()
-	{
-		player.TakeDamage(10);
-	}
-
 	public void OnPlayerHealthUpdated(bool damaged)
 	{
 		healthBar.Value = player.GetHealth();
