@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 public partial class Floor : Node2D
 {
-	[Export] public TileMapLayer mainTileMapLayer;
+	[Export] public TileMapLayer toSpawnEnemyLayer;
+	[Export] public TileMapLayer layerThatHasWalls;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -16,30 +17,30 @@ public partial class Floor : Node2D
 	}
 
 	/// <summary>
-	/// Attempts to calculate the global vertical bounds of a floor from its main tile map layer.
+	/// Attempts to calculate the global vertical bounds of a floor from its wall tile map layer.
 	/// </summary>
-	/// <param name="floor">The floor whose main tile map layer should be measured.</param>
+	/// <param name="floor">The floor whose wall tile map layer should be measured.</param>
 	/// <param name="topY">The highest global Y position occupied by the floor when the calculation succeeds; otherwise 0.</param>
 	/// <param name="bottomY">The lowest global Y position occupied by the floor when the calculation succeeds; otherwise 0.</param>
 	/// <param name="tileHeight">The global height of one tile in the floor's tile map layer when the calculation succeeds; otherwise 0.</param>
-	/// <returns>True if the floor has a valid main tile map layer, tile set, and used cells; otherwise false.</returns>
+	/// <returns>True if the floor has a valid wall tile map layer, tile set, and used cells; otherwise false.</returns>
 	public bool TryGetFloorVerticalBounds(out float topY, out float bottomY, out float tileHeight)
 	{
 		topY = 0;
 		bottomY = 0;
 		tileHeight = 0;
 
-		if (this.mainTileMapLayer == null)
+		if (this.layerThatHasWalls == null)
 		{
-			GD.PushWarning("Cannot calculate floor bounds because the floor has no main TileMapLayer assigned.");
+			GD.PushWarning("Cannot calculate floor bounds because the floor has no wall TileMapLayer assigned.");
 			return false;
 		}
 
-		TileMapLayer tileMapLayer = this.mainTileMapLayer;
+		TileMapLayer tileMapLayer = this.layerThatHasWalls;
 
 		if (tileMapLayer.TileSet == null)
 		{
-			GD.PushWarning("Cannot calculate floor bounds because the main TileMapLayer has no TileSet.");
+			GD.PushWarning("Cannot calculate floor bounds because the wall TileMapLayer has no TileSet.");
 			return false;
 		}
 
@@ -47,7 +48,7 @@ public partial class Floor : Node2D
 
 		if (usedRect.Size == Vector2I.Zero)
 		{
-			GD.PushWarning("Cannot calculate floor bounds because the main TileMapLayer has no used cells.");
+			GD.PushWarning("Cannot calculate floor bounds because the wall TileMapLayer has no used cells.");
 			return false;
 		}
 
@@ -78,29 +79,29 @@ public partial class Floor : Node2D
 	}
 
 	/// <summary>
-	/// Attempts to calculate the global horizontal bounds of a floor from its main tile map layer.
+	/// Attempts to calculate the global horizontal bounds of a floor from its wall tile map layer.
 	/// </summary>
 	/// <param name="leftX">The leftmost global X position occupied by the floor when the calculation succeeds; otherwise 0.</param>
 	/// <param name="rightX">The rightmost global X position occupied by the floor when the calculation succeeds; otherwise 0.</param>
 	/// <param name="tileWidth">The global width of one tile in the floor's tile map layer when the calculation succeeds; otherwise 0.</param>
-	/// <returns>True if the floor has a valid main tile map layer, tile set, and used cells; otherwise false.</returns>
+	/// <returns>True if the floor has a valid wall tile map layer, tile set, and used cells; otherwise false.</returns>
 	public bool TryGetFloorHorizontalBounds(out float leftX, out float rightX, out float tileWidth)
 	{
 		leftX = 0;
 		rightX = 0;
 		tileWidth = 0;
 
-		if (this.mainTileMapLayer == null)
+		if (this.layerThatHasWalls == null)
 		{
-			GD.PushWarning("Cannot calculate floor bounds because the floor has no main TileMapLayer assigned.");
+			GD.PushWarning("Cannot calculate floor bounds because the floor has no wall TileMapLayer assigned.");
 			return false;
 		}
 
-		TileMapLayer tileMapLayer = this.mainTileMapLayer;
+		TileMapLayer tileMapLayer = this.layerThatHasWalls;
 
 		if (tileMapLayer.TileSet == null)
 		{
-			GD.PushWarning("Cannot calculate floor bounds because the main TileMapLayer has no TileSet.");
+			GD.PushWarning("Cannot calculate floor bounds because the wall TileMapLayer has no TileSet.");
 			return false;
 		}
 
@@ -108,7 +109,7 @@ public partial class Floor : Node2D
 
 		if (usedRect.Size == Vector2I.Zero)
 		{
-			GD.PushWarning("Cannot calculate floor bounds because the main TileMapLayer has no used cells.");
+			GD.PushWarning("Cannot calculate floor bounds because the wall TileMapLayer has no used cells.");
 			return false;
 		}
 
@@ -147,17 +148,17 @@ public partial class Floor : Node2D
 	{
 		spawnPosition = Vector2.Zero;
 
-		if (this.mainTileMapLayer == null)
+		if (this.toSpawnEnemyLayer == null)
 		{
-			GD.PushWarning("Cannot find spawn position because the floor has no main TileMapLayer assigned.");
+			GD.PushWarning("Cannot find spawn position because the floor has no enemy spawn TileMapLayer assigned.");
 			return false;
 		}
 
-		TileMapLayer tileMapLayer = this.mainTileMapLayer;
+		TileMapLayer tileMapLayer = this.toSpawnEnemyLayer;
 
 		if (tileMapLayer.TileSet == null)
 		{
-			GD.PushWarning("Cannot find spawn position because the main TileMapLayer has no TileSet.");
+			GD.PushWarning("Cannot find spawn position because the enemy spawn TileMapLayer has no TileSet.");
 			return false;
 		}
 

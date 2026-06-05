@@ -3,9 +3,10 @@
 [ext_resource type="Script" uid="uid://cetc2ryjqqgwc" path="res://Floor.cs" id="1_j0mf0"]
 [ext_resource type="TileSet" uid="uid://cw4nfp1xk7o16" path="res://assets/tilesets/debug_tileset.tres" id="2_eh88f"]
 
-[node name="ExampleFloor" type="Node2D" unique_id=1750975773 node_paths=PackedStringArray("mainTileMapLayer")]
+[node name="ExampleFloor" type="Node2D" unique_id=1750975773 node_paths=PackedStringArray("toSpawnEnemyLayer", "layerThatHasWalls")]
 script = ExtResource("1_j0mf0")
-mainTileMapLayer = NodePath("Layer0")
+toSpawnEnemyLayer = NodePath("Layer0")
+layerThatHasWalls = NodePath("Layer0")
 
 [node name="Layer0" type="TileMapLayer" parent="." unique_id=250325027]
 texture_filter = 1
