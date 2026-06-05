@@ -3,24 +3,7 @@ using System;
 using System.ComponentModel;
 
 public partial class GunWeapon : Weapon
-{
-	[Signal] public delegate void OnAmmoCountUpdatedEventHandler(int ammo);
-	[Export] public int damage;
-	[Export] public float fireRate;
-	[Export] public float bulletSpeed;
-	[Export] public float spreadDegrees = 2.0f;
-	[Export] public float airUpwardRecoilScale = 0.25f;
-	[Export] public PackedScene bulletScene;
-	[Export] public Timer fireTimer;
-	[Export] public Node bulletSpawnPoint;
-	[Export] public AnimatedSprite2D animatedSprite2D;
-	[Export] public Node2D pivotPoint;
-	[Export] public RayCast2D shotDirection;
-	[Export] public Player player;
-	[Export] public AudioStreamPlayer2D shootSoundPlayer;
-	[Export] public int ammoCount;
-	public int maxAmmoCount;
-	
+{	
 	private Vector2 pivotPointStartPosition;
 	private Vector2 shotDirectionStartPosition;
 
