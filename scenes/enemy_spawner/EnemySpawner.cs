@@ -108,8 +108,8 @@ public partial class EnemySpawner : Node2D
 			return;
 		}
 
-		enemy.GlobalPosition = spawnPosition;
 		toSpawnIn.AddChild(enemy);
+		enemy.GlobalPosition = spawnPosition;
 
 		if (spawnTimer != null)
 		{
