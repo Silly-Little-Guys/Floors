@@ -13,6 +13,7 @@ public partial class HUD : CanvasLayer
 	[Export] public Label cashLabel;
 	[Export] public CompressedTexture2D cashImage;
 	[Export] public TextureRect itemTextureRect;
+	[Export] public Label itemTooltip;
 
 	private const int MaxCashSprites = 50;
 	private const float CashSpriteSize = 32.0f;
@@ -224,8 +225,11 @@ public partial class HUD : CanvasLayer
 		if (item is null)
 		{
 			itemTextureRect.Texture = null;
+			itemTooltip.Visible = false;
 			return;
 		}
+		itemTooltip.Text = $"Press F to equip/use {item.ItemName}";
+		itemTooltip.Visible = true;
 		itemTextureRect.Texture = item.ItemTexture;
 	}
 

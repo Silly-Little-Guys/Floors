@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://cmgdfox28hieq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cgeww"]
+bg_color = Color(0.15127608, 0.15127608, 0.15127605, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0.96049064, 0.3971324, 1)
+
+[node name="ItemTooltip" type="Label" unique_id=1183567385]
+visible = false
+offset_right = 19.0
+offset_bottom = 34.0
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_cgeww")
+text = "Press X to do X"
