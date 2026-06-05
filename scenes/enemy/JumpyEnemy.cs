@@ -16,7 +16,7 @@ public partial class JumpyEnemy : RigidBody2D, IEnemy
 	public const float speed = 30.0f;
 	public const float jumpForce = 200.0f;
 	public const float jumpRadius = 35.0f;
-	public const float gCompensation = 3f;
+	public const float gCompensation = 2f;
 	public int maxHealth;
 	private bool isAttacking = false;
 	private bool isDying = false;
@@ -102,6 +102,7 @@ public partial class JumpyEnemy : RigidBody2D, IEnemy
 			if ((nextPos - GlobalPosition).Length() < jumpRadius && shape.IsColliding())
 			{
 				state = "jumping";
+				LinearVelocity = Vector2.Zero;
 				ApplyCentralImpulse(((nextPos - GlobalPosition).Normalized() + Vector2.Up * gCompensation).Normalized() * jumpForce);
 				animatedSprite2D.Play("leap");
 			}

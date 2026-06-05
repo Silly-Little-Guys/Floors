@@ -33,6 +33,13 @@ public partial class WeaponHandler : Node2D
 				gun.OnAmmoCountUpdated += UpdateAmmoDisplay;
 				UpdateAmmoDisplay(gun.ammoCount);
 			}
+			else if (currentWeapon is ScytheWeapon scythe)
+			{
+				scythe.bulletSpawnPoint = bulletSpawnPoint;
+				scythe.player = player;
+				scythe.OnAmmoCountUpdated += UpdateAmmoDisplay;
+				UpdateAmmoDisplay(scythe.ammoCount);
+			}
 			AddChild(currentWeapon);
 		}
 	}

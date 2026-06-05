@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://fl07q48ns1ko"]
+
+[ext_resource type="Script" uid="uid://ckma46ry7w13v" path="res://scenes/weapons/ScytheWeapon.cs" id="1_wn4wk"]
+[ext_resource type="Texture2D" uid="uid://bojonyovwu7y5" path="res://assets/aseprite/Scythe.png" id="2_h01xk"]
+[ext_resource type="PackedScene" uid="uid://jhgompnmehpw" path="res://scenes/weapons/ScytheBlade.tscn" id="2_kvybn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kvybn"]
+atlas = ExtResource("2_h01xk")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qb8vp"]
+atlas = ExtResource("2_h01xk")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8vcnw"]
+atlas = ExtResource("2_h01xk")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yf5op"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kvybn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qb8vp")
+}],
+"loop": true,
+"name": &"firing",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8vcnw")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="ScytheWeapon" type="Node2D" unique_id=1568246519 node_paths=PackedStringArray("fireTimer", "animatedSprite2D", "pivotPoint", "shotDirection")]
+script = ExtResource("1_wn4wk")
+damage = 20
+fireRate = 1.0
+bulletSpeed = 100.0
+spreadDegrees = 0.0
+airUpwardRecoilScale = 0.1
+bulletScene = ExtResource("2_kvybn")
+fireTimer = NodePath("FireTime")
+animatedSprite2D = NodePath("AnimatedSprite2D")
+pivotPoint = NodePath("pivot")
+shotDirection = NodePath("shotDirection")
+ammoCount = 100
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=568229457]
+sprite_frames = SubResource("SpriteFrames_yf5op")
+animation = &"firing"
+frame_progress = 0.7330009
+
+[node name="FireTime" type="Timer" parent="." unique_id=351578566]
+wait_time = 2.0
+one_shot = true
+
+[node name="pivot" type="Node2D" parent="." unique_id=1021146026]
+position = Vector2(-2, 3)
+
+[node name="shotDirection" type="RayCast2D" parent="." unique_id=839730793]
+position = Vector2(7, 0)
+enabled = false
+target_position = Vector2(16, 0)
+collide_with_bodies = false

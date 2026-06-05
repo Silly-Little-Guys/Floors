@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://jhgompnmehpw"]
+
+[ext_resource type="Script" uid="uid://hq8vidgib1g0" path="res://scenes/weapons/ScytheBlade.cs" id="1_dqtwi"]
+[ext_resource type="Texture2D" uid="uid://bojonyovwu7y5" path="res://assets/aseprite/Scythe.png" id="1_q5nl3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q5nl3"]
+size = Vector2(4, 16)
+
+[node name="ScytheBlade" type="RigidBody2D" unique_id=1944572566 node_paths=PackedStringArray("t")]
+collision_layer = 2
+collision_mask = 2
+gravity_scale = 0.1
+contact_monitor = true
+max_contacts_reported = 5
+script = ExtResource("1_dqtwi")
+t = NodePath("DespawnTime")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1742799860]
+position = Vector2(584, 514)
+texture = ExtResource("1_q5nl3")
+hframes = 3
+frame = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1420258053]
+shape = SubResource("RectangleShape2D_q5nl3")
+
+[node name="DespawnTime" type="Timer" parent="." unique_id=446994737]
+one_shot = true
