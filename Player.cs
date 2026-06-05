@@ -105,13 +105,13 @@ public partial class Player : CharacterBody2D
 	{
 		foreach (var effect in item.Effects)
 		{
-			effect.Apply(this);
+			effect.Apply(this, item);
 		}
 	}
 
-    public override void _UnhandledInput(InputEvent @event)
-    {
-        if (@event.IsActionPressed("interact"))
+	public override void _UnhandledInput(InputEvent @event)
+	{
+		if (@event.IsActionPressed("interact"))
 		{
 			if (nearbyInteractables.Count > 0)
 			{
@@ -133,7 +133,7 @@ public partial class Player : CharacterBody2D
 			heldItem = null;
 			hud.UpdateHeldItem(heldItem);
 		}
-    }
+	}
 
 
 	public override void _PhysicsProcess(double delta)

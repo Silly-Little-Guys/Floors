@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://35ulqs0g6qdu" path="res://assets/aseprite/TreasureChest.png" id="1_47y61"]
 [ext_resource type="Script" uid="uid://jw06bf4wpgl3" path="res://scenes/lootbox/Lootbox.cs" id="1_gute8"]
-[ext_resource type="Resource" uid="uid://dx15u02evn2p7" path="res://scenes/items/health_potion/health_potion_data.tres" id="2_qg7um"]
+[ext_resource type="Resource" uid="uid://ctr7rooamc732" path="res://scenes/weapons/rifle_itemdata.tres" id="2_qg7um"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_47y61"]
 
