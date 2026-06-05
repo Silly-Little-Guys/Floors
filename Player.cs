@@ -137,8 +137,12 @@ public partial class Player : CharacterBody2D
 			if (nearbyInteractables.Count > 0)
 			{
 				var interactable = nearbyInteractables[0];
-				heldItem = interactable.Interact();
-				if (heldItem is not null) hud.UpdateHeldItem(heldItem);
+				var receivedItem = interactable.Interact();
+				if (receivedItem is not null) 
+				{
+					heldItem = receivedItem;
+					hud.UpdateHeldItem(receivedItem);
+				}
 			}
 		}
 
