@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b210nddpvah4t" path="res://assets/aseprite/RunWithHands.png" id="3_hqtel"]
 [ext_resource type="Texture2D" uid="uid://byghec0f7ghrp" path="res://assets/aseprite/RunNoHands.png" id="4_sweqy"]
 [ext_resource type="Script" uid="uid://c36j8mlu288gv" path="res://WeaponHandler.cs" id="5_sweqy"]
-[ext_resource type="PackedScene" uid="uid://c1rpt6dddknhe" path="res://scenes/weapons/pistol.tscn" id="7_1jxqw"]
+[ext_resource type="PackedScene" uid="uid://fl07q48ns1ko" path="res://scenes/weapons/ScytheWeapon.tscn" id="7_1jxqw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hqtel"]
 atlas = ExtResource("2_i3pqv")

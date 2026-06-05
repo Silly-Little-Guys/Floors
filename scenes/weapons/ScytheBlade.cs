@@ -19,7 +19,7 @@ public partial class ScytheBlade : RigidBody2D
 
 	public void OnBodyEntered(Node2D body)
 	{
-		if (body is IEnemy enemy && this.LinearVelocity.Length() > initialSpeed * 0.8f)
+		if (body is IEnemy enemy && this.LinearVelocity.Length() > initialSpeed * 0.5f)
 		{
 			enemy.TakeDamage(damage);
 			QueueFree();

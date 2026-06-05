@@ -9,14 +9,14 @@ size = Vector2(4, 16)
 [node name="ScytheBlade" type="RigidBody2D" unique_id=1944572566 node_paths=PackedStringArray("t")]
 collision_layer = 2
 collision_mask = 2
-gravity_scale = 0.1
+mass = 0.001
+gravity_scale = 0.0
 contact_monitor = true
 max_contacts_reported = 5
 script = ExtResource("1_dqtwi")
 t = NodePath("DespawnTime")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1742799860]
-position = Vector2(584, 514)
 texture = ExtResource("1_q5nl3")
 hframes = 3
 frame = 2
@@ -26,3 +26,6 @@ shape = SubResource("RectangleShape2D_q5nl3")
 
 [node name="DespawnTime" type="Timer" parent="." unique_id=446994737]
 one_shot = true
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]
+[connection signal="timeout" from="DespawnTime" to="." method="OnTimerEnded"]

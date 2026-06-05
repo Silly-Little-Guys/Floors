@@ -29,16 +29,19 @@ public partial class ScytheWeapon : Weapon
 		fireTimer.WaitTime = 1.0 / fireRate;
 		pivotPointStartPosition = pivotPoint.Position;
 		shotDirectionStartPosition = shotDirection.Position;
+		animatedSprite2D.SpriteFrames.SetAnimationLoop("firing", false);
+		animatedSprite2D.Play("idle");
 	}
-	public void OnShoot()
+
+	public bool OnShoot()
 	{
 		if (!fireTimer.IsStopped())
 		{
-			return;
+			return false;
 		}
 		if (ammoCount <= 0)
 		{
-			return;
+			return false;
 		}
 
 		ammoCount--;
@@ -62,6 +65,7 @@ public partial class ScytheWeapon : Weapon
 		}
 		player.Velocity += recoilVelocity;
 
+		return true;
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -74,11 +78,16 @@ public partial class ScytheWeapon : Weapon
 		Vector2 aimPivot = pivotPoint != null ? pivotPoint.GlobalPosition : GlobalPosition;
 		Vector2 aimDirection = GetGlobalMousePosition() - aimPivot;
 		GlobalRotation = aimDirection.Angle();
+		bool firedThisFrame = false;
 		if (Input.IsActionPressed("shoot"))
 		{
-			OnShoot();
+			firedThisFrame = OnShoot();
+		}
+		if (firedThisFrame)
+		{
+			animatedSprite2D.Stop();
 			animatedSprite2D.Play("firing");
-		} else
+		} else if (animatedSprite2D.Animation != "firing" || !animatedSprite2D.IsPlaying())
 		{
 			animatedSprite2D.Play("idle");   
 		}
