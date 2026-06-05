@@ -15,6 +15,7 @@ public partial class Lootbox : Node2D, IInteractable
 
 	[Export] public Sprite2D chestSprite;
 	[Export] public Sprite2D itemSprite;
+	[Export] public AudioStreamPlayer2D openSoundPlayer;
 
 	public ItemData Interact()
 	{
@@ -38,6 +39,8 @@ public partial class Lootbox : Node2D, IInteractable
 		chestSprite.Frame = 1;
 		Node itemNode = item.ItemScene.Instantiate();
 		itemSprite.AddChild(itemNode);
+
+		openSoundPlayer.Play();
 
 		return null; // So player does nothing else, only opens chest
 	}

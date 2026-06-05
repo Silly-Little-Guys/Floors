@@ -6,14 +6,16 @@
 [ext_resource type="Resource" uid="uid://dx15u02evn2p7" path="res://scenes/items/health_potion/health_potion_data.tres" id="3_nbj2l"]
 [ext_resource type="Resource" uid="uid://dq0g5578iyc6t" path="res://scenes/weapons/pistol/pistol_itemdata.tres" id="4_fnjek"]
 [ext_resource type="Resource" uid="uid://dvke3h26m3ss4" path="res://scenes/weapons/scythe/scythe_itemdata.tres" id="5_qga32"]
+[ext_resource type="AudioStream" uid="uid://4c32g4cicvka" path="res://assets/sfx/chest-open.wav" id="7_fnjek"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_47y61"]
 
-[node name="Lootbox" type="Node2D" unique_id=1895122844 node_paths=PackedStringArray("chestSprite", "itemSprite")]
+[node name="Lootbox" type="Node2D" unique_id=1895122844 node_paths=PackedStringArray("chestSprite", "itemSprite", "openSoundPlayer")]
 script = ExtResource("1_gute8")
 LootTable = Array[Object]([ExtResource("2_qg7um"), ExtResource("3_nbj2l"), ExtResource("4_fnjek"), ExtResource("5_qga32")])
 chestSprite = NodePath("ChestSprite")
 itemSprite = NodePath("ItemSprite")
+openSoundPlayer = NodePath("OpenSoundPlayer")
 
 [node name="ChestSprite" type="Sprite2D" parent="." unique_id=631645828]
 texture_filter = 1
@@ -29,3 +31,7 @@ shape = SubResource("RectangleShape2D_47y61")
 [node name="ItemSprite" type="Sprite2D" parent="." unique_id=404096116]
 position = Vector2(0, -4)
 scale = Vector2(0.5, 0.5)
+
+[node name="OpenSoundPlayer" type="AudioStreamPlayer2D" parent="." unique_id=730896130]
+stream = ExtResource("7_fnjek")
+volume_db = 6.0
