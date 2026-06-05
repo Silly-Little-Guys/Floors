@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dq0g5578iyc6t"]
+
+[ext_resource type="Script" uid="uid://bb7gvlfpljdd4" path="res://scenes/items/ItemData.cs" id="1_pay3x"]
+[ext_resource type="Script" uid="uid://bophm7vj2v2e6" path="res://scenes/weapons/EquipWeaponEffect.cs" id="1_shme7"]
+[ext_resource type="PackedScene" uid="uid://c1rpt6dddknhe" path="res://scenes/weapons/pistol.tscn" id="2_fwcay"]
+[ext_resource type="Texture2D" uid="uid://b436hr4bvylxn" path="res://assets/aseprite/Pistol.png" id="3_ydyt4"]
+
+[sub_resource type="Resource" id="Resource_qw0q6"]
+script = ExtResource("1_shme7")
+metadata/_custom_type_script = "uid://bophm7vj2v2e6"
+
+[resource]
+script = ExtResource("1_pay3x")
+ItemName = "Pistol"
+ItemScene = ExtResource("2_fwcay")
+ItemTexture = ExtResource("3_ydyt4")
+Effects = Array[Object]([SubResource("Resource_qw0q6")])
+metadata/_custom_type_script = "uid://bb7gvlfpljdd4"

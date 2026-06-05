@@ -3,12 +3,15 @@
 [ext_resource type="Texture2D" uid="uid://35ulqs0g6qdu" path="res://assets/aseprite/TreasureChest.png" id="1_47y61"]
 [ext_resource type="Script" uid="uid://jw06bf4wpgl3" path="res://scenes/lootbox/Lootbox.cs" id="1_gute8"]
 [ext_resource type="Resource" uid="uid://ctr7rooamc732" path="res://scenes/weapons/rifle_itemdata.tres" id="2_qg7um"]
+[ext_resource type="Resource" uid="uid://dx15u02evn2p7" path="res://scenes/items/health_potion/health_potion_data.tres" id="3_nbj2l"]
+[ext_resource type="Resource" uid="uid://dq0g5578iyc6t" path="res://scenes/weapons/pistol_itemdata.tres" id="4_fnjek"]
+[ext_resource type="Resource" uid="uid://dvke3h26m3ss4" path="res://scenes/weapons/scythe_itemdata.tres" id="5_qga32"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_47y61"]
 
 [node name="Lootbox" type="Node2D" unique_id=1895122844 node_paths=PackedStringArray("chestSprite", "itemSprite")]
 script = ExtResource("1_gute8")
-LootTable = Array[Object]([ExtResource("2_qg7um")])
+LootTable = Array[Object]([ExtResource("2_qg7um"), ExtResource("3_nbj2l"), ExtResource("4_fnjek"), ExtResource("5_qga32")])
 chestSprite = NodePath("ChestSprite")
 itemSprite = NodePath("ItemSprite")
 

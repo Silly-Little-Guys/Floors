@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dvke3h26m3ss4"]
+
+[ext_resource type="Script" uid="uid://bophm7vj2v2e6" path="res://scenes/weapons/EquipWeaponEffect.cs" id="1_7rfpe"]
+[ext_resource type="Script" uid="uid://bb7gvlfpljdd4" path="res://scenes/items/ItemData.cs" id="1_j86bn"]
+[ext_resource type="PackedScene" uid="uid://fl07q48ns1ko" path="res://scenes/weapons/ScytheWeapon.tscn" id="2_g5rfq"]
+[ext_resource type="Texture2D" uid="uid://bojonyovwu7y5" path="res://assets/aseprite/Scythe.png" id="3_qvt61"]
+
+[sub_resource type="Resource" id="Resource_u67rs"]
+script = ExtResource("1_7rfpe")
+metadata/_custom_type_script = "uid://bophm7vj2v2e6"
+
+[resource]
+script = ExtResource("1_j86bn")
+ItemName = "Scythe"
+ItemScene = ExtResource("2_g5rfq")
+ItemTexture = ExtResource("3_qvt61")
+Effects = Array[Object]([SubResource("Resource_u67rs")])
+metadata/_custom_type_script = "uid://bb7gvlfpljdd4"
