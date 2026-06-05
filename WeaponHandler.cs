@@ -17,6 +17,10 @@ public partial class WeaponHandler : Node2D
 		{
 			prevGun.OnAmmoCountUpdated -= UpdateAmmoDisplay;
 		}
+		else if (currentWeapon is ScytheWeapon prevScythe)
+		{
+			prevScythe.OnAmmoCountUpdated -= UpdateAmmoDisplay;
+		}
 
 		if (weaponToUse != null)
 		{
