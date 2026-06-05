@@ -29,7 +29,7 @@ public partial class Lootbox : Node2D, IInteractable
 			return item;
 		}
 
-		// If lootbox is not opened (nor item has been taken)
+		// If lootbox is not opened (nor item has been taken), pick a random item, display it, and store it to give to the player if they want it
 		var rng = new RandomNumberGenerator();
 		int index = rng.RandiRange(0, LootTable.Length - 1);
 		item = LootTable[index];
@@ -39,6 +39,6 @@ public partial class Lootbox : Node2D, IInteractable
 		Node itemNode = item.ItemScene.Instantiate();
 		itemSprite.AddChild(itemNode);
 
-		return null; // So player does nothing
+		return null; // So player does nothing else, only opens chest
 	}
 }
