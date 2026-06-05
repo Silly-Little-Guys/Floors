@@ -161,21 +161,28 @@ public partial class Floor : Node2D
 			return false;
 		}
 
-		List<Vector2I> spawnableCells = new();
-		Rect2I usedRect = tileMapLayer.GetUsedRect();
-		int highestTileY = usedRect.Position.Y;
-		int lowestTileY = usedRect.End.Y - 1;
+		List<Vector2I> nonCollidingCells = new();
+		int highestNonCollidingTileY = int.MaxValue;
+		int lowestNonCollidingTileY = int.MinValue;
 
 		foreach (Vector2I cell in tileMapLayer.GetUsedCells())
 		{
-			if (cell.Y == highestTileY || cell.Y == lowestTileY)
+			TileData tileData = tileMapLayer.GetCellTileData(cell);
+
+			if (tileData == null || CellHasCollision(tileData, tileMapLayer.TileSet))
 			{
 				continue;
 			}
 
-			TileData tileData = tileMapLayer.GetCellTileData(cell);
+			nonCollidingCells.Add(cell);
+			highestNonCollidingTileY = Mathf.Min(highestNonCollidingTileY, cell.Y);
+			lowestNonCollidingTileY = Mathf.Max(lowestNonCollidingTileY, cell.Y);
+		}
 
-			if (tileData == null || CellHasCollision(tileData, tileMapLayer.TileSet))
+		List<Vector2I> spawnableCells = new();
+		foreach (Vector2I cell in nonCollidingCells)
+		{
+			if (cell.Y == highestNonCollidingTileY || cell.Y == lowestNonCollidingTileY)
 			{
 				continue;
 			}

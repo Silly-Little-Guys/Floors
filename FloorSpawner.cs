@@ -77,7 +77,7 @@ public partial class FloorSpawner : Node2D
 		}
 
 		PopulateFloors(level);
-		SpawnNextFloor();
+		CallDeferred(nameof(SpawnNextFloor));
 	}
 	
 	public override void _PhysicsProcess(double delta)
@@ -111,10 +111,11 @@ public partial class FloorSpawner : Node2D
 
 		Floor previousFloor = currentFloor;
 		Floor toSpawn = floors[GD.RandRange(0, floors.Count-1)].Instantiate<Floor>();
-		rootParentToSpawnIn.CallDeferred("add_child", toSpawn);
+		rootParentToSpawnIn.AddChild(toSpawn);
 
 		if (!toSpawn.TryGetFloorVerticalBounds(out float floorTopY, out float floorBottomY, out float tileHeight))
 		{
+			toSpawn.QueueFree();
 			return;
 		}
 
