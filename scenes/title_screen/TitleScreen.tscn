@@ -90,6 +90,7 @@ grow_vertical = 2
 text = "W, A, S, D to move
 Space to jump
 E to interact (open chests)
+F to use item in off slot
 Hold down Left click to shoot gun"
 horizontal_alignment = 1
 
