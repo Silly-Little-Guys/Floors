@@ -14,19 +14,33 @@ public partial class FloorSpawner : Node2D
 	private List<PackedScene> floors = new();
 	private const string floorsPath = "res://scenes/floors";
 	private const string bottomFloorPath = "res://scenes/floors/bottomfloor.tscn";
+	private const string shopFloorPath = "res://scenes/floors/shop.tscn";
 	private const int firstLoopLevel = 2;
 	private PackedScene bottomFloorScene;
+	private PackedScene shopFloorScene;
 	
 	private float nextFloorAttachY = 0;
 	private float currentFloorTopY = 0;
 	private float currentFloorTileHeight = 0;
 	private bool hasSpawnedFloor = false;
+	private bool hasCompletedStarterFloor = false;
 	private Floor currentFloor;
 	private Floor bottomFloor;
-	private Floor floorPendingReplacement;
-	private float pendingBottomFloorAttachY = 0;
-	private float pendingReplacementThresholdY = 0;
-	private bool hasPendingFloorReplacement = false;
+	private readonly List<PendingFloorReplacement> pendingFloorReplacements = new();
+
+	private class PendingFloorReplacement
+	{
+		public Floor FloorToReplace { get; }
+		public float BottomFloorAttachY { get; }
+		public float ReplacementThresholdY { get; }
+
+		public PendingFloorReplacement(Floor floorToReplace, float bottomFloorAttachY, float replacementThresholdY)
+		{
+			FloorToReplace = floorToReplace;
+			BottomFloorAttachY = bottomFloorAttachY;
+			ReplacementThresholdY = replacementThresholdY;
+		}
+	}
 
 	/// <summary>
 	/// Populates the internal floors list with floors from a given level pool of floors.
@@ -70,10 +84,16 @@ public partial class FloorSpawner : Node2D
 	public override void _Ready()
 	{
 		bottomFloorScene = ResourceLoader.Load<PackedScene>(bottomFloorPath);
+		shopFloorScene = ResourceLoader.Load<PackedScene>(shopFloorPath);
 
 		if (bottomFloorScene == null)
 		{
 			GD.PushWarning($"Could not load bottom floor scene: {bottomFloorPath}");
+		}
+
+		if (shopFloorScene == null)
+		{
+			GD.PushWarning($"Could not load shop floor scene: {shopFloorPath}");
 		}
 
 		PopulateFloors(level);
@@ -93,15 +113,18 @@ public partial class FloorSpawner : Node2D
 	{
 		if (floorsSinceLastLevel >= 5)
 		{
-			level++;
-			enemySpawner.IncrementDifficulty();
-			floorsSinceLastLevel = 0;
-			if (!PopulateFloors(level))
+			AdvanceLevel();
+
+			if (hasCompletedStarterFloor)
 			{
-				level = firstLoopLevel;
-				levelLoopCount++;
-				PopulateFloors(level);
+				SpawnShopFloor();
 			}
+			else
+			{
+				hasCompletedStarterFloor = true;
+			}
+
+			PopulateFloorsForCurrentLevelOrLoop();
 		}
 
 		if (floors.Count == 0)
@@ -109,14 +132,54 @@ public partial class FloorSpawner : Node2D
 			return;
 		}
 
+		PackedScene floorScene = floors[GD.RandRange(0, floors.Count-1)];
+		SpawnFloor(floorScene, true, true);
+	}
+
+	private void AdvanceLevel()
+	{
+		level++;
+		enemySpawner?.IncrementDifficulty();
+		floorsSinceLastLevel = 0;
+	}
+
+	private bool PopulateFloorsForCurrentLevelOrLoop()
+	{
+		if (PopulateFloors(level))
+		{
+			return true;
+		}
+
+		level = firstLoopLevel;
+		levelLoopCount++;
+		return PopulateFloors(level);
+	}
+
+	private bool SpawnShopFloor()
+	{
+		if (shopFloorScene == null)
+		{
+			return false;
+		}
+
+		return SpawnFloor(shopFloorScene, false, false);
+	}
+
+	private bool SpawnFloor(PackedScene floorScene, bool countsTowardLevel, bool spawnEnemies)
+	{
+		if (floorScene == null)
+		{
+			return false;
+		}
+
 		Floor previousFloor = currentFloor;
-		Floor toSpawn = floors[GD.RandRange(0, floors.Count-1)].Instantiate<Floor>();
+		Floor toSpawn = floorScene.Instantiate<Floor>();
 		rootParentToSpawnIn.AddChild(toSpawn);
 
 		if (!toSpawn.TryGetFloorVerticalBounds(out float floorTopY, out float floorBottomY, out float tileHeight))
 		{
 			toSpawn.QueueFree();
-			return;
+			return false;
 		}
 
 		float yOffset = hasSpawnedFloor ? nextFloorAttachY - floorBottomY : nextFloorAttachY - floorTopY;
@@ -126,7 +189,10 @@ public partial class FloorSpawner : Node2D
 		currentFloorTileHeight = tileHeight;
 		nextFloorAttachY = currentFloorTopY;
 
-		floorsSinceLastLevel++;
+		if (countsTowardLevel)
+		{
+			floorsSinceLastLevel++;
+		}
 
 		if (hasSpawnedFloor)
 		{
@@ -136,35 +202,42 @@ public partial class FloorSpawner : Node2D
 		currentFloor = toSpawn;
 		hasSpawnedFloor = true;
 
-		if (enemySpawner != null)
+		if (spawnEnemies && enemySpawner != null)
 		{
 			enemySpawner.SpawnEnemies(toSpawn);
 		}
+
+		return true;
 	}
 
 	private void QueueFloorBelowReplacement(Floor floorToReplace, float newestFloorBottomY, float tileHeight)
 	{
-		floorPendingReplacement = floorToReplace;
-		pendingBottomFloorAttachY = newestFloorBottomY;
-		pendingReplacementThresholdY = newestFloorBottomY - tileHeight;
-		hasPendingFloorReplacement = true;
+		pendingFloorReplacements.Add(new PendingFloorReplacement(
+			floorToReplace,
+			newestFloorBottomY,
+			newestFloorBottomY - tileHeight));
 	}
 
 	private void CheckPendingFloorReplacement()
 	{
-		if (!hasPendingFloorReplacement || player == null)
+		if (pendingFloorReplacements.Count == 0 || player == null)
 		{
 			return;
 		}
 
-		if (player.GlobalPosition.Y > pendingReplacementThresholdY)
+		for (int i = 0; i < pendingFloorReplacements.Count; i++)
 		{
-			return;
-		}
+			PendingFloorReplacement pendingReplacement = pendingFloorReplacements[i];
 
-		ReplaceFloorBelow(floorPendingReplacement, pendingBottomFloorAttachY);
-		floorPendingReplacement = null;
-		hasPendingFloorReplacement = false;
+			if (player.GlobalPosition.Y > pendingReplacement.ReplacementThresholdY)
+			{
+				continue;
+			}
+
+			ReplaceFloorBelow(pendingReplacement.FloorToReplace, pendingReplacement.BottomFloorAttachY);
+			pendingFloorReplacements.RemoveAt(i);
+			i--;
+		}
 	}
 
 	private void ReplaceFloorBelow(Floor floorToReplace, float newestFloorBottomY)
