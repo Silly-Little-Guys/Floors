@@ -63,7 +63,7 @@ size = Vector2(9, 15)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d25oh"]
 
-[node name="JumpyEnemy" type="RigidBody2D" unique_id=491792340 node_paths=PackedStringArray("asp2d", "enemyHealthBar", "collisionShape2D", "animatedSprite2D", "nav", "shape", "attackCooldownTimer")]
+[node name="JumpyEnemy" type="RigidBody2D" unique_id=491792340 node_paths=PackedStringArray("asp2d", "enemyHealthBar", "bodyCollisionShape2D", "attackCollisionShape2D", "animatedSprite2D", "nav", "shape", "attackCooldownTimer")]
 collision_layer = 4
 collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_mmkk0")
@@ -72,7 +72,8 @@ lock_rotation = true
 script = ExtResource("1_f6ndo")
 asp2d = NodePath("AudioStreamPlayer2D")
 enemyHealthBar = NodePath("EnemyHealthBar")
-collisionShape2D = NodePath("AttackArea/CollisionShape2D")
+bodyCollisionShape2D = NodePath("BodyCollisionShape2D")
+attackCollisionShape2D = NodePath("AttackArea/AttackCollisionShape2D")
 animatedSprite2D = NodePath("AnimatedSprite2D")
 nav = NodePath("NavigationAgent2D")
 shape = NodePath("ShapeCast2D")
@@ -86,7 +87,7 @@ texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_65310")
 animation = &"leap"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=970825611]
+[node name="BodyCollisionShape2D" type="CollisionShape2D" parent="." unique_id=970825611]
 shape = SubResource("RectangleShape2D_b41qx")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=2059416605]
@@ -105,7 +106,7 @@ collision_mask = 3
 
 [node name="AttackArea" type="Area2D" parent="." unique_id=594065931]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1905151610]
+[node name="AttackCollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1905151610]
 shape = SubResource("RectangleShape2D_d25oh")
 
 [node name="AttackCooldown" type="Timer" parent="." unique_id=70180414]

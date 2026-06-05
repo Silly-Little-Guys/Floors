@@ -7,7 +7,8 @@ public partial class JumpyEnemy : RigidBody2D, IEnemy
 	public Player player;
 	[Export] public AudioStreamPlayer2D asp2d;
 	[Export] public EnemyHealthBar enemyHealthBar;
-	[Export] public CollisionShape2D collisionShape2D;
+	[Export] public CollisionShape2D bodyCollisionShape2D;
+	[Export] public CollisionShape2D attackCollisionShape2D;
 	[Export] public AnimatedSprite2D animatedSprite2D;
 	[Export] public NavigationAgent2D nav;
 	[Export] public ShapeCast2D shape;
@@ -37,7 +38,8 @@ public partial class JumpyEnemy : RigidBody2D, IEnemy
 			isDying = true;
 			asp2d.Play();
 			this.Visible = false;
-			collisionShape2D.SetDeferred("disabled", true);
+			attackCollisionShape2D.SetDeferred("disabled", true);
+			bodyCollisionShape2D.SetDeferred("disabled", true);
 		}
 		enemyHealthBar.SetProgress(Mathf.InverseLerp(0, maxHealth, GetHealth()));
 	}

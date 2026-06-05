@@ -13,7 +13,8 @@ public partial class WingedEnemy : CharacterBody2D, IEnemy
 	[Export] public EnemyHealthBar enemyHealthBar;
 	string flightAnimation = "default";
 	[Export] public AnimatedSprite2D animatedSprite2D;
-	[Export] public CollisionShape2D collisionShape2D;
+	[Export] public CollisionShape2D bodyCollisionShape2D;
+	[Export] public CollisionShape2D attackCollisionShape2D;
 	[Export] public NavigationAgent2D nav;
 	[Export] public Timer attackCooldownTimer;
 	private bool isAttacking = false;
@@ -27,10 +28,11 @@ public partial class WingedEnemy : CharacterBody2D, IEnemy
 		SetMeta("Health", GetHealth() - damage);
 		if (GetHealth() <= 0)
 		{
-			collisionShape2D.SetDeferred("disabled", true);
 			player.AddCash(deathCash, GlobalPosition);
 			asp2d.Play();
 			this.Visible = false;
+			attackCollisionShape2D.SetDeferred("disabled", true);
+			bodyCollisionShape2D.SetDeferred("disabled", true);
 		}
 		enemyHealthBar.SetProgress(Mathf.InverseLerp(0, maxHealth, GetHealth()));
 	}

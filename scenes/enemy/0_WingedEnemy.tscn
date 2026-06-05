@@ -46,7 +46,7 @@ size = Vector2(6, 6)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wymol"]
 
-[node name="WingedEnemy" type="CharacterBody2D" unique_id=1402600375 node_paths=PackedStringArray("asp2d", "enemyHealthBar", "animatedSprite2D", "collisionShape2D", "nav", "attackCooldownTimer")]
+[node name="WingedEnemy" type="CharacterBody2D" unique_id=1402600375 node_paths=PackedStringArray("asp2d", "enemyHealthBar", "animatedSprite2D", "bodyCollisionShape2D", "attackCollisionShape2D", "nav", "attackCooldownTimer")]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_yt117")
@@ -55,7 +55,8 @@ deathCash = 10
 asp2d = NodePath("AudioStreamPlayer2D")
 enemyHealthBar = NodePath("EnemyHealthBar")
 animatedSprite2D = NodePath("AnimatedSprite2D")
-collisionShape2D = NodePath("AttackArea/CollisionShape2D")
+bodyCollisionShape2D = NodePath("BodyCollisionShape2D")
+attackCollisionShape2D = NodePath("AttackArea/AttackCollisionShape2D")
 nav = NodePath("NavigationAgent2D")
 attackCooldownTimer = NodePath("AttackCooldown")
 metadata/Health = 100
@@ -65,7 +66,7 @@ texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_2oopx")
 frame_progress = 0.4598575
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=436350362]
+[node name="BodyCollisionShape2D" type="CollisionShape2D" parent="." unique_id=436350362]
 rotation = 0.7853982
 shape = SubResource("RectangleShape2D_yt117")
 
@@ -80,7 +81,7 @@ scale = Vector2(0.16313294, 0.16313294)
 
 [node name="AttackArea" type="Area2D" parent="." unique_id=1658594072]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1732167856]
+[node name="AttackCollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1732167856]
 shape = SubResource("RectangleShape2D_wymol")
 
 [node name="AttackCooldown" type="Timer" parent="." unique_id=1917598587]
