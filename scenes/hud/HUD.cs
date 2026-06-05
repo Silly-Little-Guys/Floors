@@ -12,6 +12,7 @@ public partial class HUD : CanvasLayer
 	[Export] public AnimationPlayer damageAnimation;
 	[Export] public Label cashLabel;
 	[Export] public CompressedTexture2D cashImage;
+	[Export] public TextureRect itemTextureRect;
 
 	private const int MaxCashSprites = 50;
 	private const float CashSpriteSize = 32.0f;
@@ -223,9 +224,9 @@ public partial class HUD : CanvasLayer
 		public float PeakScale;
 	}
 
-	public void UpdateHeldItem(int item)
+	public void UpdateHeldItem(ItemData item)
 	{
-		
+		itemTextureRect.Texture = item.ItemTexture;
 	}
 
 	/// <summary>

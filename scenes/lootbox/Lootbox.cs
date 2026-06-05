@@ -1,32 +1,44 @@
 using Godot;
-using System;
-using System.ComponentModel;
 
 public partial class Lootbox : Node2D, IInteractable
 {
+	[Export] public ItemData[] LootTable;
+
 	private bool opened = false;
+	private bool taken = false;
+	private ItemData item = new();
 
-	[Export] public Sprite2D sprite;
+	// 0: health potion
+	// 1: rifle
+	// 2: pistol
+	private static int maxNum = 3;
 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+	[Export] public Sprite2D chestSprite;
+	[Export] public Sprite2D itemSprite;
+
+	public ItemData Interact()
 	{
-		
-	}
+		// If item already taken, do nothing
+		if (taken) return null;
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
+		// If chest already opened, give player the item
+		if (opened)
+		{
+			taken = true;
+			itemSprite.GetChild(0).QueueFree();
+			return item;
+		}
 
-	public int Interact()
-	{
-		if (opened) return -1;
+		// If lootbox is not opened (nor item has been taken)
+		var rng = new RandomNumberGenerator();
+		int index = rng.RandiRange(0, LootTable.Length - 1);
+		item = LootTable[index];
+
 		opened = true;
-		
-		GD.Print("Interacted");
-		sprite.Frame = 1;
+		chestSprite.Frame = 1;
+		Node itemNode = item.ItemScene.Instantiate();
+		itemSprite.AddChild(itemNode);
 
-		return 0;
+		return null; // So player does nothing
 	}
 }

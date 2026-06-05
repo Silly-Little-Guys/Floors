@@ -48,13 +48,14 @@ _data = {
 &"damage_flash": SubResource("Animation_cgeww")
 }
 
-[node name="HUD" type="CanvasLayer" unique_id=651644861 node_paths=PackedStringArray("healthBar", "ammoLabel", "damageAnimation", "cashLabel")]
+[node name="HUD" type="CanvasLayer" unique_id=651644861 node_paths=PackedStringArray("healthBar", "ammoLabel", "damageAnimation", "cashLabel", "itemTextureRect")]
 script = ExtResource("1_37p78")
 healthBar = NodePath("HealthBar")
 ammoLabel = NodePath("AmmoLabel")
 damageAnimation = NodePath("AnimationPlayer")
 cashLabel = NodePath("CashLabel")
 cashImage = ExtResource("2_cgeww")
+itemTextureRect = NodePath("ItemHolder/TextureRect")
 
 [node name="HealthBar" type="ProgressBar" parent="." unique_id=1664389420]
 offset_left = 55.0
