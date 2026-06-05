@@ -12,7 +12,7 @@ public partial class Player : CharacterBody2D
 	public delegate void CashUpdatedEventHandler(int newCash);
 
 	[Signal]
-	public delegate void CashAddedEventHandler(int amountAdded);
+	public delegate void CashAddedEventHandler(int amountAdded, Vector2 sourceGlobalPosition);
 
 	public const float Speed = 100.0f;
 	public const float JumpVelocity = -300.0f;
@@ -57,10 +57,15 @@ public partial class Player : CharacterBody2D
 
 	public void AddCash(int amount)
 	{
+		AddCash(amount, GlobalPosition);
+	}
+
+	public void AddCash(int amount, Vector2 sourceGlobalPosition)
+	{
 		int newCash = GetCash() + amount;
 		SetMeta("Cash", newCash);
 		EmitSignal(SignalName.CashUpdated, newCash);
-		EmitSignal(SignalName.CashAdded, amount);
+		EmitSignal(SignalName.CashAdded, amount, sourceGlobalPosition);
 	}
 
 	public void TakeCash(int amount)

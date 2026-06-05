@@ -27,7 +27,7 @@ public partial class WingedEnemy : CharacterBody2D, IEnemy
 		SetMeta("Health", GetHealth() - damage);
 		if (GetHealth() <= 0)
 		{
-			player.AddCash(deathCash);
+			player.AddCash(deathCash, GlobalPosition);
 			asp2d.Play();
 			this.Visible = false;
 			// collisionShape2D.Disabled = true;

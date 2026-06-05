@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 
@@ -12,9 +13,19 @@ public partial class HUD : CanvasLayer
 	[Export] public Label cashLabel;
 	[Export] public CompressedTexture2D cashImage;
 
+	private const int MaxCashSprites = 50;
+	private const float CashSpriteSize = 32.0f;
+	private const float CashBurstDuration = 0.95f;
+	private const float CashLabelPulseDuration = 0.25f;
+
+	private readonly List<CashAnimation> cashAnimations = new();
+	private readonly RandomNumberGenerator random = new();
+	private float cashLabelPulseTimer = 0.0f;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		random.Randomize();
 		healthBar.Value = player.GetHealth();
 		OnPlayerCashUpdated(player.GetCash());
 	}
@@ -22,6 +33,8 @@ public partial class HUD : CanvasLayer
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		UpdateCashAnimations((float)delta);
+		UpdateCashLabelPulse((float)delta);
 	}
 
 	public void OnButtonPressed()
@@ -40,9 +53,174 @@ public partial class HUD : CanvasLayer
 		cashLabel.Text = $"${newAmount.ToString("N0", CultureInfo.InvariantCulture)}";
 	}
 
-	public void OnPlayerCashAdded(int amount)
+	public void OnPlayerCashAdded(int amount, Vector2 sourceGlobalPosition)
 	{
-		// do some fancy animatino to show the cash added.
+		SpawnCashBurst(amount, WorldToHudPosition(sourceGlobalPosition));
+		cashLabelPulseTimer = CashLabelPulseDuration;
+	}
+
+	private void SpawnCashBurst(int amount, Vector2 sourcePosition)
+	{
+		if (cashImage == null || cashLabel == null)
+		{
+			return;
+		}
+
+		int spriteCount = Mathf.Clamp(amount, 1, MaxCashSprites);
+		Vector2 cashLabelCenter = cashLabel.GetGlobalRect().GetCenter();
+
+		for (int i = 0; i < spriteCount; i++)
+		{
+			TextureRect cashSprite = new TextureRect
+			{
+				Texture = cashImage,
+				Size = new Vector2(CashSpriteSize, CashSpriteSize),
+				PivotOffset = new Vector2(CashSpriteSize, CashSpriteSize) / 2.0f,
+				MouseFilter = Control.MouseFilterEnum.Ignore,
+				ZIndex = 100,
+				Modulate = new Color(1.0f, 1.0f, 1.0f, 0.0f),
+				Scale = Vector2.Zero,
+			};
+
+			float angle = random.RandfRange(0.0f, Mathf.Pi * 2.0f);
+			Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+			Vector2 startPosition = sourcePosition + direction * random.RandfRange(0.0f, 18.0f);
+			Vector2 burstPosition = sourcePosition + direction * random.RandfRange(50.0f, 115.0f);
+			Vector2 midpoint = (burstPosition + cashLabelCenter) / 2.0f;
+			Vector2 arcLift = Vector2.Up * random.RandfRange(70.0f, 150.0f);
+			Vector2 arcSide = new Vector2(-direction.Y, direction.X) * random.RandfRange(-45.0f, 45.0f);
+
+			AddChild(cashSprite);
+			cashSprite.Position = startPosition - cashSprite.PivotOffset;
+
+			cashAnimations.Add(new CashAnimation
+			{
+				Sprite = cashSprite,
+				StartPosition = startPosition,
+				BurstPosition = burstPosition,
+				ControlPosition = midpoint + arcLift + arcSide,
+				EndPosition = cashLabelCenter,
+				Delay = i * 0.015f + random.RandfRange(0.0f, 0.08f),
+				Duration = CashBurstDuration + random.RandfRange(-0.08f, 0.16f),
+				StartRotation = random.RandfRange(-0.9f, 0.9f),
+				EndRotation = random.RandfRange(-Mathf.Pi * 3.0f, Mathf.Pi * 3.0f),
+				PeakScale = random.RandfRange(1.25f, 1.8f),
+			});
+		}
+	}
+
+	private Vector2 WorldToHudPosition(Vector2 worldPosition)
+	{
+		return GetViewport().GetCanvasTransform() * worldPosition;
+	}
+
+	private void UpdateCashAnimations(float delta)
+	{
+		for (int i = cashAnimations.Count - 1; i >= 0; i--)
+		{
+			CashAnimation cashAnimation = cashAnimations[i];
+			cashAnimation.Elapsed += delta;
+
+			float rawProgress = (cashAnimation.Elapsed - cashAnimation.Delay) / cashAnimation.Duration;
+			if (rawProgress < 0.0f)
+			{
+				cashAnimations[i] = cashAnimation;
+				continue;
+			}
+
+			if (rawProgress >= 1.0f)
+			{
+				cashAnimation.Sprite.QueueFree();
+				cashAnimations.RemoveAt(i);
+				continue;
+			}
+
+			float progress = Mathf.Clamp(rawProgress, 0.0f, 1.0f);
+			float scatterEnd = 0.28f;
+			Vector2 position;
+			float scale;
+			float alpha;
+
+			if (progress < scatterEnd)
+			{
+				float scatterProgress = progress / scatterEnd;
+				float easedScatter = EaseOutBack(scatterProgress);
+				position = cashAnimation.StartPosition.Lerp(cashAnimation.BurstPosition, easedScatter);
+				scale = Mathf.Lerp(0.1f, cashAnimation.PeakScale, EaseOutBack(scatterProgress));
+				alpha = EaseOutCubic(Mathf.Clamp(scatterProgress * 2.0f, 0.0f, 1.0f));
+			}
+			else
+			{
+				float flyProgress = (progress - scatterEnd) / (1.0f - scatterEnd);
+				float easedFly = EaseInCubic(flyProgress);
+				position = QuadraticBezier(cashAnimation.BurstPosition, cashAnimation.ControlPosition, cashAnimation.EndPosition, easedFly);
+				scale = Mathf.Lerp(cashAnimation.PeakScale, 0.45f, EaseOutCubic(flyProgress));
+				alpha = 1.0f - EaseInCubic(Mathf.Clamp((flyProgress - 0.82f) / 0.18f, 0.0f, 1.0f));
+			}
+
+			cashAnimation.Sprite.Position = position - cashAnimation.Sprite.PivotOffset;
+			cashAnimation.Sprite.Scale = Vector2.One * scale;
+			cashAnimation.Sprite.Rotation = Mathf.Lerp(cashAnimation.StartRotation, cashAnimation.EndRotation, EaseOutCubic(progress));
+			cashAnimation.Sprite.Modulate = new Color(1.0f, 1.0f, 1.0f, alpha);
+			cashAnimations[i] = cashAnimation;
+		}
+	}
+
+	private void UpdateCashLabelPulse(float delta)
+	{
+		if (cashLabel == null)
+		{
+			return;
+		}
+
+		if (cashLabelPulseTimer <= 0.0f)
+		{
+			cashLabel.Scale = Vector2.One;
+			return;
+		}
+
+		cashLabel.PivotOffset = cashLabel.Size / 2.0f;
+		cashLabelPulseTimer = Mathf.Max(cashLabelPulseTimer - delta, 0.0f);
+		float progress = 1.0f - cashLabelPulseTimer / CashLabelPulseDuration;
+		float pulse = Mathf.Sin(progress * Mathf.Pi);
+		cashLabel.Scale = Vector2.One * (1.0f + pulse * 0.18f);
+	}
+
+	private static Vector2 QuadraticBezier(Vector2 start, Vector2 control, Vector2 end, float weight)
+	{
+		return start.Lerp(control, weight).Lerp(control.Lerp(end, weight), weight);
+	}
+
+	private static float EaseOutCubic(float weight)
+	{
+		return 1.0f - Mathf.Pow(1.0f - weight, 3.0f);
+	}
+
+	private static float EaseInCubic(float weight)
+	{
+		return weight * weight * weight;
+	}
+
+	private static float EaseOutBack(float weight)
+	{
+		const float backAmount = 1.70158f;
+		float shiftedWeight = weight - 1.0f;
+		return 1.0f + (backAmount + 1.0f) * Mathf.Pow(shiftedWeight, 3.0f) + backAmount * Mathf.Pow(shiftedWeight, 2.0f);
+	}
+
+	private struct CashAnimation
+	{
+		public TextureRect Sprite;
+		public Vector2 StartPosition;
+		public Vector2 BurstPosition;
+		public Vector2 ControlPosition;
+		public Vector2 EndPosition;
+		public float Elapsed;
+		public float Delay;
+		public float Duration;
+		public float StartRotation;
+		public float EndRotation;
+		public float PeakScale;
 	}
 
 	public void UpdateHeldItem(int item)

@@ -33,7 +33,7 @@ public partial class JumpyEnemy : RigidBody2D, IEnemy
 		SetMeta("Health", GetHealth() - damage);
 		if (GetHealth() <= 0)
 		{
-			player.AddCash(deathCash);
+			player.AddCash(deathCash, GlobalPosition);
 			isDying = true;
 			asp2d.Play();
 			this.Visible = false;
