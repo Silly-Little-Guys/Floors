@@ -8,6 +8,12 @@ public partial class Player : CharacterBody2D
 	[Signal]
 	public delegate void HealthUpdatedEventHandler(bool damaged);
 
+	[Signal]
+	public delegate void CashUpdatedEventHandler(int newCash);
+
+	[Signal]
+	public delegate void CashAddedEventHandler(int amountAdded);
+
 	public const float Speed = 100.0f;
 	public const float JumpVelocity = -300.0f;
 	private List<IInteractable> nearbyInteractables = new();
@@ -47,6 +53,26 @@ public partial class Player : CharacterBody2D
 		int newHealth = Mathf.Clamp(GetHealth() - amount, 0, 100);
 		SetMeta("Health", newHealth);
 		EmitSignal(SignalName.HealthUpdated, true);
+	}
+
+	public void AddCash(int amount)
+	{
+		int newCash = GetCash() + amount;
+		SetMeta("Cash", newCash);
+		EmitSignal(SignalName.CashUpdated, newCash);
+		EmitSignal(SignalName.CashAdded, amount);
+	}
+
+	public void TakeCash(int amount)
+	{
+		int newCash = GetCash() - amount;
+		SetMeta("Cash", newCash);
+		EmitSignal(SignalName.CashUpdated, newCash);
+	}
+
+	public int GetCash()
+	{
+		return (int) GetMeta("Cash");
 	}
 
 	public int GetHealth()

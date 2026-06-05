@@ -51,6 +51,7 @@ collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_yt117")
 attackDamage = 10
+deathCash = 10
 asp2d = NodePath("AudioStreamPlayer2D")
 enemyHealthBar = NodePath("EnemyHealthBar")
 animatedSprite2D = NodePath("AnimatedSprite2D")

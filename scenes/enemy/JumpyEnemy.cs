@@ -12,6 +12,7 @@ public partial class JumpyEnemy : RigidBody2D, IEnemy
 	[Export] public NavigationAgent2D nav;
 	[Export] public ShapeCast2D shape;
 	[Export] public Timer attackCooldownTimer;
+	[Export] public int deathCash;
 	[Export] public int attackDamage;
 	public const float speed = 30.0f;
 	public const float jumpForce = 200.0f;
@@ -32,6 +33,7 @@ public partial class JumpyEnemy : RigidBody2D, IEnemy
 		SetMeta("Health", GetHealth() - damage);
 		if (GetHealth() <= 0)
 		{
+			player.AddCash(deathCash);
 			isDying = true;
 			asp2d.Play();
 			this.Visible = false;

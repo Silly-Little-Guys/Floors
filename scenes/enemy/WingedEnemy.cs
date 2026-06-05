@@ -8,6 +8,7 @@ public partial class WingedEnemy : CharacterBody2D, IEnemy
 	public Player player;
 	public int maxHealth;
 	[Export] public int attackDamage;
+	[Export] public int deathCash;
 	[Export] public AudioStreamPlayer2D asp2d;
 	[Export] public EnemyHealthBar enemyHealthBar;
 	string flightAnimation = "default";
@@ -26,6 +27,7 @@ public partial class WingedEnemy : CharacterBody2D, IEnemy
 		SetMeta("Health", GetHealth() - damage);
 		if (GetHealth() <= 0)
 		{
+			player.AddCash(deathCash);
 			asp2d.Play();
 			this.Visible = false;
 			// collisionShape2D.Disabled = true;

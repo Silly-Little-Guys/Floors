@@ -94,6 +94,7 @@ public partial class FloorSpawner : Node2D
 		if (floorsSinceLastLevel >= 5)
 		{
 			level++;
+			enemySpawner.IncrementDifficulty();
 			floorsSinceLastLevel = 0;
 			if (!PopulateFloors(level))
 			{

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cb81quefv111a"]
 
 [ext_resource type="Script" uid="uid://bqlnlcjrbse4b" path="res://scenes/hud/HUD.cs" id="1_37p78"]
+[ext_resource type="Texture2D" uid="uid://btq2k1ajhp4xn" path="res://assets/aseprite/cash.png" id="2_cgeww"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_48c2t"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -47,11 +48,13 @@ _data = {
 &"damage_flash": SubResource("Animation_cgeww")
 }
 
-[node name="HUD" type="CanvasLayer" unique_id=651644861 node_paths=PackedStringArray("healthBar", "ammoLabel", "damageAnimation")]
+[node name="HUD" type="CanvasLayer" unique_id=651644861 node_paths=PackedStringArray("healthBar", "ammoLabel", "damageAnimation", "cashLabel")]
 script = ExtResource("1_37p78")
 healthBar = NodePath("HealthBar")
 ammoLabel = NodePath("AmmoLabel")
 damageAnimation = NodePath("AnimationPlayer")
+cashLabel = NodePath("CashLabel")
+cashImage = ExtResource("2_cgeww")
 
 [node name="HealthBar" type="ProgressBar" parent="." unique_id=1664389420]
 offset_left = 55.0
@@ -122,5 +125,13 @@ color = Color(1, 0, 0, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=856967178]
 libraries/ = SubResource("AnimationLibrary_c45xl")
+
+[node name="CashLabel" type="Label" parent="." unique_id=2097608474]
+offset_left = 758.0
+offset_top = 420.0
+offset_right = 1144.0
+offset_bottom = 443.0
+text = "$999,999"
+horizontal_alignment = 2
 
 [connection signal="pressed" from="Button" to="." method="OnButtonPressed"]

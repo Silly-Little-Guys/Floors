@@ -77,6 +77,7 @@ animatedSprite2D = NodePath("AnimatedSprite2D")
 nav = NodePath("NavigationAgent2D")
 shape = NodePath("ShapeCast2D")
 attackCooldownTimer = NodePath("AttackCooldown")
+deathCash = 50
 attackDamage = 20
 metadata/Health = 20
 

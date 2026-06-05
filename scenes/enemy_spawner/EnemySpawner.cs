@@ -28,6 +28,11 @@ public partial class EnemySpawner : Node2D
 		PopulateEnemyScenes();
 	}
 
+	public void IncrementDifficulty()
+	{
+		difficultyLevel++;
+	}
+
 	private void PopulateEnemyScenes()
 	{
 		enemyScenes.Clear();
