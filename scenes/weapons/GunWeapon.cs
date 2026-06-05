@@ -17,6 +17,7 @@ public partial class GunWeapon : Weapon
 	[Export] public Node2D pivotPoint;
 	[Export] public RayCast2D shotDirection;
 	[Export] public Player player;
+	[Export] public AudioStreamPlayer2D shootSoundPlayer;
 	[Export] public int ammoCount;
 	public int maxAmmoCount;
 	
@@ -46,6 +47,8 @@ public partial class GunWeapon : Weapon
 
 		ammoCount--;
 		EmitSignal(SignalName.OnAmmoCountUpdated, ammoCount);
+
+		shootSoundPlayer.Play();
 
 		fireTimer.Start();
 		float shotSpread = Mathf.DegToRad((float)GD.RandRange(-spreadDegrees, spreadDegrees));

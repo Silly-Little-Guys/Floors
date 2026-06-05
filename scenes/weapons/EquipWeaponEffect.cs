@@ -1,7 +1,7 @@
 using Godot;
 
 [GlobalClass]
-public partial class RifleItemEffect : ItemEffect
+public partial class EquipWeaponEffect : ItemEffect
 {
 	public override void Apply(Player player, ItemData item)
 	{
