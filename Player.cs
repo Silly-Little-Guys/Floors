@@ -26,6 +26,8 @@ public partial class Player : CharacterBody2D
 	[Export] public HUD hud;
 	[Export] public WeaponHandler weaponHandler;
 	[Export] public Node bulletSpawnPoint;
+	[Export] public AudioStreamPlayer2D equipWeaponSoundPlayer;
+	[Export] public AudioStreamPlayer2D drinkPotionSoundPlayer;
 	private ItemData heldItem;
 
 	private int maxHealth;

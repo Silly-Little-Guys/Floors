@@ -7,5 +7,6 @@ public partial class EquipWeaponEffect : ItemEffect
 	{
 		player.weaponHandler.weaponToUse = item.ItemScene;
 		player.weaponHandler.UpdateWeapon();
+		player.equipWeaponSoundPlayer.Play();
 	}
 }

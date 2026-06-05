@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://byghec0f7ghrp" path="res://assets/aseprite/RunNoHands.png" id="4_sweqy"]
 [ext_resource type="Script" uid="uid://c36j8mlu288gv" path="res://WeaponHandler.cs" id="5_sweqy"]
 [ext_resource type="PackedScene" uid="uid://fl07q48ns1ko" path="res://scenes/weapons/scythe/ScytheWeapon.tscn" id="7_1jxqw"]
+[ext_resource type="AudioStream" uid="uid://dl2gesutslbd0" path="res://assets/sfx/equip-weapon.wav" id="8_dw050"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hqtel"]
 atlas = ExtResource("2_i3pqv")
@@ -148,7 +149,7 @@ size = Vector2(6, 13)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1jxqw"]
 
-[node name="player" type="CharacterBody2D" unique_id=28407583 node_paths=PackedStringArray("animatedSprite2D", "coyoteTimer", "jumpBufferTimer", "weaponHandler")]
+[node name="player" type="CharacterBody2D" unique_id=28407583 node_paths=PackedStringArray("animatedSprite2D", "coyoteTimer", "jumpBufferTimer", "weaponHandler", "equipWeaponSoundPlayer")]
 z_index = 1
 collision_mask = 5
 script = ExtResource("1_4flbx")
@@ -157,6 +158,7 @@ animatedSprite2D = NodePath("AnimatedSprite2D")
 coyoteTimer = NodePath("CoyoteTime")
 jumpBufferTimer = NodePath("JumpBuffTime")
 weaponHandler = NodePath("WeaponHandler")
+equipWeaponSoundPlayer = NodePath("EquipWeaponSoundPlayer")
 metadata/Cash = 0
 metadata/Health = 100
 
@@ -187,6 +189,10 @@ player = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=364566377]
 shape = SubResource("RectangleShape2D_1jxqw")
+
+[node name="EquipWeaponSoundPlayer" type="AudioStreamPlayer2D" parent="." unique_id=506798281]
+stream = ExtResource("8_dw050")
+volume_db = 4.0
 
 [connection signal="area_entered" from="InteractionArea" to="." method="OnInteractionAreaAreaEntered"]
 [connection signal="area_exited" from="InteractionArea" to="." method="OnInteractionAreaAreaExited"]
