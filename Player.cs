@@ -70,19 +70,6 @@ public partial class Player : CharacterBody2D
 		}
 	}
 
-	public override void _UnhandledInput(InputEvent @event)
-	{
-		if (@event.IsActionPressed("interact"))
-		{
-			if (nearbyInteractables.Count > 0)
-			{
-				var interactable = nearbyInteractables[0];
-				heldItem = interactable.Interact();
-				hud.UpdateHeldItem(heldItem);
-			}
-		}
-	}
-
 	public override void _PhysicsProcess(double delta)
 	{
 		bool hasWeapon = weaponHandler.HasWeapon();
@@ -111,6 +98,17 @@ public partial class Player : CharacterBody2D
 		{
 			velocity.Y = JumpVelocity;
 			jumpBufferTimer.Stop();
+		}
+
+		// Handle interaction.
+		if (Input.IsActionJustPressed("interact"))
+		{
+			if (nearbyInteractables.Count > 0)
+			{
+				var interactable = nearbyInteractables[0];
+				heldItem = interactable.Interact();
+				hud.UpdateHeldItem(heldItem);
+			}
 		}
 
 		// Get the input direction and handle the movement/deceleration.
