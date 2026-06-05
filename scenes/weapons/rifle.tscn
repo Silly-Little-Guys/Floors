@@ -48,7 +48,7 @@ fireTimer = NodePath("FireTime")
 animatedSprite2D = NodePath("AnimatedSprite2D")
 pivotPoint = NodePath("pivot")
 shotDirection = NodePath("shotDirection")
-ammoCount = 9999
+ammoCount = 200
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=529214809]
 texture_filter = 1
