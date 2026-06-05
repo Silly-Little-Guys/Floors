@@ -162,9 +162,17 @@ public partial class Floor : Node2D
 		}
 
 		List<Vector2I> spawnableCells = new();
+		Rect2I usedRect = tileMapLayer.GetUsedRect();
+		int highestTileY = usedRect.Position.Y;
+		int lowestTileY = usedRect.End.Y - 1;
 
 		foreach (Vector2I cell in tileMapLayer.GetUsedCells())
 		{
+			if (cell.Y == highestTileY || cell.Y == lowestTileY)
+			{
+				continue;
+			}
+
 			TileData tileData = tileMapLayer.GetCellTileData(cell);
 
 			if (tileData == null || CellHasCollision(tileData, tileMapLayer.TileSet))
