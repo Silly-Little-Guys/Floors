@@ -40,7 +40,7 @@ animations = [{
 
 [node name="ScytheWeapon" type="Node2D" unique_id=1568246519 node_paths=PackedStringArray("fireTimer", "animatedSprite2D", "pivotPoint", "shotDirection")]
 script = ExtResource("1_wn4wk")
-damage = 20
+damage = 100
 fireRate = 1.0
 bulletSpeed = 100.0
 spreadDegrees = 0.0
