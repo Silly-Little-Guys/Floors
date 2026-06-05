@@ -27,11 +27,10 @@ public partial class WingedEnemy : CharacterBody2D, IEnemy
 		SetMeta("Health", GetHealth() - damage);
 		if (GetHealth() <= 0)
 		{
+			collisionShape2D.SetDeferred("disabled", true);
 			player.AddCash(deathCash, GlobalPosition);
 			asp2d.Play();
 			this.Visible = false;
-			// collisionShape2D.Disabled = true;
-			collisionShape2D.SetDeferred("disabled", true);
 		}
 		enemyHealthBar.SetProgress(Mathf.InverseLerp(0, maxHealth, GetHealth()));
 	}
