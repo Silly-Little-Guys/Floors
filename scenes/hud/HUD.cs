@@ -226,6 +226,11 @@ public partial class HUD : CanvasLayer
 
 	public void UpdateHeldItem(ItemData item)
 	{
+		if (item is null)
+		{
+			itemTextureRect.Texture = null;
+			return;
+		}
 		itemTextureRect.Texture = item.ItemTexture;
 	}
 

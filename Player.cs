@@ -101,6 +101,14 @@ public partial class Player : CharacterBody2D
 		}
 	}
 
+	public void UseItem(ItemData item)
+	{
+		foreach (var effect in item.Effects)
+		{
+			effect.Apply(this);
+		}
+	}
+
     public override void _UnhandledInput(InputEvent @event)
     {
         if (@event.IsActionPressed("interact"))
@@ -115,6 +123,15 @@ public partial class Player : CharacterBody2D
 					hud.UpdateHeldItem(receivedItem);
 				}
 			}
+		}
+
+		if (@event.IsActionPressed("use_item"))
+		{
+			if (heldItem is null) return;
+
+			UseItem(heldItem);
+			heldItem = null;
+			hud.UpdateHeldItem(heldItem);
 		}
     }
 
