@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c1rpt6dddknhe"]
 
 [ext_resource type="Script" uid="uid://dtsmwo6e616we" path="res://scenes/weapons/GunWeapon.cs" id="1_60a84"]
-[ext_resource type="PackedScene" uid="uid://ccbwt5f4t5ks0" path="res://scenes/weapons/bullet.tscn" id="2_ivc8v"]
+[ext_resource type="PackedScene" uid="uid://ccbwt5f4t5ks0" path="res://scenes/weapons/bullet/bullet.tscn" id="2_ivc8v"]
 [ext_resource type="Texture2D" uid="uid://b436hr4bvylxn" path="res://assets/aseprite/Pistol.png" id="3_60a84"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ivc8v"]

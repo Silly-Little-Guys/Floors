@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://ctr7rooamc732"]
 
 [ext_resource type="Script" uid="uid://bb7gvlfpljdd4" path="res://scenes/items/ItemData.cs" id="1_bbpvd"]
-[ext_resource type="PackedScene" uid="uid://brivmfkko535o" path="res://scenes/weapons/rifle.tscn" id="1_h40wu"]
+[ext_resource type="PackedScene" uid="uid://brivmfkko535o" path="res://scenes/weapons/rifle/rifle.tscn" id="1_h40wu"]
 [ext_resource type="Script" uid="uid://bophm7vj2v2e6" path="res://scenes/weapons/EquipWeaponEffect.cs" id="1_uh5gt"]
 [ext_resource type="Texture2D" uid="uid://co5js2tw3h4r8" path="res://assets/aseprite/Rifle.png" id="2_tb44h"]
 

@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://fl07q48ns1ko"]
 
-[ext_resource type="Script" uid="uid://ckma46ry7w13v" path="res://scenes/weapons/ScytheWeapon.cs" id="1_wn4wk"]
+[ext_resource type="Script" uid="uid://ckma46ry7w13v" path="res://scenes/weapons/scythe/ScytheWeapon.cs" id="1_wn4wk"]
 [ext_resource type="Texture2D" uid="uid://bojonyovwu7y5" path="res://assets/aseprite/Scythe.png" id="2_h01xk"]
-[ext_resource type="PackedScene" uid="uid://jhgompnmehpw" path="res://scenes/weapons/ScytheBlade.tscn" id="2_kvybn"]
+[ext_resource type="PackedScene" uid="uid://jhgompnmehpw" path="res://scenes/weapons/scythe/ScytheBlade.tscn" id="2_kvybn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kvybn"]
 atlas = ExtResource("2_h01xk")

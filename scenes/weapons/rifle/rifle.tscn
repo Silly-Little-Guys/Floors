@@ -2,7 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dtsmwo6e616we" path="res://scenes/weapons/GunWeapon.cs" id="1_6kub0"]
 [ext_resource type="Texture2D" uid="uid://co5js2tw3h4r8" path="res://assets/aseprite/Rifle.png" id="2_hkhc6"]
-[ext_resource type="PackedScene" uid="uid://ccbwt5f4t5ks0" path="res://scenes/weapons/bullet.tscn" id="2_sg1yr"]
+[ext_resource type="PackedScene" uid="uid://ccbwt5f4t5ks0" path="res://scenes/weapons/bullet/bullet.tscn" id="2_sg1yr"]
+[ext_resource type="AudioStream" uid="uid://dxp2twkgupota" path="res://assets/sfx/gun-shoot.mp3" id="4_oaqv7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sg1yr"]
 atlas = ExtResource("2_hkhc6")
@@ -67,3 +68,6 @@ position = Vector2(6, 3)
 enabled = false
 target_position = Vector2(16, 0)
 collide_with_bodies = false
+
+[node name="ShootSoundPlayer" type="AudioStreamPlayer2D" parent="." unique_id=439163307]
+stream = ExtResource("4_oaqv7")

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://jhgompnmehpw"]
 
-[ext_resource type="Script" uid="uid://hq8vidgib1g0" path="res://scenes/weapons/ScytheBlade.cs" id="1_dqtwi"]
+[ext_resource type="Script" uid="uid://hq8vidgib1g0" path="res://scenes/weapons/scythe/ScytheBlade.cs" id="1_dqtwi"]
 [ext_resource type="Texture2D" uid="uid://bojonyovwu7y5" path="res://assets/aseprite/Scythe.png" id="1_q5nl3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q5nl3"]
