@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dsaht58y4qk6y"]
 
-[ext_resource type="Script" uid="uid://pgi8fscxvf6r" path="res://scenes/title_screen/TitleScreen.cs" id="1_fr4xu"]
+[ext_resource type="Script" uid="uid://cscwv06eqkb8u" path="res://scenes/death_screen/DeathScreen.cs" id="1_jynsk"]
 
 [sub_resource type="SystemFont" id="SystemFont_bludd"]
 font_names = PackedStringArray("Comic Sans MS")
@@ -11,7 +11,7 @@ font_stretch = 50
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bludd"]
 bg_color = Color(0.7490196, 0, 0, 1)
 
-[node name="TitleScreen" type="Control" unique_id=952694068]
+[node name="DeathScreen" type="Control" unique_id=952694068]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -22,7 +22,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-script = ExtResource("1_fr4xu")
+script = ExtResource("1_jynsk")
 
 [node name="Label" type="Label" parent="." unique_id=1636276247]
 layout_mode = 1
@@ -58,21 +58,38 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 60
 text = "Try again"
 
-[node name="QuitButton" type="Button" parent="." unique_id=1422715309]
+[node name="MainMenuButton" type="Button" parent="." unique_id=1422715309]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -46.0
-offset_top = 105.0
-offset_right = 46.0
-offset_bottom = 168.0
+offset_left = -89.5
+offset_top = 136.0
+offset_right = 89.5
+offset_bottom = 199.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "Main menu"
+
+[node name="QuitButton" type="Button" parent="." unique_id=1744241312]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -89.5
+offset_top = 241.5
+offset_right = 89.5
+offset_bottom = 304.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 40
 text = "Ragequit"
 
 [connection signal="pressed" from="StartButton" to="." method="OnStartButtonPressed"]
+[connection signal="pressed" from="MainMenuButton" to="." method="OnMainMenuButtonPressed"]
 [connection signal="pressed" from="QuitButton" to="." method="OnQuitButtonPressed"]
