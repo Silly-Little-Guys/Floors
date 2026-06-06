@@ -34,6 +34,7 @@ public partial class Lootbox : Node2D, IInteractable
 		chestSprite.Frame = 1;
 		Node itemNode = item.ItemScene.Instantiate();
 		itemSprite.AddChild(itemNode);
+		itemSprite.GetChild(0).ProcessMode = ProcessModeEnum.Disabled;
 
 		openSoundPlayer.Play();
 
