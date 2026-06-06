@@ -5,6 +5,8 @@ using System.Collections.Generic;
 //I was here
 public partial class FloorSpawner : Node2D
 {
+	[Signal]
+	public delegate void OnNextFloorSpawnEventHandler(int currentFloorNumber);
 	[Export] public Player player;
 	[Export] public Node2D rootParentToSpawnIn;
 	[Export] public EnemySpawner enemySpawner;
@@ -145,6 +147,7 @@ public partial class FloorSpawner : Node2D
 		PackedScene floorScene = floors[GD.RandRange(0, floors.Count-1)];
 		SpawnFloor(floorScene, true, true);
 		currentFloorNumber++;
+		EmitSignal(SignalName.OnNextFloorSpawn, currentFloorNumber);
 	}
 
 	private void AdvanceLevel()

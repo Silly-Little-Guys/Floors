@@ -46,6 +46,11 @@ public partial class HUD : CanvasLayer
 		if (damaged) damageAnimation.Play("damage_flash");
 	}
 
+	public void OnNextFloorSpawn(int currentFloorNumber)
+	{
+		GD.Print("Floor: " + currentFloorNumber);
+	}
+
 	public void OnPlayerCashUpdated(int newAmount)
 	{
 		cashLabel.Text = $"${newAmount.ToString("N0", CultureInfo.InvariantCulture)}";

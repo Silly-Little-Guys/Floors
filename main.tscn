@@ -43,6 +43,7 @@ player = NodePath("../player")
 [node name="HUD" parent="." unique_id=651644861 node_paths=PackedStringArray("player") instance=ExtResource("8_5vw27")]
 player = NodePath("../player")
 
+[connection signal="OnNextFloorSpawn" from="floor_spawner" to="HUD" method="OnNextFloorSpawn"]
 [connection signal="CashAdded" from="player" to="HUD" method="OnPlayerCashAdded"]
 [connection signal="CashUpdated" from="player" to="HUD" method="OnPlayerCashUpdated"]
 [connection signal="HealthUpdated" from="player" to="HUD" method="OnPlayerHealthUpdated"]
