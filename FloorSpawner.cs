@@ -9,6 +9,7 @@ public partial class FloorSpawner : Node2D
 	[Export] public Node2D rootParentToSpawnIn;
 	[Export] public EnemySpawner enemySpawner;
 	private int level = 1;
+	public int currentFloorNumber = 0;
 	private int floorsSinceLastLevel = 4;
 	private int levelLoopCount = 0;
 	private List<PackedScene> floors = new();
@@ -40,6 +41,15 @@ public partial class FloorSpawner : Node2D
 			BottomFloorAttachY = bottomFloorAttachY;
 			ReplacementThresholdY = replacementThresholdY;
 		}
+	}
+
+	/// <summary>
+	/// Gets the current floor number, i.e. player is on their first floor, second floor, etc.
+	/// </summary>
+	/// <returns>int representing the floor number</returns>
+	public int GetCurrentFloorNumber()
+	{
+		return currentFloorNumber;
 	}
 
 	/// <summary>
@@ -134,6 +144,7 @@ public partial class FloorSpawner : Node2D
 
 		PackedScene floorScene = floors[GD.RandRange(0, floors.Count-1)];
 		SpawnFloor(floorScene, true, true);
+		currentFloorNumber++;
 	}
 
 	private void AdvanceLevel()
