@@ -28,6 +28,7 @@ public partial class Player : CharacterBody2D
 	[Export] public Node bulletSpawnPoint;
 	[Export] public AudioStreamPlayer2D equipWeaponSoundPlayer;
 	[Export] public AudioStreamPlayer2D drinkPotionSoundPlayer;
+	[Export] public AudioStreamPlayer2D damageSoundPlayer;
 	private ItemData heldItem;
 
 	private int maxHealth;
@@ -41,7 +42,7 @@ public partial class Player : CharacterBody2D
 	}
 
 	/// <summary>
-	/// Add an integer amount of health to the player's health. Player health will be clamped from 0 to 100. Additive can be negative.
+	/// Add an integer amount of health to the player's health.
 	/// </summary>
 	public void AddHealth(int amount)
 	{
@@ -55,6 +56,7 @@ public partial class Player : CharacterBody2D
 		int newHealth = Mathf.Clamp(GetHealth() - amount, 0, 100);
 		SetMeta("Health", newHealth);
 		EmitSignal(SignalName.HealthUpdated, true);
+		damageSoundPlayer.Play();
 		if (GetHealth() <= 0)
 		{
 			GetTree().ChangeSceneToFile("res://scenes/death_screen/death_screen.tscn");

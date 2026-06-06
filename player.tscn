@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://fl07q48ns1ko" path="res://scenes/weapons/scythe/ScytheWeapon.tscn" id="7_1jxqw"]
 [ext_resource type="AudioStream" uid="uid://dl2gesutslbd0" path="res://assets/sfx/equip-weapon.wav" id="8_dw050"]
 [ext_resource type="AudioStream" uid="uid://n0lyxqscropr" path="res://assets/sfx/heal.wav" id="9_b26j0"]
+[ext_resource type="AudioStream" uid="uid://uo8vxxchqbcl" path="res://assets/sfx/damage.wav" id="10_n7ghd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hqtel"]
 atlas = ExtResource("2_i3pqv")
@@ -150,7 +151,7 @@ size = Vector2(6, 13)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1jxqw"]
 
-[node name="player" type="CharacterBody2D" unique_id=28407583 node_paths=PackedStringArray("animatedSprite2D", "coyoteTimer", "jumpBufferTimer", "weaponHandler", "equipWeaponSoundPlayer", "drinkPotionSoundPlayer")]
+[node name="player" type="CharacterBody2D" unique_id=28407583 node_paths=PackedStringArray("animatedSprite2D", "coyoteTimer", "jumpBufferTimer", "weaponHandler", "equipWeaponSoundPlayer", "drinkPotionSoundPlayer", "damageSoundPlayer")]
 z_index = 1
 collision_mask = 5
 script = ExtResource("1_4flbx")
@@ -161,6 +162,7 @@ jumpBufferTimer = NodePath("JumpBuffTime")
 weaponHandler = NodePath("WeaponHandler")
 equipWeaponSoundPlayer = NodePath("EquipWeaponSoundPlayer")
 drinkPotionSoundPlayer = NodePath("DrinkPotionSoundPlayer")
+damageSoundPlayer = NodePath("DamageSoundPlayer")
 metadata/Cash = 0
 metadata/Health = 100
 
@@ -198,6 +200,10 @@ volume_db = 4.0
 
 [node name="DrinkPotionSoundPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1172876674]
 stream = ExtResource("9_b26j0")
+volume_db = 2.0
+
+[node name="DamageSoundPlayer" type="AudioStreamPlayer2D" parent="." unique_id=810079236]
+stream = ExtResource("10_n7ghd")
 
 [connection signal="area_entered" from="InteractionArea" to="." method="OnInteractionAreaAreaEntered"]
 [connection signal="area_exited" from="InteractionArea" to="." method="OnInteractionAreaAreaExited"]
