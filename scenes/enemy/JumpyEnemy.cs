@@ -27,6 +27,7 @@ public partial class JumpyEnemy : RigidBody2D, IEnemy
 	public override void _Ready()
 	{
 		maxHealth = GetHealth();
+		enemyHealthBar.UpdateHealth(GetHealth(), maxHealth);
 	}
 
 	public void TakeDamage(int damage)
@@ -41,7 +42,7 @@ public partial class JumpyEnemy : RigidBody2D, IEnemy
 			attackCollisionShape2D.SetDeferred("disabled", true);
 			bodyCollisionShape2D.SetDeferred("disabled", true);
 		}
-		enemyHealthBar.SetProgress(Mathf.InverseLerp(0, maxHealth, GetHealth()));
+		enemyHealthBar.UpdateHealth(GetHealth(), maxHealth);
 	}
 
 	private int GetHealth()
