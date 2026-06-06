@@ -22,7 +22,7 @@ texture_filter = 1
 texture = ExtResource("1_47y61")
 hframes = 2
 
-[node name="ChestInteractionArea" type="Area2D" parent="." unique_id=158243479 groups=["interactable"]]
+[node name="ChestInteractionArea" type="Area2D" parent="." unique_id=158243479 groups=["interactable", "lootbox"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ChestInteractionArea" unique_id=741571913]
 visible = false

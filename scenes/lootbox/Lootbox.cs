@@ -4,9 +4,9 @@ public partial class Lootbox : Node2D, IInteractable
 {
 	[Export] public ItemData[] LootTable;
 
-	private bool opened = false;
-	private bool taken = false;
-	private ItemData item = new();
+	public bool opened { get; private set; } = false;
+	public bool taken { get; private set; } = false;
+	public ItemData item { get; private set; } = new();
 
 	[Export] public Sprite2D chestSprite;
 	[Export] public Sprite2D itemSprite;

@@ -93,12 +93,38 @@ public partial class Player : CharacterBody2D
 		return (int) GetMeta("Health");
 	}
 
+	public void UpdateAndDisplayInteractTooltipLootbox(Lootbox lb)
+	{
+		if (lb.taken)
+		{
+			hud.interactTooltip.Visible = false;
+			return;
+		}
+		if (lb.opened)
+		{
+			hud.interactTooltip.Text = $"Press E to pick up {lb.item.ItemName}";
+		}
+		else
+		{
+			hud.interactTooltip.Text = $"Press E to open lootbox";
+		}
+		hud.interactTooltip.Visible = true;
+	}
+
 	public void OnInteractionAreaAreaEntered(Area2D area)
 	{
 		if (area.IsInGroup("interactable"))
 		{
+			hud.interactTooltip.Text = "Press E to interact";
 			nearbyInteractables.Add(area.GetParent() as IInteractable);
-			hud.interactTooltip.Visible = true;
+			if (area.IsInGroup("lootbox"))
+			{
+				UpdateAndDisplayInteractTooltipLootbox(area.GetParent() as Lootbox);
+			}
+			else
+			{
+				hud.interactTooltip.Visible = true;
+			}		
 		}
 	}
 
@@ -130,6 +156,10 @@ public partial class Player : CharacterBody2D
 			{
 				var interactable = nearbyInteractables[0];
 				var receivedItem = interactable.Interact();
+				if (interactable is Lootbox lb)
+				{
+					UpdateAndDisplayInteractTooltipLootbox(lb);
+				}
 				if (receivedItem is not null) 
 				{
 					heldItem = receivedItem;
