@@ -22,7 +22,7 @@ public partial class ScytheBlade : RigidBody2D
 		if (body is IEnemy enemy && this.LinearVelocity.Length() > initialSpeed * 0.5f)
 		{
 			enemy.TakeDamage(damage);
-			QueueFree();
 		}
+		QueueFree();
 	}
 }

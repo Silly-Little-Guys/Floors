@@ -46,7 +46,7 @@ public partial class ScytheWeapon : Weapon
 		bulletSpawnPoint.AddChild(b);
 
 		float weightScale = 70.0f / Mathf.Max(player.weightInKilograms, 1.0f);
-		Vector2 recoilVelocity = new Vector2(bulletSpeed * 2, 0).Rotated(shotRotation) * weightScale;
+		Vector2 recoilVelocity = new Vector2(bulletSpeed * 4, 0).Rotated(shotRotation) * weightScale;
 		if (recoilVelocity.Y < 0.0f)
 		{
 			recoilVelocity.Y *= player.IsOnFloor() ? 0.0f : Mathf.Clamp(airUpwardRecoilScale, 0.0f, 1.0f);
