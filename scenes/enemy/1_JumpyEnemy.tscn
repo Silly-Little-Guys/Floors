@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://o2coqqjqr7o6" path="res://scenes/enemy/JumpyEnemy.cs" id="1_f6ndo"]
 [ext_resource type="Texture2D" uid="uid://dnudt53rpc2q7" path="res://assets/aseprite/JumpyBoy.png" id="2_mmkk0"]
+[ext_resource type="AudioStream" uid="uid://bmoiyo21pa1q8" path="res://assets/sfx/skeleton-death.wav" id="3_f53jo"]
 [ext_resource type="PackedScene" uid="uid://c68wqs36aaijx" path="res://scenes/enemy_health_bar/EnemyHealthBar.tscn" id="3_mmkk0"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mmkk0"]
@@ -91,6 +92,8 @@ animation = &"leap"
 shape = SubResource("RectangleShape2D_b41qx")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=2059416605]
+stream = ExtResource("3_f53jo")
+volume_db = 2.0
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=843341059]
 
