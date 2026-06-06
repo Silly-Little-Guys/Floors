@@ -45,7 +45,7 @@ animations = [{
 size = Vector2(6, 6)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wymol"]
-size = Vector2(16, 8)
+size = Vector2(16, 9)
 
 [node name="WingedEnemy" type="CharacterBody2D" unique_id=1402600375 node_paths=PackedStringArray("asp2d", "enemyHealthBar", "animatedSprite2D", "bodyCollisionShape2D", "attackCollisionShape2D", "nav", "attackCooldownTimer")]
 collision_layer = 4
@@ -83,6 +83,7 @@ scale = Vector2(0.16313294, 0.16313294)
 [node name="AttackArea" type="Area2D" parent="." unique_id=1658594072]
 
 [node name="AttackCollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1732167856]
+position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_wymol")
 
 [node name="AttackCooldown" type="Timer" parent="." unique_id=1917598587]
