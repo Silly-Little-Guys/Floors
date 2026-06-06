@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://co5js2tw3h4r8" path="res://assets/aseprite/Rifle.png" id="2_hkhc6"]
 [ext_resource type="PackedScene" uid="uid://ccbwt5f4t5ks0" path="res://scenes/weapons/bullet/bullet.tscn" id="2_sg1yr"]
 [ext_resource type="AudioStream" uid="uid://cuso7y5elfg5x" path="res://assets/sfx/gunshot.wav" id="4_oaqv7"]
+[ext_resource type="AudioStream" uid="uid://dvfc7sq81blkm" path="res://assets/sfx/empty-weapon.wav" id="5_lvkgm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sg1yr"]
 atlas = ExtResource("2_hkhc6")
@@ -39,7 +40,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="rifle" type="Node2D" unique_id=176905316 node_paths=PackedStringArray("fireTimer", "animatedSprite2D", "pivotPoint", "shotDirection", "shootSoundPlayer")]
+[node name="rifle" type="Node2D" unique_id=176905316 node_paths=PackedStringArray("fireTimer", "animatedSprite2D", "pivotPoint", "shotDirection", "shootSoundPlayer", "emptySoundPlayer")]
 script = ExtResource("1_6kub0")
 damage = 15
 fireRate = 10.0
@@ -50,6 +51,7 @@ animatedSprite2D = NodePath("AnimatedSprite2D")
 pivotPoint = NodePath("pivot")
 shotDirection = NodePath("shotDirection")
 shootSoundPlayer = NodePath("ShootSoundPlayer")
+emptySoundPlayer = NodePath("EmptySoundPlayer")
 ammoCount = 200
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=529214809]
@@ -72,3 +74,6 @@ collide_with_bodies = false
 
 [node name="ShootSoundPlayer" type="AudioStreamPlayer2D" parent="." unique_id=439163307]
 stream = ExtResource("4_oaqv7")
+
+[node name="EmptySoundPlayer" type="AudioStreamPlayer2D" parent="." unique_id=238593798]
+stream = ExtResource("5_lvkgm")

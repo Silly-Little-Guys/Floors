@@ -23,8 +23,11 @@ public partial class ScytheWeapon : Weapon
 		{
 			return false;
 		}
+		
+		fireTimer.Start();
 		if (ammoCount <= 0)
 		{
+			emptySoundPlayer.Play();
 			return false;
 		}
 
@@ -33,7 +36,6 @@ public partial class ScytheWeapon : Weapon
 
 		shootSoundPlayer.Play();
 
-		fireTimer.Start();
 		float shotSpread = Mathf.DegToRad((float)GD.RandRange(-spreadDegrees, spreadDegrees));
 		float shotRotation = shotDirection.GlobalRotation + shotSpread;
 		ScytheBlade b = bulletScene.Instantiate<ScytheBlade>();

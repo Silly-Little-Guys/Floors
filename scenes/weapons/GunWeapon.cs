@@ -23,8 +23,10 @@ public partial class GunWeapon : Weapon
 		{
 			return false;
 		}
+		fireTimer.Start();
 		if (ammoCount <= 0)
 		{
+			emptySoundPlayer.Play();
 			return false;
 		}
 
@@ -33,7 +35,6 @@ public partial class GunWeapon : Weapon
 
 		shootSoundPlayer.Play();
 
-		fireTimer.Start();
 		float shotSpread = Mathf.DegToRad((float)GD.RandRange(-spreadDegrees, spreadDegrees));
 		float shotRotation = shotDirection.GlobalRotation + shotSpread;
 		Bullet b = bulletScene.Instantiate<Bullet>();

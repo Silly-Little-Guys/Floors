@@ -16,6 +16,7 @@ public abstract partial class Weapon : Node2D
 	[Export] public RayCast2D shotDirection;
 	[Export] public Player player;
 	[Export] public AudioStreamPlayer2D shootSoundPlayer;
+	[Export] public AudioStreamPlayer2D emptySoundPlayer;
 	[Export] public int ammoCount;
 	public int maxAmmoCount;
 }

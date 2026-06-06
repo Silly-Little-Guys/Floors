@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bojonyovwu7y5" path="res://assets/aseprite/Scythe.png" id="2_h01xk"]
 [ext_resource type="PackedScene" uid="uid://jhgompnmehpw" path="res://scenes/weapons/scythe/ScytheBlade.tscn" id="2_kvybn"]
 [ext_resource type="AudioStream" uid="uid://cgeyqkg0asym8" path="res://assets/sfx/roblox-sword.wav" id="4_a36tw"]
+[ext_resource type="AudioStream" uid="uid://dvfc7sq81blkm" path="res://assets/sfx/empty-weapon.wav" id="5_jh4kw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kvybn"]
 atlas = ExtResource("2_h01xk")
@@ -39,7 +40,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="ScytheWeapon" type="Node2D" unique_id=1568246519 node_paths=PackedStringArray("fireTimer", "animatedSprite2D", "pivotPoint", "shotDirection", "shootSoundPlayer")]
+[node name="ScytheWeapon" type="Node2D" unique_id=1568246519 node_paths=PackedStringArray("fireTimer", "animatedSprite2D", "pivotPoint", "shotDirection", "shootSoundPlayer", "emptySoundPlayer")]
 script = ExtResource("1_wn4wk")
 damage = 100
 fireRate = 1.0
@@ -51,6 +52,7 @@ animatedSprite2D = NodePath("AnimatedSprite2D")
 pivotPoint = NodePath("pivot")
 shotDirection = NodePath("shotDirection")
 shootSoundPlayer = NodePath("ShootSoundPlayer")
+emptySoundPlayer = NodePath("EmptySoundPlayer")
 ammoCount = 100
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=568229457]
@@ -74,3 +76,6 @@ collide_with_bodies = false
 [node name="ShootSoundPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1077501999]
 stream = ExtResource("4_a36tw")
 volume_db = 2.0
+
+[node name="EmptySoundPlayer" type="AudioStreamPlayer2D" parent="." unique_id=601042034]
+stream = ExtResource("5_jh4kw")
