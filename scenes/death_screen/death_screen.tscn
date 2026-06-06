@@ -1,12 +1,7 @@
 [gd_scene format=3 uid="uid://dsaht58y4qk6y"]
 
 [ext_resource type="Script" uid="uid://cscwv06eqkb8u" path="res://scenes/death_screen/DeathScreen.cs" id="1_jynsk"]
-
-[sub_resource type="SystemFont" id="SystemFont_bludd"]
-font_names = PackedStringArray("Comic Sans MS")
-font_italic = true
-font_weight = 999
-font_stretch = 50
+[ext_resource type="FontFile" uid="uid://bs751fsdc1idw" path="res://assets/fonts/comic-sans-bold-italic.ttf" id="2_lsi1j"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bludd"]
 bg_color = Color(0.7490196, 0, 0, 1)
@@ -37,7 +32,7 @@ offset_right = 86.5
 offset_bottom = -56.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = SubResource("SystemFont_bludd")
+theme_override_fonts/font = ExtResource("2_lsi1j")
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_bludd")
 text = "you die"
