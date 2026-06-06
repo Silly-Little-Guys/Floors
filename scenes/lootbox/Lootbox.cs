@@ -8,11 +8,6 @@ public partial class Lootbox : Node2D, IInteractable
 	private bool taken = false;
 	private ItemData item = new();
 
-	// 0: health potion
-	// 1: rifle
-	// 2: pistol
-	private static int maxNum = 3;
-
 	[Export] public Sprite2D chestSprite;
 	[Export] public Sprite2D itemSprite;
 	[Export] public AudioStreamPlayer2D openSoundPlayer;

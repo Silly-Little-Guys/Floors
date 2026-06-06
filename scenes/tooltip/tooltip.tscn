@@ -8,7 +8,7 @@ border_width_right = 3
 border_width_bottom = 3
 border_color = Color(0, 0.96049064, 0.3971324, 1)
 
-[node name="ItemTooltip" type="Label" unique_id=1183567385]
+[node name="Tooltip" type="Label" unique_id=1183567385]
 visible = false
 offset_right = 19.0
 offset_bottom = 34.0
