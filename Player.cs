@@ -98,6 +98,7 @@ public partial class Player : CharacterBody2D
 		if (area.IsInGroup("interactable"))
 		{
 			nearbyInteractables.Add(area.GetParent() as IInteractable);
+			hud.interactTooltip.Visible = true;
 		}
 	}
 
@@ -106,6 +107,10 @@ public partial class Player : CharacterBody2D
 		if (area.IsInGroup("interactable"))
 		{
 			nearbyInteractables.Remove(area.GetParent() as IInteractable);
+		}
+		if (nearbyInteractables.Count <= 0)
+		{
+			hud.interactTooltip.Visible = false;
 		}
 	}
 

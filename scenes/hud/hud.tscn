@@ -49,7 +49,7 @@ _data = {
 &"damage_flash": SubResource("Animation_cgeww")
 }
 
-[node name="HUD" type="CanvasLayer" unique_id=651644861 node_paths=PackedStringArray("healthBar", "ammoLabel", "damageAnimation", "cashLabel", "itemTextureRect", "itemTooltip")]
+[node name="HUD" type="CanvasLayer" unique_id=651644861 node_paths=PackedStringArray("healthBar", "ammoLabel", "damageAnimation", "cashLabel", "itemTextureRect", "itemTooltip", "interactTooltip")]
 script = ExtResource("1_37p78")
 healthBar = NodePath("HealthBar")
 ammoLabel = NodePath("AmmoLabel")
@@ -58,6 +58,7 @@ cashLabel = NodePath("CashLabel")
 cashImage = ExtResource("2_cgeww")
 itemTextureRect = NodePath("ItemHolder/TextureRect")
 itemTooltip = NodePath("ItemTooltip")
+interactTooltip = NodePath("InteractTooltip")
 
 [node name="HealthBar" type="ProgressBar" parent="." unique_id=1664389420]
 offset_left = 55.0
@@ -144,3 +145,17 @@ offset_right = 0.0
 offset_bottom = -214.0
 grow_horizontal = 0
 grow_vertical = 0
+
+[node name="InteractTooltip" parent="." unique_id=205795588 instance=ExtResource("3_c45xl")]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -74.5
+offset_top = -81.0
+offset_right = 74.5
+offset_bottom = -47.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Press E to interact"

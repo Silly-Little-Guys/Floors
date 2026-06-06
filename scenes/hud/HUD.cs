@@ -14,6 +14,7 @@ public partial class HUD : CanvasLayer
 	[Export] public CompressedTexture2D cashImage;
 	[Export] public TextureRect itemTextureRect;
 	[Export] public Label itemTooltip;
+	[Export] public Label interactTooltip;
 
 	private const int MaxCashSprites = 50;
 	private const float CashSpriteSize = 32.0f;
