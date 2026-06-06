@@ -42,9 +42,9 @@ animations = [{
 
 [node name="pistol" type="Node2D" unique_id=176905316 node_paths=PackedStringArray("fireTimer", "animatedSprite2D", "pivotPoint", "shotDirection", "shootSoundPlayer", "emptySoundPlayer")]
 script = ExtResource("1_60a84")
-damage = 50
+damage = 200
 fireRate = 2.0
-bulletSpeed = 200.0
+bulletSpeed = 300.0
 bulletScene = ExtResource("2_ivc8v")
 fireTimer = NodePath("FireTime")
 animatedSprite2D = NodePath("AnimatedSprite2D")
