@@ -10,9 +10,8 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Arr
 outlines = Array[PackedVector2Array]([PackedVector2Array(-225, -153, -220, -4, 96, -8, 100, -150)])
 agent_radius = 6.0
 
-[node name="ExampleFloor" type="Node2D" unique_id=1750975773 node_paths=PackedStringArray("toSpawnEnemyLayer", "layerThatHasWalls")]
+[node name="ExampleFloor" type="Node2D" unique_id=1750975773 node_paths=PackedStringArray("layerThatHasWalls")]
 script = ExtResource("1_d5q16")
-toSpawnEnemyLayer = NodePath("backgroundlayer")
 layerThatHasWalls = NodePath("NavigationRegion2D/Layer0")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=435796539]
