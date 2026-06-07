@@ -35,10 +35,10 @@ script = ExtResource("6_7mycd")
 position = Vector2(13, 47)
 shape = SubResource("WorldBoundaryShape2D_7mycd")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=2009549934 node_paths=PackedStringArray("player")]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2009549934 node_paths=PackedStringArray("floorSpawner")]
 zoom = Vector2(7, 7)
 script = ExtResource("7_272bh")
-player = NodePath("../player")
+floorSpawner = NodePath("../floor_spawner")
 
 [node name="HUD" parent="." unique_id=651644861 node_paths=PackedStringArray("player") instance=ExtResource("8_5vw27")]
 player = NodePath("../player")

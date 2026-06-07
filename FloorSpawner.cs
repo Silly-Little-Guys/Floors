@@ -7,6 +7,8 @@ public partial class FloorSpawner : Node2D
 {
 	[Signal]
 	public delegate void OnNextFloorSpawnEventHandler(int currentFloorNumber);
+	[Signal]
+	public delegate void CurrentFloorChangedEventHandler(Floor currentFloor);
 	[Export] public Player player;
 	[Export] public Node2D rootParentToSpawnIn;
 	[Export] public EnemySpawner enemySpawner;
@@ -52,6 +54,11 @@ public partial class FloorSpawner : Node2D
 	public int GetCurrentFloorNumber()
 	{
 		return currentFloorNumber;
+	}
+
+	public Floor GetCurrentFloor()
+	{
+		return currentFloor;
 	}
 
 	/// <summary>
@@ -215,6 +222,7 @@ public partial class FloorSpawner : Node2D
 
 		currentFloor = toSpawn;
 		hasSpawnedFloor = true;
+		EmitSignal(SignalName.CurrentFloorChanged, currentFloor);
 
 		if (spawnEnemies && enemySpawner != null)
 		{
