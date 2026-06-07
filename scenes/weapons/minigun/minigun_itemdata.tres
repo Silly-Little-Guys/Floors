@@ -11,7 +11,7 @@ metadata/_custom_type_script = "uid://bophm7vj2v2e6"
 
 [resource]
 script = ExtResource("1_ekal8")
-ItemName = "minigun"
+ItemName = "Minigun"
 ItemScene = ExtResource("1_k02ms")
 ItemTexture = ExtResource("2_wrsk0")
 Effects = Array[Object]([SubResource("Resource_ksbbu")])
