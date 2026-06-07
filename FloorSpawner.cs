@@ -30,18 +30,21 @@ public partial class FloorSpawner : Node2D
 	private bool hasSpawnedFloor = false;
 	private bool hasCompletedStarterFloor = false;
 	private Floor currentFloor;
+	private Floor activeFloor;
 	private Floor bottomFloor;
 	private readonly List<PendingFloorReplacement> pendingFloorReplacements = new();
 
 	private class PendingFloorReplacement
 	{
 		public Floor FloorToReplace { get; }
+		public Floor FloorToActivate { get; }
 		public float BottomFloorAttachY { get; }
 		public float ReplacementThresholdY { get; }
 
-		public PendingFloorReplacement(Floor floorToReplace, float bottomFloorAttachY, float replacementThresholdY)
+		public PendingFloorReplacement(Floor floorToReplace, Floor floorToActivate, float bottomFloorAttachY, float replacementThresholdY)
 		{
 			FloorToReplace = floorToReplace;
+			FloorToActivate = floorToActivate;
 			BottomFloorAttachY = bottomFloorAttachY;
 			ReplacementThresholdY = replacementThresholdY;
 		}
@@ -58,7 +61,7 @@ public partial class FloorSpawner : Node2D
 
 	public Floor GetCurrentFloor()
 	{
-		return currentFloor;
+		return activeFloor;
 	}
 
 	/// <summary>
@@ -193,6 +196,7 @@ public partial class FloorSpawner : Node2D
 			return false;
 		}
 
+		bool isFirstFloor = !hasSpawnedFloor;
 		Floor previousFloor = currentFloor;
 		Floor toSpawn = floorScene.Instantiate<Floor>();
 		rootParentToSpawnIn.AddChild(toSpawn);
@@ -205,6 +209,12 @@ public partial class FloorSpawner : Node2D
 
 		float yOffset = hasSpawnedFloor ? nextFloorAttachY - floorBottomY : nextFloorAttachY - floorTopY;
 		toSpawn.GlobalPosition += new Vector2(0, yOffset);
+
+		if (hasSpawnedFloor && previousFloor != null)
+		{
+			AlignFloorOpenings(previousFloor, toSpawn);
+		}
+
 		currentFloorTopY = floorTopY + yOffset;
 		float currentFloorBottomY = floorBottomY + yOffset;
 		currentFloorTileHeight = tileHeight;
@@ -217,12 +227,16 @@ public partial class FloorSpawner : Node2D
 
 		if (hasSpawnedFloor)
 		{
-			QueueFloorBelowReplacement(previousFloor, currentFloorBottomY, tileHeight);
+			QueueFloorBelowReplacement(previousFloor, toSpawn, currentFloorBottomY, tileHeight);
 		}
 
 		currentFloor = toSpawn;
 		hasSpawnedFloor = true;
-		EmitSignal(SignalName.CurrentFloorChanged, currentFloor);
+
+		if (isFirstFloor)
+		{
+			ActivateFloor(toSpawn);
+		}
 
 		if (spawnEnemies && enemySpawner != null)
 		{
@@ -232,10 +246,27 @@ public partial class FloorSpawner : Node2D
 		return true;
 	}
 
-	private void QueueFloorBelowReplacement(Floor floorToReplace, float newestFloorBottomY, float tileHeight)
+	private void AlignFloorOpenings(Floor lowerFloor, Floor upperFloor)
+	{
+		if (!lowerFloor.TryGetTopOpeningCenter(out Vector2 lowerOpeningCenter))
+		{
+			GD.PushWarning("Could not align floors because the lower floor has no top opening.");
+			return;
+		}
+
+		if (!upperFloor.TryGetBottomOpeningCenter(out Vector2 upperOpeningCenter))
+		{
+			return;
+		}
+
+		upperFloor.GlobalPosition += new Vector2(lowerOpeningCenter.X - upperOpeningCenter.X, 0.0f);
+	}
+
+	private void QueueFloorBelowReplacement(Floor floorToReplace, Floor floorToActivate, float newestFloorBottomY, float tileHeight)
 	{
 		pendingFloorReplacements.Add(new PendingFloorReplacement(
 			floorToReplace,
+			floorToActivate,
 			newestFloorBottomY,
 			newestFloorBottomY - tileHeight));
 	}
@@ -256,13 +287,25 @@ public partial class FloorSpawner : Node2D
 				continue;
 			}
 
-			ReplaceFloorBelow(pendingReplacement.FloorToReplace, pendingReplacement.BottomFloorAttachY);
+			ReplaceFloorBelow(pendingReplacement.FloorToReplace, pendingReplacement.FloorToActivate, pendingReplacement.BottomFloorAttachY);
+			ActivateFloor(pendingReplacement.FloorToActivate);
 			pendingFloorReplacements.RemoveAt(i);
 			i--;
 		}
 	}
 
-	private void ReplaceFloorBelow(Floor floorToReplace, float newestFloorBottomY)
+	private void ActivateFloor(Floor floor)
+	{
+		if (floor == null || !IsInstanceValid(floor) || floor == activeFloor)
+		{
+			return;
+		}
+
+		activeFloor = floor;
+		EmitSignal(SignalName.CurrentFloorChanged, activeFloor);
+	}
+
+	private void ReplaceFloorBelow(Floor floorToReplace, Floor floorAboveBottomFloor, float newestFloorBottomY)
 	{
 		if (floorToReplace != null && IsInstanceValid(floorToReplace))
 		{
@@ -282,14 +325,46 @@ public partial class FloorSpawner : Node2D
 		Floor newBottomFloor = bottomFloorScene.Instantiate<Floor>();
 		rootParentToSpawnIn.CallDeferred("add_child", newBottomFloor);
 
-		if (!newBottomFloor.TryGetFloorVerticalBounds(out float bottomFloorTopY, out _, out _))
+		if (!newBottomFloor.TryGetFloorVerticalBounds(out float bottomFloorTopY, out _, out _)
+			|| !newBottomFloor.TryGetFloorHorizontalBounds(out float bottomFloorLeftX, out float bottomFloorRightX, out _))
 		{
 			newBottomFloor.QueueFree();
 			return;
 		}
 
-		newBottomFloor.GlobalPosition += new Vector2(0, newestFloorBottomY - bottomFloorTopY);
+		float xOffset = 0.0f;
+		if (TryGetBottomFloorTargetX(floorAboveBottomFloor, out float targetX))
+		{
+			float bottomFloorCenterX = (bottomFloorLeftX + bottomFloorRightX) / 2.0f;
+			xOffset = targetX - bottomFloorCenterX;
+		}
+
+		newBottomFloor.GlobalPosition += new Vector2(xOffset, newestFloorBottomY - bottomFloorTopY);
 		bottomFloor = newBottomFloor;
+	}
+
+	private bool TryGetBottomFloorTargetX(Floor floorAboveBottomFloor, out float targetX)
+	{
+		targetX = 0.0f;
+
+		if (floorAboveBottomFloor == null || !IsInstanceValid(floorAboveBottomFloor))
+		{
+			return false;
+		}
+
+		if (floorAboveBottomFloor.TryGetBottomOpeningCenter(out Vector2 bottomOpeningCenter))
+		{
+			targetX = bottomOpeningCenter.X;
+			return true;
+		}
+
+		if (floorAboveBottomFloor.TryGetFloorHorizontalBounds(out float leftX, out float rightX, out _))
+		{
+			targetX = (leftX + rightX) / 2.0f;
+			return true;
+		}
+
+		return false;
 	}
 
 	/// <summary>

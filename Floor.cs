@@ -139,6 +139,112 @@ public partial class Floor : Node2D
 		return true;
 	}
 
+	public bool TryGetTopOpeningCenter(out Vector2 openingCenter)
+	{
+		return TryGetBoundaryOpeningCenter(true, out openingCenter);
+	}
+
+	public bool TryGetBottomOpeningCenter(out Vector2 openingCenter)
+	{
+		return TryGetBoundaryOpeningCenter(false, out openingCenter);
+	}
+
+	private bool TryGetBoundaryOpeningCenter(bool topBoundary, out Vector2 openingCenter)
+	{
+		openingCenter = Vector2.Zero;
+
+		if (this.layerThatHasWalls == null)
+		{
+			GD.PushWarning("Cannot calculate floor opening because the floor has no wall TileMapLayer assigned.");
+			return false;
+		}
+
+		TileMapLayer tileMapLayer = this.layerThatHasWalls;
+
+		if (tileMapLayer.TileSet == null)
+		{
+			GD.PushWarning("Cannot calculate floor opening because the wall TileMapLayer has no TileSet.");
+			return false;
+		}
+
+		Rect2I usedRect = tileMapLayer.GetUsedRect();
+
+		if (usedRect.Size == Vector2I.Zero)
+		{
+			GD.PushWarning("Cannot calculate floor opening because the wall TileMapLayer has no used cells.");
+			return false;
+		}
+
+		HashSet<Vector2I> usedCells = new(tileMapLayer.GetUsedCells());
+		int boundaryY = topBoundary ? usedRect.Position.Y : usedRect.End.Y - 1;
+		int rowLeftX = int.MaxValue;
+		int rowRightX = int.MinValue;
+
+		foreach (Vector2I cell in usedCells)
+		{
+			if (cell.Y != boundaryY)
+			{
+				continue;
+			}
+
+			rowLeftX = Mathf.Min(rowLeftX, cell.X);
+			rowRightX = Mathf.Max(rowRightX, cell.X);
+		}
+
+		if (rowLeftX == int.MaxValue)
+		{
+			return false;
+		}
+
+		int bestStartX = 0;
+		int bestLength = 0;
+		int currentStartX = 0;
+		int currentLength = 0;
+
+		void CommitCurrentOpening()
+		{
+			if (currentLength > bestLength)
+			{
+				bestStartX = currentStartX;
+				bestLength = currentLength;
+			}
+		}
+
+		for (int x = rowLeftX; x <= rowRightX; x++)
+		{
+			bool cellIsMissing = !usedCells.Contains(new Vector2I(x, boundaryY));
+
+			if (cellIsMissing)
+			{
+				if (currentLength == 0)
+				{
+					currentStartX = x;
+				}
+
+				currentLength++;
+				continue;
+			}
+
+			CommitCurrentOpening();
+			currentLength = 0;
+		}
+
+		CommitCurrentOpening();
+
+		if (bestLength < 2)
+		{
+			return false;
+		}
+
+		Vector2I tileSize = tileMapLayer.TileSet.TileSize;
+		Vector2 localOpeningCenter = new Vector2(
+			(bestStartX + bestLength / 2.0f) * tileSize.X,
+			(boundaryY + 0.5f) * tileSize.Y);
+
+		openingCenter = tileMapLayer.ToGlobal(localOpeningCenter);
+		return true;
+	}
+
 	/// <summary>
 	/// Attempts to find a random tile center that is inside this floor's tile map and has no TileSet collision polygons.
 	/// </summary>
