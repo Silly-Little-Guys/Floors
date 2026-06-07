@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://itv80tkt4cf1"]
+
+[ext_resource type="Script" uid="uid://bb7gvlfpljdd4" path="res://scenes/items/ItemData.cs" id="1_ekal8"]
+[ext_resource type="PackedScene" uid="uid://dvt7hw1xhepn0" path="res://scenes/weapons/minigun/minigun.tscn" id="1_k02ms"]
+[ext_resource type="Script" uid="uid://bophm7vj2v2e6" path="res://scenes/weapons/EquipWeaponEffect.cs" id="1_yk5v3"]
+[ext_resource type="Texture2D" uid="uid://drgselwli74bi" path="res://assets/aseprite/minigunPreview.png" id="2_wrsk0"]
+
+[sub_resource type="Resource" id="Resource_ksbbu"]
+script = ExtResource("1_yk5v3")
+metadata/_custom_type_script = "uid://bophm7vj2v2e6"
+
+[resource]
+script = ExtResource("1_ekal8")
+ItemName = "minigun"
+ItemScene = ExtResource("1_k02ms")
+ItemTexture = ExtResource("2_wrsk0")
+Effects = Array[Object]([SubResource("Resource_ksbbu")])
+metadata/_custom_type_script = "uid://bb7gvlfpljdd4"

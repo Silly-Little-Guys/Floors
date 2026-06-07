@@ -6,13 +6,14 @@
 [ext_resource type="Resource" uid="uid://dx15u02evn2p7" path="res://scenes/items/health_potion/health_potion_itemdata.tres" id="3_nbj2l"]
 [ext_resource type="Resource" uid="uid://dq0g5578iyc6t" path="res://scenes/weapons/pistol/pistol_itemdata.tres" id="4_fnjek"]
 [ext_resource type="Resource" uid="uid://dvke3h26m3ss4" path="res://scenes/weapons/scythe/scythe_itemdata.tres" id="5_qga32"]
+[ext_resource type="Resource" uid="uid://itv80tkt4cf1" path="res://scenes/weapons/minigun/minigun_itemdata.tres" id="6_qga32"]
 [ext_resource type="AudioStream" uid="uid://4c32g4cicvka" path="res://assets/sfx/chest-open.wav" id="7_fnjek"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_47y61"]
 
 [node name="Lootbox" type="Node2D" unique_id=1895122844 node_paths=PackedStringArray("chestSprite", "itemSprite", "openSoundPlayer")]
 script = ExtResource("1_gute8")
-LootTable = Array[Object]([ExtResource("2_qg7um"), ExtResource("3_nbj2l"), ExtResource("4_fnjek"), ExtResource("5_qga32")])
+LootTable = Array[Object]([ExtResource("2_qg7um"), ExtResource("3_nbj2l"), ExtResource("4_fnjek"), ExtResource("5_qga32"), ExtResource("6_qga32")])
 chestSprite = NodePath("ChestSprite")
 itemSprite = NodePath("ItemSprite")
 openSoundPlayer = NodePath("OpenSoundPlayer")
