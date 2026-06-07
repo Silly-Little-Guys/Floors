@@ -16,6 +16,10 @@ config/features=PackedStringArray("4.6", "C#")
 boot_splash/image="uid://cuwqntruq40ul"
 config/icon="res://icon.svg"
 
+[autoload]
+
+CRTCameraEffect="*res://scenes/effects/crt_camera_effect.tscn"
+
 [dotnet]
 
 project/assembly_name="Floors"
