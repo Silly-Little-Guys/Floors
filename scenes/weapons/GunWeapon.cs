@@ -50,6 +50,7 @@ public partial class GunWeapon : Weapon
 		{
 			recoilVelocity.Y *= player.IsOnFloor() ? 0.0f : Mathf.Clamp(airUpwardRecoilScale, 0.0f, 1.0f);
 		}
+		recoilVelocity.X *= horizontalRecoilScale;
 		player.Velocity += recoilVelocity;
 
 		return true;
@@ -72,8 +73,10 @@ public partial class GunWeapon : Weapon
 		}
 		if (firedThisFrame)
 		{
-			animatedSprite2D.Stop();
-			animatedSprite2D.Play("firing");
+			if (animatedSprite2D.Animation != "firing" || !animatedSprite2D.IsPlaying())
+			{
+				animatedSprite2D.Play("firing");
+			}
 		} else if (animatedSprite2D.Animation != "firing" || !animatedSprite2D.IsPlaying())
 		{
 			animatedSprite2D.Play("idle");   

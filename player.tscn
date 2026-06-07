@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b210nddpvah4t" path="res://assets/aseprite/RunWithHands.png" id="3_hqtel"]
 [ext_resource type="Texture2D" uid="uid://byghec0f7ghrp" path="res://assets/aseprite/RunNoHands.png" id="4_sweqy"]
 [ext_resource type="Script" uid="uid://c36j8mlu288gv" path="res://WeaponHandler.cs" id="5_sweqy"]
-[ext_resource type="PackedScene" uid="uid://fl07q48ns1ko" path="res://scenes/weapons/scythe/ScytheWeapon.tscn" id="7_1jxqw"]
+[ext_resource type="PackedScene" uid="uid://dvt7hw1xhepn0" path="res://scenes/weapons/minigun/minigun.tscn" id="7_n7ghd"]
 [ext_resource type="AudioStream" uid="uid://dl2gesutslbd0" path="res://assets/sfx/equip-weapon.wav" id="8_dw050"]
 [ext_resource type="AudioStream" uid="uid://n0lyxqscropr" path="res://assets/sfx/heal.wav" id="9_b26j0"]
 [ext_resource type="AudioStream" uid="uid://uo8vxxchqbcl" path="res://assets/sfx/damage.wav" id="10_n7ghd"]
@@ -186,7 +186,7 @@ one_shot = true
 
 [node name="WeaponHandler" type="Node2D" parent="." unique_id=701302093 node_paths=PackedStringArray("player")]
 script = ExtResource("5_sweqy")
-weaponToUse = ExtResource("7_1jxqw")
+weaponToUse = ExtResource("7_n7ghd")
 player = NodePath("..")
 
 [node name="InteractionArea" type="Area2D" parent="." unique_id=1348010403]

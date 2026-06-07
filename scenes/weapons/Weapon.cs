@@ -8,6 +8,7 @@ public abstract partial class Weapon : Node2D
 	[Export] public float bulletSpeed;
 	[Export] public float spreadDegrees;
 	[Export] public float airUpwardRecoilScale;
+	[Export] public float horizontalRecoilScale;
 	[Export] public PackedScene bulletScene;
 	[Export] public Timer fireTimer;
 	[Export] public Node bulletSpawnPoint;
