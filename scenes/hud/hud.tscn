@@ -49,12 +49,13 @@ _data = {
 &"damage_flash": SubResource("Animation_cgeww")
 }
 
-[node name="HUD" type="CanvasLayer" unique_id=651644861 node_paths=PackedStringArray("healthBar", "ammoLabel", "damageAnimation", "cashLabel", "itemTextureRect", "itemTooltip", "interactTooltip")]
+[node name="HUD" type="CanvasLayer" unique_id=651644861 node_paths=PackedStringArray("healthBar", "ammoLabel", "damageAnimation", "cashLabel", "floorLabel", "itemTextureRect", "itemTooltip", "interactTooltip")]
 script = ExtResource("1_37p78")
 healthBar = NodePath("HealthBar")
 ammoLabel = NodePath("AmmoLabel")
 damageAnimation = NodePath("AnimationPlayer")
 cashLabel = NodePath("CashLabel")
+floorLabel = NodePath("FloorLabel")
 cashImage = ExtResource("2_cgeww")
 itemTextureRect = NodePath("ItemHolder/TextureRect")
 itemTooltip = NodePath("ItemTooltip")
@@ -166,3 +167,17 @@ offset_bottom = -47.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "Press E to interact"
+
+[node name="FloorLabel" type="Label" parent="." unique_id=1500824791]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -386.0
+offset_top = -309.0
+offset_bottom = -286.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Floor X"
+horizontal_alignment = 2

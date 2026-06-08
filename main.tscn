@@ -22,10 +22,11 @@ enemySpawner = NodePath("../enemy_spawner")
 difficultyLevel = 1
 player = NodePath("../player")
 
-[node name="player" parent="." unique_id=28407583 node_paths=PackedStringArray("hud", "bulletSpawnPoint") instance=ExtResource("4_7mycd")]
+[node name="player" parent="." unique_id=28407583 node_paths=PackedStringArray("hud", "bulletSpawnPoint", "mainScene") instance=ExtResource("4_7mycd")]
 position = Vector2(14, 29)
 hud = NodePath("../HUD")
 bulletSpawnPoint = NodePath("..")
+mainScene = NodePath("..")
 
 [node name="BottomDeath" type="Area2D" parent="." unique_id=786361301]
 position = Vector2(-4, 146)
@@ -43,7 +44,7 @@ floorSpawner = NodePath("../floor_spawner")
 [node name="HUD" parent="." unique_id=651644861 node_paths=PackedStringArray("player") instance=ExtResource("8_5vw27")]
 player = NodePath("../player")
 
-[connection signal="OnNextFloorSpawn" from="floor_spawner" to="HUD" method="OnNextFloorSpawn"]
+[connection signal="OnNextFloorSpawn" from="floor_spawner" to="player" method="OnNextFloorSpawn"]
 [connection signal="CashAdded" from="player" to="HUD" method="OnPlayerCashAdded"]
 [connection signal="CashUpdated" from="player" to="HUD" method="OnPlayerCashUpdated"]
 [connection signal="HealthUpdated" from="player" to="HUD" method="OnPlayerHealthUpdated"]

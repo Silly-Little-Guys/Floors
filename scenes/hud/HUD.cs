@@ -11,6 +11,7 @@ public partial class HUD : CanvasLayer
 	[Export] public Label ammoLabel;
 	[Export] public AnimationPlayer damageAnimation;
 	[Export] public Label cashLabel;
+	[Export] public Label floorLabel;
 	[Export] public CompressedTexture2D cashImage;
 	[Export] public TextureRect itemTextureRect;
 	[Export] public Label itemTooltip;
@@ -44,11 +45,6 @@ public partial class HUD : CanvasLayer
 	{
 		healthBar.Value = player.GetHealth();
 		if (damaged) damageAnimation.Play("damage_flash");
-	}
-
-	public void OnNextFloorSpawn(int currentFloorNumber)
-	{
-		GD.Print("Floor: " + currentFloorNumber);
 	}
 
 	public void OnPlayerCashUpdated(int newAmount)

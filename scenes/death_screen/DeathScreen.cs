@@ -3,6 +3,9 @@ using System;
 
 public partial class DeathScreen : Control
 {
+	[Export] public Label cashLabel;
+	[Export] public Label floorLabel;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{

@@ -29,7 +29,9 @@ public partial class Player : CharacterBody2D
 	[Export] public AudioStreamPlayer2D equipWeaponSoundPlayer;
 	[Export] public AudioStreamPlayer2D drinkPotionSoundPlayer;
 	[Export] public AudioStreamPlayer2D damageSoundPlayer;
+	[Export] public Node2D mainScene;
 	private ItemData heldItem;
+	private int currentFloor;
 
 	private int maxHealth;
 
@@ -59,12 +61,30 @@ public partial class Player : CharacterBody2D
 		EmitSignal(SignalName.HealthUpdated, true);
 		damageSoundPlayer.Play();
 		if (GetHealth() <= 0)
-		{
-			GetTree().ChangeSceneToFile("res://scenes/death_screen/death_screen.tscn");
-		}
+        {
+            ShowDeathScreen();
+        }
+    }
+
+    private void ShowDeathScreen()
+    {
+        DeathScreen deathScreen = ResourceLoader.Load<PackedScene>("res://scenes/death_screen/death_screen.tscn").Instantiate() as DeathScreen;
+		deathScreen.cashLabel.Text = $"${GetCash()}";
+		deathScreen.floorLabel.Text = $"Floor {currentFloor}";
+		
+		var root = GetTree().Root;
+		root.AddChild(deathScreen);
+		GetTree().CurrentScene = deathScreen;
+		mainScene.QueueFree();
+    }
+
+	public void OnNextFloorSpawn(int currentFloorNumber)
+	{
+		currentFloor = currentFloorNumber;
+		hud.floorLabel.Text = $"Floor {currentFloorNumber}";
 	}
 
-	public void AddCash(int amount)
+    public void AddCash(int amount)
 	{
 		AddCash(amount, GlobalPosition);
 	}
