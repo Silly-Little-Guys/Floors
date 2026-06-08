@@ -124,7 +124,7 @@ grow_vertical = 2
 bbcode_enabled = true
 text = "[b]Information:[/b]
 The main objective of the game is to jump through as many floors as you can.
-The exit for each floor is in the top of a floor.
+The exit for each floor is at the top of the screen.
 As you go, kill enemies to protect yourself and get cash.
 In many floors, there are lootboxes. Open them to get useful items."
 horizontal_alignment = 1
