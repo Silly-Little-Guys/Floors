@@ -139,14 +139,19 @@ public partial class FloorSpawner : Node2D
 
 			if (hasCompletedStarterFloor)
 			{
-				SpawnShopFloor();
+				bool spawnedShopFloor = SpawnShopFloor();
+				PopulateFloorsForCurrentLevelOrLoop();
+
+				if (spawnedShopFloor)
+				{
+					return;
+				}
 			}
 			else
 			{
 				hasCompletedStarterFloor = true;
+				PopulateFloorsForCurrentLevelOrLoop();
 			}
-
-			PopulateFloorsForCurrentLevelOrLoop();
 		}
 
 		if (floors.Count == 0)

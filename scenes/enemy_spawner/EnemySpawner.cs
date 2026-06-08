@@ -10,6 +10,7 @@ public partial class EnemySpawner : Node2D
 	private Floor currentFloor;
 	private readonly List<EnemyScene> enemyScenes = new();
 	private const string enemyScenesPath = "res://scenes/enemy";
+	private const float playerSpawnExclusionRadiusInTiles = 1.0f;
 	private const float harderEnemyWeightSharpness = 0.75f;
 
 	private class EnemyScene
@@ -83,7 +84,10 @@ public partial class EnemySpawner : Node2D
 			return;
 		}
 
-		if (!toSpawnIn.TryGetRandomNonCollidingSpawnPosition(out Vector2 spawnPosition))
+		Vector2 avoidPosition = player != null ? player.GlobalPosition : Vector2.Zero;
+		float avoidRadiusInTiles = player != null ? playerSpawnExclusionRadiusInTiles : 0.0f;
+
+		if (!toSpawnIn.TryGetRandomNonCollidingSpawnPosition(avoidPosition, avoidRadiusInTiles, out Vector2 spawnPosition))
 		{
 			return;
 		}

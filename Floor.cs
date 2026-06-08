@@ -252,6 +252,18 @@ public partial class Floor : Node2D
 	/// <returns>True if at least one non-colliding used cell exists; otherwise false.</returns>
 	public bool TryGetRandomNonCollidingSpawnPosition(out Vector2 spawnPosition)
 	{
+		return TryGetRandomNonCollidingSpawnPosition(Vector2.Zero, 0.0f, out spawnPosition);
+	}
+
+	/// <summary>
+	/// Attempts to find a random tile center while keeping a tile-radius clear around an avoided global position.
+	/// </summary>
+	/// <param name="avoidPosition">Global position that spawn points should keep away from.</param>
+	/// <param name="avoidRadiusInTiles">Radius, in tiles, to exclude around the avoided position.</param>
+	/// <param name="spawnPosition">A global position safe for spawning when the calculation succeeds; otherwise Vector2.Zero.</param>
+	/// <returns>True if at least one valid spawn cell exists outside the avoided radius; otherwise false.</returns>
+	public bool TryGetRandomNonCollidingSpawnPosition(Vector2 avoidPosition, float avoidRadiusInTiles, out Vector2 spawnPosition)
+	{
 		spawnPosition = Vector2.Zero;
 
 		if (this.toSpawnEnemyLayer == null)
@@ -297,6 +309,23 @@ public partial class Floor : Node2D
 			spawnableCells.Add(cell);
 		}
 
+		if (avoidRadiusInTiles > 0.0f)
+		{
+			Vector2I tileSize = tileMapLayer.TileSet.TileSize;
+			float tileWidth = Mathf.Abs(tileMapLayer.ToGlobal(new Vector2(tileSize.X, 0)).X - tileMapLayer.ToGlobal(Vector2.Zero).X);
+			float tileHeight = Mathf.Abs(tileMapLayer.ToGlobal(new Vector2(0, tileSize.Y)).Y - tileMapLayer.ToGlobal(Vector2.Zero).Y);
+
+			for (int i = spawnableCells.Count - 1; i >= 0; i--)
+			{
+				Vector2 candidatePosition = tileMapLayer.ToGlobal(tileMapLayer.MapToLocal(spawnableCells[i]));
+
+				if (IsWithinTileRadius(candidatePosition, avoidPosition, avoidRadiusInTiles, tileWidth, tileHeight))
+				{
+					spawnableCells.RemoveAt(i);
+				}
+			}
+		}
+
 		if (spawnableCells.Count == 0)
 		{
 			GD.PushWarning("Cannot find spawn position because the floor has no non-colliding used cells.");
@@ -319,5 +348,12 @@ public partial class Floor : Node2D
 		}
 
 		return false;
+	}
+
+	private static bool IsWithinTileRadius(Vector2 position, Vector2 center, float radiusInTiles, float tileWidth, float tileHeight)
+	{
+		float radiusX = tileWidth * radiusInTiles;
+		float radiusY = tileHeight * radiusInTiles;
+		return Mathf.Abs(position.X - center.X) <= radiusX && Mathf.Abs(position.Y - center.Y) <= radiusY;
 	}
 }
