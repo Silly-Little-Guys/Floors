@@ -13,7 +13,7 @@
 
 [node name="Lootbox" type="Node2D" unique_id=1895122844 node_paths=PackedStringArray("chestSprite", "itemSprite", "openSoundPlayer")]
 script = ExtResource("1_gute8")
-LootTable = Array[Object]([ExtResource("2_qg7um"), ExtResource("3_nbj2l"), ExtResource("4_fnjek"), ExtResource("5_qga32"), ExtResource("6_qga32")])
+LootTable = Array[Object]([ExtResource("3_nbj2l"), ExtResource("3_nbj2l"), ExtResource("2_qg7um"), ExtResource("4_fnjek"), ExtResource("5_qga32"), ExtResource("6_qga32")])
 chestSprite = NodePath("ChestSprite")
 itemSprite = NodePath("ItemSprite")
 openSoundPlayer = NodePath("OpenSoundPlayer")
