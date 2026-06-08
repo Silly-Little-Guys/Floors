@@ -5,10 +5,10 @@
 [ext_resource type="PackedScene" uid="uid://cvmk4ragt284q" path="res://scenes/lootbox/Lootbox.tscn" id="3_a0fu2"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_1nay1"]
-vertices = PackedVector2Array(86, -117.953125, 86, -134, 90, -144.07813, 90, -22, 6, -37.953125, -202, -22, -86, -37.953125, 70, -53.953125, 70, -70, 54, -85.953125, 10, -70, 10, -85.953125, 10, -53.953125, 6, -54, 54, -102, 42, -117.953125, 10, -102, 70, -144.27344, 70, -138, 42, -134, -202, -138, -86, -54, -122, -101.953125, -122, -118, -198, -118, -198, -101.953125)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 3, 5, 6), PackedInt32Array(0, 3, 7, 8), PackedInt32Array(9, 8, 10, 11), PackedInt32Array(7, 3, 4, 12), PackedInt32Array(12, 4, 13, 10), PackedInt32Array(0, 8, 9, 14), PackedInt32Array(15, 0, 14, 16), PackedInt32Array(17, 2, 1, 18), PackedInt32Array(18, 1, 19, 20), PackedInt32Array(21, 22, 23, 16, 11, 13), PackedInt32Array(20, 19, 15, 16, 23), PackedInt32Array(20, 23, 24), PackedInt32Array(5, 20, 24, 25), PackedInt32Array(6, 5, 25, 22, 21), PackedInt32Array(13, 11, 10)])
+vertices = PackedVector2Array(-210, -150.85156, -210, -146, -222.77344, -146, -222.92969, -150.97656, 50, -98, 14, -98, -126, -105.953125, -126, -114, 46, -121.953125, 82, -121.953125, 66, -18, 2, -41.953125, 2, -50, 14, -57.953125, 66, -57.953125, 94, -9.96875, 82, -130, 94, -148.03906, 66, -66, 50, -89.953125, 14, -66, 14, -89.953125, 66, -148.3125, 66, -142, 46, -130, -206, -142, 66, -9.609375, -206, -18, -82, -41.953125, -194, -114, -194, -105.953125, -82, -50)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7, 8, 9), PackedInt32Array(10, 11, 12, 13, 14, 15), PackedInt32Array(9, 16, 17, 15), PackedInt32Array(9, 15, 14, 18), PackedInt32Array(9, 18, 19, 4), PackedInt32Array(19, 18, 20, 21), PackedInt32Array(22, 17, 16, 23), PackedInt32Array(23, 16, 24, 25), PackedInt32Array(15, 26, 10), PackedInt32Array(11, 10, 27, 28), PackedInt32Array(25, 24, 8, 7, 29), PackedInt32Array(27, 25, 29, 30), PackedInt32Array(28, 27, 30, 6, 31), PackedInt32Array(12, 31, 6, 5, 21), PackedInt32Array(12, 21, 20), PackedInt32Array(12, 20, 13)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-225, -153, -220, -4, 96, -8, 100, -150)])
-agent_radius = 6.0
+agent_radius = 2.0
 
 [node name="ExampleFloor" type="Node2D" unique_id=1750975773 node_paths=PackedStringArray("toSpawnEnemyLayer", "layerThatHasWalls")]
 script = ExtResource("1_d5q16")
