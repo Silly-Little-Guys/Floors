@@ -1,16 +1,34 @@
 using Godot;
 using System;
 
-public partial class VendingMachine : Area2D
+public partial class VendingMachine : Area2D, IInteractable
 {
 	[Export] public BuffManager.Buffs buff;
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+	[Export] public int amountToIncrement;
+	[Export] public int initialCost;
+
+	private int calculateCost()
 	{
+		return initialCost;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public void UpdatePlayerToolTip(Player player)
 	{
+		player.hud.interactTooltip.Text = "$" + calculateCost() + "\nPress E to increase " + BuffManager.Instance.GetBuffAsString(buff) + " by " + amountToIncrement;
+	}
+
+    public ItemData Interact(Player player)
+	{
+		UpdatePlayerToolTip(player);
+		int cost = calculateCost();
+		if (player.GetCash() >= cost)
+		{
+			player.TakeCash(cost);
+			BuffManager.Instance.currentBuffs[buff] += amountToIncrement;
+		} else
+		{
+			player.hud.interactTooltip.Text = "Not Enough Money";
+		}
+		return null;
 	}
 }

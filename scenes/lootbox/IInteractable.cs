@@ -1,4 +1,4 @@
 public interface IInteractable
 {
-    public ItemData Interact();
+    public ItemData Interact(Player player);
 }

@@ -117,15 +117,22 @@ public partial class Player : CharacterBody2D
 		if (area.IsInGroup("interactable"))
 		{
 			hud.interactTooltip.Text = "Press E to interact";
-			nearbyInteractables.Add(area.GetParent() as IInteractable);
 			if (area.IsInGroup("lootbox"))
 			{
+				nearbyInteractables.Add(area.GetParent() as IInteractable);
 				UpdateAndDisplayInteractTooltipLootbox(area.GetParent() as Lootbox);
+			} else if (area.IsInGroup("vending"))
+			{
+				nearbyInteractables.Add(area as IInteractable);
+				VendingMachine vendingMachine = area as VendingMachine;
+				vendingMachine.UpdatePlayerToolTip(this);
+				hud.interactTooltip.Visible = true;
 			}
 			else
 			{
+				nearbyInteractables.Add(area.GetParent() as IInteractable);
 				hud.interactTooltip.Visible = true;
-			}		
+			}
 		}
 	}
 
@@ -133,7 +140,13 @@ public partial class Player : CharacterBody2D
 	{
 		if (area.IsInGroup("interactable"))
 		{
-			nearbyInteractables.Remove(area.GetParent() as IInteractable);
+			if (area.IsInGroup("vending"))
+			{
+				nearbyInteractables.Remove(area as IInteractable);
+			} else
+			{
+				nearbyInteractables.Remove(area.GetParent() as IInteractable);
+			}
 		}
 		if (nearbyInteractables.Count <= 0)
 		{
@@ -156,7 +169,7 @@ public partial class Player : CharacterBody2D
 			if (nearbyInteractables.Count > 0)
 			{
 				var interactable = nearbyInteractables[0];
-				var receivedItem = interactable.Interact();
+				var receivedItem = interactable.Interact(this);
 				if (interactable is Lootbox lb)
 				{
 					UpdateAndDisplayInteractTooltipLootbox(lb);

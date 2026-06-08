@@ -12,7 +12,7 @@ public partial class Lootbox : Node2D, IInteractable
 	[Export] public Sprite2D itemSprite;
 	[Export] public AudioStreamPlayer2D openSoundPlayer;
 
-	public ItemData Interact()
+	public ItemData Interact(Player player)
 	{
 		// If item already taken, do nothing
 		if (taken) return null;

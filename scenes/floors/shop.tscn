@@ -37,13 +37,16 @@ tile_set = ExtResource("2_48l2y")
 position = Vector2(0, -56)
 
 [node name="Vendingmachine2" parent="." unique_id=963858618 instance=ExtResource("3_s7dnk")]
-position = Vector2(-48, -56)
+position = Vector2(-109, -56)
+buff = 1
+amountToIncrement = 1
+initialCost = 10000
 
 [node name="permanent" type="Label" parent="." unique_id=624955583]
-offset_left = -73.0
-offset_top = -112.0
-offset_right = 25.0
-offset_bottom = -89.0
+offset_left = -107.0
+offset_top = -132.0
+offset_right = -9.0
+offset_bottom = -109.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0.8423076, 0.884617, 1)
 theme_override_constants/outline_size = 1
@@ -64,5 +67,19 @@ theme_override_constants/outline_size = 1
 theme_override_fonts/font = ExtResource("2_nuld6")
 theme_override_font_sizes/font_size = 10
 text = "potion potency"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="vending2" type="Label" parent="." unique_id=1565622917]
+offset_left = -158.0
+offset_top = -84.0
+offset_right = -60.0
+offset_bottom = -61.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.8335207, 0, 0.10412597, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = ExtResource("2_nuld6")
+theme_override_font_sizes/font_size = 10
+text = "ammo multiplier"
 horizontal_alignment = 1
 vertical_alignment = 1

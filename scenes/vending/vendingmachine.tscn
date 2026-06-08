@@ -4,13 +4,18 @@
 [ext_resource type="Texture2D" uid="uid://c3afre5hpwptj" path="res://assets/aseprite/vendingmachine.png" id="1_balfn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_agquu"]
-size = Vector2(12, 16)
+size = Vector2(31, 25)
 
-[node name="Vendingmachine" type="Area2D" unique_id=1747375057]
+[node name="Vendingmachine" type="Area2D" unique_id=1747375057 groups=["interactable", "vending"]]
 script = ExtResource("1_agquu")
+amountToIncrement = 5
+initialCost = 1000
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1686684205]
 texture = ExtResource("1_balfn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1494352131]
+position = Vector2(-0.5, -4.5)
 shape = SubResource("RectangleShape2D_agquu")
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]
