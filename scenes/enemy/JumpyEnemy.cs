@@ -19,6 +19,9 @@ public partial class JumpyEnemy : RigidBody2D, IEnemy
 	public const float jumpForce = 200.0f;
 	public const float jumpRadius = 35.0f;
 	public const float gCompensation = 2f;
+	public const float maxHorizontalSpeed = 80.0f;
+	public const float minimumMoveDistance = 2.0f;
+	public const float stuckSpeed = 5.0f;
 	public int maxHealth;
 	private bool isAttacking = false;
 	private bool isDying = false;
@@ -88,13 +91,34 @@ public partial class JumpyEnemy : RigidBody2D, IEnemy
 
 	public override void _PhysicsProcess(double delta)
 	{
+		if (player == null || isDying)
+		{
+			return;
+		}
+
 		if (state.Equals("walking"))
 		{
 			nav.TargetPosition = player.GlobalPosition;
-			Vector2 nextPos = new Vector2(nav.GetNextPathPosition().X, GlobalPosition.Y);
-			animatedSprite2D.Play(walk);
-			ApplyCentralForce((nextPos - GlobalPosition).Normalized() * speed);
+			Vector2 pathPos = nav.GetNextPathPosition();
+			float targetX = pathPos.X;
+			if (Mathf.Abs(targetX - GlobalPosition.X) < minimumMoveDistance)
+			{
+				targetX = player.GlobalPosition.X;
+			}
 
+			Vector2 nextPos = new Vector2(targetX, GlobalPosition.Y);
+			animatedSprite2D.Play(walk);
+			Vector2 toTarget = nextPos - GlobalPosition;
+			if (toTarget.LengthSquared() > minimumMoveDistance * minimumMoveDistance)
+			{
+				ApplyCentralForce(toTarget.Normalized() * speed);
+			}
+
+			if (Mathf.Abs(LinearVelocity.X) > maxHorizontalSpeed)
+			{
+				LinearVelocity = new Vector2(Mathf.Sign(LinearVelocity.X) * maxHorizontalSpeed, LinearVelocity.Y);
+			}
+	
 			if (nextPos.X < GlobalPosition.X)
 			{
 				animatedSprite2D.FlipH = true;
@@ -103,8 +127,12 @@ public partial class JumpyEnemy : RigidBody2D, IEnemy
 			{
 				animatedSprite2D.FlipH = false;
 			}
+	
+			bool isCloseToPathPoint = (pathPos - GlobalPosition).Length() < jumpRadius;
+			bool isStuckNearPlayer = Mathf.Abs(LinearVelocity.X) < stuckSpeed
+				&& Mathf.Abs(player.GlobalPosition.X - GlobalPosition.X) < jumpRadius * 2.0f;
 
-			if ((nextPos - GlobalPosition).Length() < jumpRadius && shape.IsColliding())
+			if ((isCloseToPathPoint || isStuckNearPlayer) && shape.IsColliding())
 			{
 				state = "jumping";
 				LinearVelocity = Vector2.Zero;

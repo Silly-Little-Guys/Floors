@@ -18,8 +18,11 @@ public partial class WingedEnemy : CharacterBody2D, IEnemy
 	[Export] public NavigationAgent2D nav;
 	[Export] public Timer attackCooldownTimer;
 	private bool isAttacking = false;
+	private bool isDying = false;
+	private const float minimumMoveDistance = 2.0f;
 	public override void _Ready()
 	{
+		MotionMode = MotionModeEnum.Floating;
 		maxHealth = GetHealth();
 		enemyHealthBar.UpdateHealth(GetHealth(), maxHealth);
 	}
@@ -30,6 +33,7 @@ public partial class WingedEnemy : CharacterBody2D, IEnemy
 		if (GetHealth() <= 0)
 		{
 			player.AddCash(deathCash, GlobalPosition);
+			isDying = true;
 			asp2d.Play();
 			this.Visible = false;
 			attackCollisionShape2D.SetDeferred("disabled", true);
@@ -50,7 +54,7 @@ public partial class WingedEnemy : CharacterBody2D, IEnemy
 
 	public void Attack()
 	{
-		if (isAttacking)
+		if (isAttacking && !isDying)
 		{
 			player.TakeDamage(attackDamage);
 			attackCooldownTimer.Start();
@@ -82,10 +86,18 @@ public partial class WingedEnemy : CharacterBody2D, IEnemy
 
 	public override void _PhysicsProcess(double delta)
 	{
-		nav.TargetPosition = player.GlobalPosition;
-		Vector2 nextPos = nav.GetNextPathPosition();
+		if (player == null || isDying)
+		{
+			Velocity = Vector2.Zero;
+			return;
+		}
+
 		animatedSprite2D.Play(flightAnimation);
-		Vector2 updateVelo = (nextPos - GlobalPosition).Normalized() * speed;
+		Vector2 toPlayer = player.GlobalPosition - GlobalPosition;
+		Velocity = toPlayer.LengthSquared() > minimumMoveDistance * minimumMoveDistance
+			? toPlayer.Normalized() * speed
+			: Vector2.Zero;
+
 		if (Velocity.X < 0)
 		{
 			animatedSprite2D.FlipH = true;
@@ -93,7 +105,7 @@ public partial class WingedEnemy : CharacterBody2D, IEnemy
 		{
 			animatedSprite2D.FlipH = false;
 		}
-		Velocity = updateVelo;
+
 		MoveAndSlide();
 	}
 }
