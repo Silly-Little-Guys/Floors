@@ -10,6 +10,7 @@ public partial class HUD : CanvasLayer
 	[Export] public ProgressBar healthBar;
 	[Export] public Label ammoLabel;
 	[Export] public AnimationPlayer damageAnimation;
+	[Export] public AnimationPlayer lowHealthAnimation;
 	[Export] public Label cashLabel;
 	[Export] public Label floorLabel;
 	[Export] public CompressedTexture2D cashImage;
@@ -24,6 +25,8 @@ public partial class HUD : CanvasLayer
 	private const float CashSpriteSize = 32.0f;
 	private const float CashBurstDuration = 0.95f;
 	private const float CashLabelPulseDuration = 0.25f;
+
+	private const int LowHealthThreshold = 50;
 
 	private readonly List<CashAnimation> cashAnimations = new();
 	private readonly RandomNumberGenerator random = new();
@@ -56,8 +59,18 @@ public partial class HUD : CanvasLayer
 
 	public void OnPlayerHealthUpdated(bool damaged)
 	{
-		healthBar.Value = player.GetHealth();
+		int health = player.GetHealth();
+		healthBar.Value = health;
 		if (damaged) damageAnimation.Play("damage_flash");
+
+		if (health <= LowHealthThreshold) 
+		{
+			lowHealthAnimation.Play("low_health");
+		}
+		else
+		{
+			lowHealthAnimation.Play("RESET");
+		}
 	}
 
 	public void OnPlayerCashUpdated(int newAmount)
