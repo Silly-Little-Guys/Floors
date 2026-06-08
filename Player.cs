@@ -33,7 +33,7 @@ public partial class Player : CharacterBody2D
 	private ItemData heldItem;
 	private int currentFloor;
 
-	private int maxHealth;
+	public int maxHealth { get; private set; }
 
 	public override void _Ready()
 	{
@@ -174,12 +174,16 @@ public partial class Player : CharacterBody2D
 		}
 	}
 
-	public void UseItem(ItemData item)
+	public bool UseItem(ItemData item)
 	{
 		foreach (var effect in item.Effects)
 		{
-			effect.Apply(this, item);
+			if (!effect.Apply(this, item))
+			{
+				return false;
+			}
 		}
+		return true;
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
@@ -206,9 +210,11 @@ public partial class Player : CharacterBody2D
 		{
 			if (heldItem is null) return;
 
-			UseItem(heldItem);
-			heldItem = null;
-			hud.UpdateHeldItem(heldItem);
+			if (UseItem(heldItem))
+			{
+				heldItem = null;
+				hud.UpdateHeldItem(heldItem);
+			}
 		}
 	}
 

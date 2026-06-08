@@ -16,6 +16,7 @@ public partial class HUD : CanvasLayer
 	[Export] public TextureRect itemTextureRect;
 	[Export] public Label itemTooltip;
 	[Export] public Label interactTooltip;
+	[Export] public Label healthErrortip;
 	[Export] public Control pauseScreen;
 	private bool paused = false;
 
@@ -245,6 +246,13 @@ public partial class HUD : CanvasLayer
 		itemTooltip.Text = $"Press F to equip/use {item.ItemName}";
 		itemTooltip.Visible = true;
 		itemTextureRect.Texture = item.ItemTexture;
+	}
+
+	public async void FlashHealthErrortip()
+	{
+		healthErrortip.Visible = true;
+		await ToSignal(GetTree().CreateTimer(2f), SceneTreeTimer.SignalName.Timeout);
+		healthErrortip.Visible = false;
 	}
 
 	/// <summary>

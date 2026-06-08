@@ -4,6 +4,46 @@
 [ext_resource type="Texture2D" uid="uid://btq2k1ajhp4xn" path="res://assets/aseprite/cash.png" id="2_cgeww"]
 [ext_resource type="PackedScene" uid="uid://cmgdfox28hieq" path="res://scenes/tooltip/tooltip.tscn" id="3_c45xl"]
 [ext_resource type="PackedScene" uid="uid://cfdhtncdv1ukc" path="res://scenes/pause_screen/pause_screen.tscn" id="4_0bx4p"]
+[ext_resource type="PackedScene" uid="uid://c1ya1mgemmkcp" path="res://scenes/tooltip/errortip.tscn" id="5_mgtrf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mgtrf"]
+
+[sub_resource type="Animation" id="Animation_v7mo4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HealthBar:theme_override_styles/fill:bg_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.6, 0.6, 0.6, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_n56i7"]
+resource_name = "low_health"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HealthBar:theme_override_styles/fill:bg_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.99999994, 0.28180134, 0.5683283, 1), Color(0.6, 0.6, 0.6, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mq0y1"]
+_data = {
+&"RESET": SubResource("Animation_v7mo4"),
+&"low_health": SubResource("Animation_n56i7")
+}
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_48c2t"]
 bg_color = Color(0.6, 0.6, 0.6, 0.53333336)
@@ -50,25 +90,30 @@ _data = {
 &"damage_flash": SubResource("Animation_cgeww")
 }
 
-[node name="HUD" type="CanvasLayer" unique_id=651644861 node_paths=PackedStringArray("healthBar", "ammoLabel", "damageAnimation", "cashLabel", "floorLabel", "itemTextureRect", "itemTooltip", "interactTooltip", "pauseScreen")]
+[node name="HUD" type="CanvasLayer" unique_id=651644861 node_paths=PackedStringArray("healthBar", "ammoLabel", "damageAnimation", "cashLabel", "floorLabel", "itemTextureRect", "itemTooltip", "interactTooltip", "healthErrortip", "pauseScreen")]
 process_mode = 3
 script = ExtResource("1_37p78")
 healthBar = NodePath("HealthBar")
 ammoLabel = NodePath("AmmoLabel")
-damageAnimation = NodePath("AnimationPlayer")
+damageAnimation = NodePath("DamageAnimationPlayer")
 cashLabel = NodePath("CashLabel")
 floorLabel = NodePath("FloorLabel")
 cashImage = ExtResource("2_cgeww")
 itemTextureRect = NodePath("ItemHolder/TextureRect")
 itemTooltip = NodePath("ItemTooltip")
 interactTooltip = NodePath("InteractTooltip")
+healthErrortip = NodePath("HealthErrortip")
 pauseScreen = NodePath("PauseScreen")
 
 [node name="HealthBar" type="ProgressBar" parent="." unique_id=1664389420]
 offset_left = 55.0
 offset_right = 287.0
 offset_bottom = 27.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_mgtrf")
 value = 50.0
+
+[node name="LowHealthAnimationPlayer" type="AnimationPlayer" parent="." unique_id=385574058]
+libraries/ = SubResource("AnimationLibrary_mq0y1")
 
 [node name="HealthLabel" type="Label" parent="." unique_id=837840285]
 offset_right = 40.0
@@ -126,7 +171,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 0, 0, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=856967178]
+[node name="DamageAnimationPlayer" type="AnimationPlayer" parent="." unique_id=856967178]
 libraries/ = SubResource("AnimationLibrary_c45xl")
 
 [node name="CashLabel" type="Label" parent="." unique_id=2097608474]
@@ -188,3 +233,17 @@ horizontal_alignment = 2
 [node name="PauseScreen" parent="." unique_id=952694068 instance=ExtResource("4_0bx4p")]
 process_mode = 3
 visible = false
+
+[node name="HealthErrortip" parent="." unique_id=1733037351 instance=ExtResource("5_mgtrf")]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -181.0
+offset_top = -75.0
+offset_right = 0.0
+offset_bottom = -41.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Your health is full!"
