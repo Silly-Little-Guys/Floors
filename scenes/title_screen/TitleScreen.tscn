@@ -4,9 +4,10 @@
 [ext_resource type="FontFile" uid="uid://bs751fsdc1idw" path="res://assets/fonts/comic-sans-bold-italic.ttf" id="2_82c0b"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bludd"]
-bg_color = Color(0.7495496, 0.570537, 1.92523e-07, 1)
+bg_color = Color(0.7490196, 0.5686275, 0, 1)
 
 [node name="TitleScreen" type="Control" unique_id=952694068]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5

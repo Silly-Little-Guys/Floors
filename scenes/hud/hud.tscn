@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bqlnlcjrbse4b" path="res://scenes/hud/HUD.cs" id="1_37p78"]
 [ext_resource type="Texture2D" uid="uid://btq2k1ajhp4xn" path="res://assets/aseprite/cash.png" id="2_cgeww"]
 [ext_resource type="PackedScene" uid="uid://cmgdfox28hieq" path="res://scenes/tooltip/tooltip.tscn" id="3_c45xl"]
+[ext_resource type="PackedScene" uid="uid://cfdhtncdv1ukc" path="res://scenes/pause_screen/pause_screen.tscn" id="4_0bx4p"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_48c2t"]
 bg_color = Color(0.6, 0.6, 0.6, 0.53333336)
@@ -49,7 +50,8 @@ _data = {
 &"damage_flash": SubResource("Animation_cgeww")
 }
 
-[node name="HUD" type="CanvasLayer" unique_id=651644861 node_paths=PackedStringArray("healthBar", "ammoLabel", "damageAnimation", "cashLabel", "floorLabel", "itemTextureRect", "itemTooltip", "interactTooltip")]
+[node name="HUD" type="CanvasLayer" unique_id=651644861 node_paths=PackedStringArray("healthBar", "ammoLabel", "damageAnimation", "cashLabel", "floorLabel", "itemTextureRect", "itemTooltip", "interactTooltip", "pauseScreen")]
+process_mode = 3
 script = ExtResource("1_37p78")
 healthBar = NodePath("HealthBar")
 ammoLabel = NodePath("AmmoLabel")
@@ -60,6 +62,7 @@ cashImage = ExtResource("2_cgeww")
 itemTextureRect = NodePath("ItemHolder/TextureRect")
 itemTooltip = NodePath("ItemTooltip")
 interactTooltip = NodePath("InteractTooltip")
+pauseScreen = NodePath("PauseScreen")
 
 [node name="HealthBar" type="ProgressBar" parent="." unique_id=1664389420]
 offset_left = 55.0
@@ -181,3 +184,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "Floor X"
 horizontal_alignment = 2
+
+[node name="PauseScreen" parent="." unique_id=952694068 instance=ExtResource("4_0bx4p")]
+process_mode = 3
+visible = false

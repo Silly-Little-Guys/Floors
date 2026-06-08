@@ -16,6 +16,8 @@ public partial class HUD : CanvasLayer
 	[Export] public TextureRect itemTextureRect;
 	[Export] public Label itemTooltip;
 	[Export] public Label interactTooltip;
+	[Export] public Control pauseScreen;
+	private bool paused = false;
 
 	private const int MaxCashSprites = 50;
 	private const float CashSpriteSize = 32.0f;
@@ -40,6 +42,16 @@ public partial class HUD : CanvasLayer
 		UpdateCashAnimations((float)delta);
 		UpdateCashLabelPulse((float)delta);
 	}
+
+    public override void _UnhandledInput(InputEvent @event)
+    {
+		if (@event.IsActionPressed("pause"))
+		{
+			paused = !paused;
+			pauseScreen.Visible = paused;
+			GetTree().Paused = paused;
+		}
+    }
 
 	public void OnPlayerHealthUpdated(bool damaged)
 	{
