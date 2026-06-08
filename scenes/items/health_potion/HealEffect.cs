@@ -5,7 +5,7 @@ public partial class HealEffect : ItemEffect
 {
 	public override void Apply(Player player, ItemData item)
 	{
-		player.AddHealth(20);
+		player.AddHealth(BuffManager.Instance.currentBuffs[BuffManager.Buffs.POTION_POTENCY]);
 		player.drinkPotionSoundPlayer.Play();
 	}
 }

@@ -1,11 +1,13 @@
 [gd_scene format=3 uid="uid://e3hg0btimloj"]
 
+[ext_resource type="Script" uid="uid://ckcbrcobag4c7" path="res://scenes/vending/VendingMachine.cs" id="1_agquu"]
 [ext_resource type="Texture2D" uid="uid://c3afre5hpwptj" path="res://assets/aseprite/vendingmachine.png" id="1_balfn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_agquu"]
 size = Vector2(12, 16)
 
 [node name="Vendingmachine" type="Area2D" unique_id=1747375057]
+script = ExtResource("1_agquu")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1686684205]
 texture = ExtResource("1_balfn")

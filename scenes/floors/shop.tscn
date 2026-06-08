@@ -2,12 +2,24 @@
 
 [ext_resource type="Script" uid="uid://cetc2ryjqqgwc" path="res://Floor.cs" id="1_hglvu"]
 [ext_resource type="TileSet" uid="uid://cw4nfp1xk7o16" path="res://assets/tilesets/debug_tileset.tres" id="2_48l2y"]
+[ext_resource type="FontFile" uid="uid://caikr7uslw4u1" path="res://assets/fonts/Ithaca-LVB75.ttf" id="2_nuld6"]
 [ext_resource type="PackedScene" uid="uid://e3hg0btimloj" path="res://scenes/vending/vendingmachine.tscn" id="3_s7dnk"]
 
 [node name="ExampleFloor" type="Node2D" unique_id=1750975773 node_paths=PackedStringArray("toSpawnEnemyLayer", "layerThatHasWalls")]
 script = ExtResource("1_hglvu")
 toSpawnEnemyLayer = NodePath("backgroundlayer")
 layerThatHasWalls = NodePath("Layer0")
+
+[node name="BuffShop" type="Label" parent="." unique_id=839090251]
+offset_left = -97.0
+offset_top = -139.0
+offset_right = -22.0
+offset_bottom = -116.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 0.5631707, 0.9083867, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = ExtResource("2_nuld6")
+text = "Tuff Buff Shop"
 
 [node name="Layer0" type="TileMapLayer" parent="." unique_id=250325027]
 texture_filter = 1
@@ -26,3 +38,31 @@ position = Vector2(0, -56)
 
 [node name="Vendingmachine2" parent="." unique_id=963858618 instance=ExtResource("3_s7dnk")]
 position = Vector2(-48, -56)
+
+[node name="permanent" type="Label" parent="." unique_id=624955583]
+offset_left = -73.0
+offset_top = -112.0
+offset_right = 25.0
+offset_bottom = -89.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0.8423076, 0.884617, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = ExtResource("2_nuld6")
+theme_override_font_sizes/font_size = 13
+text = "permanent effects"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="vending1" type="Label" parent="." unique_id=827369596]
+offset_left = -47.0
+offset_top = -84.0
+offset_right = 51.0
+offset_bottom = -61.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.8335207, 0, 0.10412597, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = ExtResource("2_nuld6")
+theme_override_font_sizes/font_size = 10
+text = "potion potency"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -37,6 +37,7 @@ public partial class Player : CharacterBody2D
 	{
 		weaponHandler.bulletSpawnPoint = bulletSpawnPoint;
 		weaponHandler.hud = hud;
+		SetMeta("Health", BuffManager.Instance.currentBuffs[BuffManager.Buffs.MAX_HEALTH]);
 		maxHealth = (int)GetMeta("Health");
 		weaponHandler.UpdateWeapon();
 	}

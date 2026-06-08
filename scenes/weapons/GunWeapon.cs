@@ -9,6 +9,7 @@ public partial class GunWeapon : Weapon
 
 	public override void _Ready()
 	{
+		ammoCount *= BuffManager.Instance.currentBuffs[BuffManager.Buffs.AMMO_MULT_MODIFIER];
 		maxAmmoCount = ammoCount;
 		fireTimer.OneShot = true;
 		fireTimer.WaitTime = 1.0 / fireRate;

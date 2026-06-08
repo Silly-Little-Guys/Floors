@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://c8j4l8ry1sll7"]
+
+[ext_resource type="Script" uid="uid://bqhr5yj27wqlj" path="res://BuffManager.cs" id="1_hpvxe"]
+
+[node name="BuffManager" type="Node" unique_id=1355131667]
+script = ExtResource("1_hpvxe")
