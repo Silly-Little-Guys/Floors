@@ -10,6 +10,7 @@ public partial class EnemySpawner : Node2D
 	private Floor currentFloor;
 	private readonly List<EnemyScene> enemyScenes = new();
 	private const string enemyScenesPath = "res://scenes/enemy";
+	private const float harderEnemyWeightSharpness = 0.75f;
 
 	private class EnemyScene
 	{
@@ -144,10 +145,11 @@ public partial class EnemySpawner : Node2D
 			return null;
 		}
 
+		int highestEligibleDifficulty = eligibleEnemyScenes[^1].Difficulty;
 		float totalWeight = 0.0f;
 		foreach (EnemyScene enemyScene in eligibleEnemyScenes)
 		{
-			totalWeight += GetEnemyWeight(enemyScene);
+			totalWeight += GetEnemyWeight(enemyScene, highestEligibleDifficulty);
 		}
 
 		float roll = (float)GD.Randf() * totalWeight;
@@ -155,7 +157,7 @@ public partial class EnemySpawner : Node2D
 
 		foreach (EnemyScene enemyScene in eligibleEnemyScenes)
 		{
-			accumulatedWeight += GetEnemyWeight(enemyScene);
+			accumulatedWeight += GetEnemyWeight(enemyScene, highestEligibleDifficulty);
 			if (roll <= accumulatedWeight)
 			{
 				return enemyScene.Scene;
@@ -165,9 +167,10 @@ public partial class EnemySpawner : Node2D
 		return eligibleEnemyScenes[^1].Scene;
 	}
 
-	private float GetEnemyWeight(EnemyScene enemyScene)
+	private float GetEnemyWeight(EnemyScene enemyScene, int highestEligibleDifficulty)
 	{
-		return difficultyLevel - enemyScene.Difficulty + 1;
+		int difficultyGapFromHardest = highestEligibleDifficulty - enemyScene.Difficulty;
+		return MathF.Exp(-difficultyGapFromHardest * difficultyLevel * harderEnemyWeightSharpness);
 	}
 
 	private bool SetEnemyPlayer(Node2D enemy)
