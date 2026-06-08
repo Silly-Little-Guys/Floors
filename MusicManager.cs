@@ -7,7 +7,7 @@ public partial class MusicManager : Node
 	private const string MenuMusicPath = "res://assets/music/ShopTheme.mp3";
 	private const string GameMusicPath = "res://assets/music/BulletHell.mp3";
 	private const float SilentVolumeDb = -40.0f;
-	private const float FullVolumeDb = -6.0f;
+	private const float FullVolumeDb = -8.0f;
 
 	[Export] public double FadeDurationSeconds = 1.0;
 
