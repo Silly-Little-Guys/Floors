@@ -78,7 +78,7 @@ collide_with_bodies = false
 
 [node name="ShootSoundPlayer" type="AudioStreamPlayer2D" parent="." unique_id=439163307]
 stream = ExtResource("4_mftem")
-volume_db = -1.0
+volume_db = -10.0
 
 [node name="EmptySoundPlayer" type="AudioStreamPlayer2D" parent="." unique_id=238593798]
 stream = ExtResource("5_dqvvk")

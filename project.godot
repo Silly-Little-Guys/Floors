@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 BuffManager="*uid://c8j4l8ry1sll7"
+MusicManager="*res://MusicManager.cs"
 CRTCameraEffect="*res://scenes/effects/crt_camera_effect.tscn"
 
 [dotnet]
