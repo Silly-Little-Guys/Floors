@@ -43,15 +43,15 @@ public partial class HUD : CanvasLayer
 		UpdateCashLabelPulse((float)delta);
 	}
 
-    public override void _UnhandledInput(InputEvent @event)
-    {
+	public override void _UnhandledInput(InputEvent @event)
+	{
 		if (@event.IsActionPressed("pause"))
 		{
 			paused = !paused;
 			pauseScreen.Visible = paused;
 			GetTree().Paused = paused;
 		}
-    }
+	}
 
 	public void OnPlayerHealthUpdated(bool damaged)
 	{

@@ -21,6 +21,7 @@ public partial class PauseScreen : Control
 	
 	public void OnMainMenuButtonPressed()
 	{
+		GetTree().Paused = false;
 		GetTree().ChangeSceneToFile("res://scenes/title_screen/TitleScreen.tscn");
 	}
 
