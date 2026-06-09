@@ -23,7 +23,7 @@ public partial class VendingMachine : Area2D, IInteractable
 		int cost = calculateCost();
 		if (player.GetCash() >= cost)
 		{
-			player.TakeCash(cost);
+			player.TakeCash(cost, GlobalPosition);
 			BuffManager.Instance.currentBuffs[buff] += amountToIncrement;
 		} else
 		{

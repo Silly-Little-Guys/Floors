@@ -25,6 +25,8 @@ public partial class HUD : CanvasLayer
 	private const float CashSpriteSize = 32.0f;
 	private const float CashBurstDuration = 0.95f;
 	private const float CashLabelPulseDuration = 0.25f;
+	private static readonly Color CashGainTint = Colors.White;
+	private static readonly Color CashSpentTint = new Color(1.0f, 0.22f, 0.2f, 1.0f);
 
 	private const int LowHealthThreshold = 50;
 
@@ -80,11 +82,16 @@ public partial class HUD : CanvasLayer
 
 	public void OnPlayerCashAdded(int amount, Vector2 sourceGlobalPosition)
 	{
-		SpawnCashBurst(amount, WorldToHudPosition(sourceGlobalPosition));
+		SpawnCashBurst(amount, WorldToHudPosition(sourceGlobalPosition), cashLabel.GetGlobalRect().GetCenter(), CashGainTint, true);
 		cashLabelPulseTimer = CashLabelPulseDuration;
 	}
 
-	private void SpawnCashBurst(int amount, Vector2 sourcePosition)
+	public void OnPlayerCashSpent(int amount, Vector2 destinationGlobalPosition)
+	{
+		SpawnCashBurst(amount, cashLabel.GetGlobalRect().GetCenter(), WorldToHudPosition(destinationGlobalPosition), CashSpentTint, false);
+	}
+
+	private void SpawnCashBurst(int amount, Vector2 sourcePosition, Vector2 endPosition, Color tint, bool burstFirst)
 	{
 		if (cashImage == null || cashLabel == null)
 		{
@@ -92,7 +99,6 @@ public partial class HUD : CanvasLayer
 		}
 
 		int spriteCount = Mathf.Clamp(amount, 1, MaxCashSprites);
-		Vector2 cashLabelCenter = cashLabel.GetGlobalRect().GetCenter();
 
 		for (int i = 0; i < spriteCount; i++)
 		{
@@ -103,16 +109,18 @@ public partial class HUD : CanvasLayer
 				PivotOffset = new Vector2(CashSpriteSize, CashSpriteSize) / 2.0f,
 				MouseFilter = Control.MouseFilterEnum.Ignore,
 				ZIndex = 100,
-				Modulate = new Color(1.0f, 1.0f, 1.0f, 0.0f),
+				Modulate = new Color(tint.R, tint.G, tint.B, 0.0f),
 				Scale = Vector2.Zero,
 			};
 
 			float angle = random.RandfRange(0.0f, Mathf.Pi * 2.0f);
 			Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
-			Vector2 startPosition = sourcePosition + direction * random.RandfRange(0.0f, 18.0f);
-			Vector2 burstPosition = sourcePosition + direction * random.RandfRange(50.0f, 115.0f);
-			Vector2 midpoint = (burstPosition + cashLabelCenter) / 2.0f;
-			Vector2 arcLift = Vector2.Up * random.RandfRange(70.0f, 150.0f);
+			Vector2 startPosition = sourcePosition + direction * random.RandfRange(0.0f, burstFirst ? 18.0f : 10.0f);
+			Vector2 burstPosition = burstFirst
+				? sourcePosition + direction * random.RandfRange(50.0f, 115.0f)
+				: sourcePosition + direction * random.RandfRange(18.0f, 46.0f);
+			Vector2 midpoint = (burstPosition + endPosition) / 2.0f;
+			Vector2 arcLift = Vector2.Up * random.RandfRange(burstFirst ? 70.0f : 35.0f, burstFirst ? 150.0f : 95.0f);
 			Vector2 arcSide = new Vector2(-direction.Y, direction.X) * random.RandfRange(-45.0f, 45.0f);
 
 			AddChild(cashSprite);
@@ -124,12 +132,13 @@ public partial class HUD : CanvasLayer
 				StartPosition = startPosition,
 				BurstPosition = burstPosition,
 				ControlPosition = midpoint + arcLift + arcSide,
-				EndPosition = cashLabelCenter,
+				EndPosition = endPosition,
 				Delay = i * 0.015f + random.RandfRange(0.0f, 0.08f),
-				Duration = CashBurstDuration + random.RandfRange(-0.08f, 0.16f),
+				Duration = (burstFirst ? CashBurstDuration : 0.82f) + random.RandfRange(-0.08f, 0.16f),
 				StartRotation = random.RandfRange(-0.9f, 0.9f),
 				EndRotation = random.RandfRange(-Mathf.Pi * 3.0f, Mathf.Pi * 3.0f),
-				PeakScale = random.RandfRange(1.25f, 1.8f),
+				PeakScale = random.RandfRange(burstFirst ? 1.25f : 0.95f, burstFirst ? 1.8f : 1.35f),
+				Tint = tint,
 			});
 		}
 	}
@@ -186,7 +195,7 @@ public partial class HUD : CanvasLayer
 			cashAnimation.Sprite.Position = position - cashAnimation.Sprite.PivotOffset;
 			cashAnimation.Sprite.Scale = Vector2.One * scale;
 			cashAnimation.Sprite.Rotation = Mathf.Lerp(cashAnimation.StartRotation, cashAnimation.EndRotation, EaseOutCubic(progress));
-			cashAnimation.Sprite.Modulate = new Color(1.0f, 1.0f, 1.0f, alpha);
+			cashAnimation.Sprite.Modulate = new Color(cashAnimation.Tint.R, cashAnimation.Tint.G, cashAnimation.Tint.B, alpha);
 			cashAnimations[i] = cashAnimation;
 		}
 	}
@@ -246,6 +255,7 @@ public partial class HUD : CanvasLayer
 		public float StartRotation;
 		public float EndRotation;
 		public float PeakScale;
+		public Color Tint;
 	}
 
 	public void UpdateHeldItem(ItemData item)

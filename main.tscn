@@ -46,6 +46,7 @@ player = NodePath("../player")
 
 [connection signal="OnNextFloorSpawn" from="floor_spawner" to="player" method="OnNextFloorSpawn"]
 [connection signal="CashAdded" from="player" to="HUD" method="OnPlayerCashAdded"]
+[connection signal="CashSpent" from="player" to="HUD" method="OnPlayerCashSpent"]
 [connection signal="CashUpdated" from="player" to="HUD" method="OnPlayerCashUpdated"]
 [connection signal="HealthUpdated" from="player" to="HUD" method="OnPlayerHealthUpdated"]
 [connection signal="body_entered" from="BottomDeath" to="BottomDeath" method="OnBodyEntered"]

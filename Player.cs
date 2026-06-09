@@ -14,8 +14,12 @@ public partial class Player : CharacterBody2D
 	[Signal]
 	public delegate void CashAddedEventHandler(int amountAdded, Vector2 sourceGlobalPosition);
 
+	[Signal]
+	public delegate void CashSpentEventHandler(int amountSpent, Vector2 destinationGlobalPosition);
+
 	public const float Speed = 100.0f;
 	public const float JumpVelocity = -300.0f;
+	private const float FootDustMoveThreshold = 12.0f;
 	private List<IInteractable> nearbyInteractables = new();
 	[Export] public float weightInKilograms = 1000.0f;
 	
@@ -32,6 +36,10 @@ public partial class Player : CharacterBody2D
 	[Export] public Node2D mainScene;
 	private ItemData heldItem;
 	private int currentFloor;
+	private CpuParticles2D footDustParticles;
+	private ImageTexture footDustTexture;
+	private readonly Dictionary<TileSetAtlasSource, Image> tileSourceImages = new();
+	private Color currentGroundDustColor = new Color(0.58f, 0.55f, 0.48f, 0.78f);
 
 	public int maxHealth { get; private set; }
 
@@ -42,6 +50,7 @@ public partial class Player : CharacterBody2D
 		SetMeta("Health", BuffManager.Instance.currentBuffs[BuffManager.Buffs.MAX_HEALTH]);
 		maxHealth = (int)GetMeta("Health");
 		weaponHandler.UpdateWeapon();
+		CreateFootDustParticles();
 	}
 
 	/// <summary>
@@ -102,6 +111,12 @@ public partial class Player : CharacterBody2D
 		int newCash = GetCash() - amount;
 		SetMeta("Cash", newCash);
 		EmitSignal(SignalName.CashUpdated, newCash);
+	}
+
+	public void TakeCash(int amount, Vector2 destinationGlobalPosition)
+	{
+		TakeCash(amount);
+		EmitSignal(SignalName.CashSpent, amount, destinationGlobalPosition);
 	}
 
 	public int GetCash()
@@ -279,6 +294,7 @@ public partial class Player : CharacterBody2D
 
 		Velocity = velocity;
 		MoveAndSlide();
+		UpdateFootDust(direction, wasOnFloor);
 
 		if (IsOnFloor() && !wasOnFloor)
 		{
@@ -288,5 +304,194 @@ public partial class Player : CharacterBody2D
 		{
 			coyoteTimer.Start();
 		}
+	}
+
+	private void CreateFootDustParticles()
+	{
+		footDustTexture = CreateFootDustTexture();
+		Gradient alphaRamp = new Gradient();
+		alphaRamp.SetColor(0, new Color(1.0f, 1.0f, 1.0f, 0.75f));
+		alphaRamp.SetColor(1, new Color(1.0f, 1.0f, 1.0f, 0.0f));
+
+		Curve scaleCurve = new Curve();
+		scaleCurve.AddPoint(Vector2.Zero);
+		scaleCurve.AddPoint(new Vector2(0.35f, 1.0f));
+		scaleCurve.AddPoint(new Vector2(1.0f, 0.18f));
+
+		footDustParticles = new CpuParticles2D
+		{
+			Name = "FootDustParticles",
+			Amount = 22,
+			Texture = footDustTexture,
+			Lifetime = 0.38,
+			OneShot = false,
+			Preprocess = 0.0,
+			SpeedScale = 1.0,
+			Explosiveness = 0.24f,
+			Randomness = 0.72f,
+			LifetimeRandomness = 0.35f,
+			LocalCoords = false,
+			DrawOrder = CpuParticles2D.DrawOrderEnum.Lifetime,
+			EmissionShape = CpuParticles2D.EmissionShapeEnum.Rectangle,
+			EmissionRectExtents = new Vector2(4.0f, 1.1f),
+			Direction = Vector2.Up,
+			Spread = 84.0f,
+			Gravity = new Vector2(0.0f, 16.0f),
+			InitialVelocityMin = 3.5f,
+			InitialVelocityMax = 18.0f,
+			LinearAccelMin = -5.0f,
+			LinearAccelMax = 2.0f,
+			DampingMin = 14.0f,
+			DampingMax = 26.0f,
+			ScaleAmountMin = 0.72f,
+			ScaleAmountMax = 1.65f,
+			ScaleAmountCurve = scaleCurve,
+			ColorRamp = alphaRamp,
+			Color = currentGroundDustColor,
+			ZIndex = 0,
+			Emitting = false,
+		};
+
+		AddChild(footDustParticles);
+		footDustParticles.Position = new Vector2(0.0f, 8.0f);
+	}
+
+	private static ImageTexture CreateFootDustTexture()
+	{
+		Image image = Image.CreateEmpty(4, 4, false, Image.Format.Rgba8);
+		image.Fill(new Color(1.0f, 1.0f, 1.0f, 0.0f));
+
+		Color softWhite = Colors.White;
+		image.SetPixel(1, 0, new Color(1.0f, 1.0f, 1.0f, 0.45f));
+		image.SetPixel(2, 0, new Color(1.0f, 1.0f, 1.0f, 0.45f));
+		image.SetPixel(0, 1, new Color(1.0f, 1.0f, 1.0f, 0.45f));
+		image.SetPixel(1, 1, softWhite);
+		image.SetPixel(2, 1, softWhite);
+		image.SetPixel(3, 1, new Color(1.0f, 1.0f, 1.0f, 0.45f));
+		image.SetPixel(0, 2, new Color(1.0f, 1.0f, 1.0f, 0.45f));
+		image.SetPixel(1, 2, softWhite);
+		image.SetPixel(2, 2, softWhite);
+		image.SetPixel(3, 2, new Color(1.0f, 1.0f, 1.0f, 0.45f));
+		image.SetPixel(1, 3, new Color(1.0f, 1.0f, 1.0f, 0.45f));
+		image.SetPixel(2, 3, new Color(1.0f, 1.0f, 1.0f, 0.45f));
+
+		return ImageTexture.CreateFromImage(image);
+	}
+
+	private void UpdateFootDust(Vector2 inputDirection, bool wasOnFloor)
+	{
+		if (footDustParticles == null)
+		{
+			return;
+		}
+
+		bool isWalkingOnGround = IsOnFloor() && Mathf.Abs(Velocity.X) > FootDustMoveThreshold && inputDirection.X != 0.0f;
+		footDustParticles.GlobalPosition = GlobalPosition + new Vector2(0.0f, 8.0f);
+		footDustParticles.Emitting = isWalkingOnGround;
+
+		if (!isWalkingOnGround)
+		{
+			return;
+		}
+
+		footDustParticles.Direction = new Vector2(-Mathf.Sign(Velocity.X) * 0.65f, -0.35f).Normalized();
+		Color sampledColor = GetGroundColorAt(GlobalPosition + new Vector2(0.0f, 9.0f));
+		currentGroundDustColor = currentGroundDustColor.Lerp(sampledColor, wasOnFloor ? 0.35f : 1.0f);
+		footDustParticles.Color = currentGroundDustColor;
+	}
+
+	private Color GetGroundColorAt(Vector2 globalPosition)
+	{
+		TileMapLayer groundLayer = FindGroundTileLayer(globalPosition);
+		if (groundLayer == null || groundLayer.TileSet == null)
+		{
+			return currentGroundDustColor;
+		}
+
+		Vector2I cell = groundLayer.LocalToMap(groundLayer.ToLocal(globalPosition));
+		int sourceId = groundLayer.GetCellSourceId(cell);
+		if (sourceId < 0)
+		{
+			return currentGroundDustColor;
+		}
+
+		TileSetSource source = groundLayer.TileSet.GetSource(sourceId);
+		if (source is not TileSetAtlasSource atlasSource)
+		{
+			return currentGroundDustColor;
+		}
+
+		Image sourceImage = GetTileSourceImage(atlasSource);
+		if (sourceImage == null)
+		{
+			return currentGroundDustColor;
+		}
+
+		Vector2I atlasCoords = groundLayer.GetCellAtlasCoords(cell);
+		Rect2I textureRegion = atlasSource.GetTileTextureRegion(atlasCoords, 0);
+		Vector2I samplePosition = textureRegion.Position + textureRegion.Size / 2;
+		Color tileColor = sourceImage.GetPixel(
+			Mathf.Clamp(samplePosition.X, 0, sourceImage.GetWidth() - 1),
+			Mathf.Clamp(samplePosition.Y, 0, sourceImage.GetHeight() - 1));
+
+		return BoostDustColor(tileColor);
+	}
+
+	private TileMapLayer FindGroundTileLayer(Vector2 globalPosition)
+	{
+		Node searchRoot = GetTree().CurrentScene ?? GetTree().Root;
+		return FindGroundTileLayer(searchRoot, globalPosition);
+	}
+
+	private TileMapLayer FindGroundTileLayer(Node node, Vector2 globalPosition)
+	{
+		if (node is TileMapLayer tileMapLayer && tileMapLayer.Name.ToString().ToLowerInvariant().Contains("background"))
+		{
+			Vector2I cell = tileMapLayer.LocalToMap(tileMapLayer.ToLocal(globalPosition));
+			if (tileMapLayer.GetCellSourceId(cell) >= 0)
+			{
+				return tileMapLayer;
+			}
+		}
+
+		foreach (Node child in node.GetChildren())
+		{
+			TileMapLayer result = FindGroundTileLayer(child, globalPosition);
+			if (result != null)
+			{
+				return result;
+			}
+		}
+
+		return null;
+	}
+
+	private Image GetTileSourceImage(TileSetAtlasSource atlasSource)
+	{
+		if (tileSourceImages.TryGetValue(atlasSource, out Image image))
+		{
+			return image;
+		}
+
+		Texture2D texture = atlasSource.Texture;
+		if (texture == null)
+		{
+			return null;
+		}
+
+		image = texture.GetImage();
+		tileSourceImages[atlasSource] = image;
+		return image;
+	}
+
+	private static Color BoostDustColor(Color color)
+	{
+		float maxChannel = Mathf.Max(color.R, Mathf.Max(color.G, color.B));
+		float boost = maxChannel < 0.42f ? 1.35f : 1.12f;
+		return new Color(
+			Mathf.Clamp(color.R * boost + 0.08f, 0.0f, 1.0f),
+			Mathf.Clamp(color.G * boost + 0.08f, 0.0f, 1.0f),
+			Mathf.Clamp(color.B * boost + 0.08f, 0.0f, 1.0f),
+			0.78f);
 	}
 }
